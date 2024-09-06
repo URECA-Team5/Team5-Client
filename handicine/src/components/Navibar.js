@@ -1,7 +1,7 @@
 import React from 'react';
 import { Navbar, Nav, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import './Navibar.css'; // CSS 파일
+import './Navibar.css';
 
 const Navibar = () => {
   return (
