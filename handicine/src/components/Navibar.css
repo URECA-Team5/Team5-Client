@@ -2,17 +2,17 @@
   position: absolute;
   top: 0;
   width: 100%;
-  background-color: transparent; /* 배경을 투명하게 설정 */
+  background-color: transparent;
   z-index: 10;
-  display: flex; /* 플렉스박스를 사용하여 세 가지 부분을 배치 */
+  display: flex;
   align-items: center;
-  justify-content: space-between; /* 세 부분을 좌, 중, 우로 나눔 */
+  justify-content: space-between;
   padding-top: 20px;
   padding-right: 40px;
 }
 
 .brand-container {
-  flex: 2; /* 왼쪽에 위치하는 Handicine */
+  flex: 2;
 }
 
 .custom-brand {
