@@ -25,9 +25,6 @@ const MainContent = () => {
         <SearchBar />
       </div>
       <div className="button-container">
-        <button className="custom-button" onClick={handleFileSelect}>
-          약품 이미지로 검색하기
-        </button>
         <input
           type="file"
           ref={fileInputRef}
