@@ -19,17 +19,11 @@ const MainContent = () => {
         backgroundSize: "cover",
         backgroundPosition: "center",
         height: "100vh",
+        position: "relative", // To position children absolutely
       }}
     >
       <div className="search-container">
         <SearchBar />
-      </div>
-      <div className="button-container">
-        <input
-          type="file"
-          ref={fileInputRef}
-          style={{ display: "none" }}
-        />
       </div>
       <div className="content-container">
         <h1>내 손 안의 약사 서비스, HANDICINE</h1>
