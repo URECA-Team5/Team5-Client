@@ -12,7 +12,7 @@
 }
 
 .brand-container {
-  flex: 2;
+  flex: 1;
 }
 
 .custom-brand {
@@ -26,6 +26,7 @@
   flex: 3;
   display: flex;
   justify-content: center;
+  margin-left: 160px;
 }
 
 .menu .nav-link {
