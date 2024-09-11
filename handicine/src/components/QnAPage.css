@@ -96,3 +96,16 @@ h1 {
     margin: 5px 0;
     color: #555;
 }
+
+.write-button-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+  }
+  
+  .pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
