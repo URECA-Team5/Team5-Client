@@ -10,7 +10,6 @@ import GoogleIcon from '@mui/icons-material/Google';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import './SignUp.css';  // 스타일을 위한 CSS 파일
 import Checkbox from '@mui/material/Checkbox';
-import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 
 // Material UI 테마
@@ -43,16 +42,23 @@ const theme = createTheme({
   },
 });
 
-export default function SignUp() {
+export default function Mypage() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    const Id = data.get('Id')
-    const password = data.get('password')
+    const Id = data.get('Id');
+    const password = data.get('password');
     console.log({
       id: data.get('id'),
       password: data.get('password'),
     });
+  };
+
+  const handleDeleteAccount = () => {
+    // 정보 삭제 기능 (실제 환경에서는 API 호출 필요)
+    console.log("회원탈퇴 버튼 클릭됨");
+    // 예를 들어, API 호출을 통해 사용자의 정보를 삭제하는 로직을 추가할 수 있습니다.
+    alert('회원탈퇴 기능이 호출되었습니다. 실제로는 서버와 통신하여 사용자를 삭제해야 합니다.');
   };
 
   return (
@@ -68,29 +74,41 @@ export default function SignUp() {
               alignItems: 'flex-start', // 왼쪽 정렬
             }}
           >
-            {/* HANDICINE 글자 */}
-            <Typography
-              component="h1"
-              variant="h4" // 'h4'로 유지
-              className="brand-title"
-              sx={{
-                mb: 3,
-                mt: -3,
-                textAlign: 'left',
-                color: '#B3D9E2',
-                fontSize: '2rem', // 원하는 크기로 조정
-              }}
-            >
-              HANDICINE
-            </Typography>
+            <div style={{ display: 'flex', alignItems: 'center', width: '100%' }}>
+              {/* HANDICINE 글자 */}
+              <Typography
+                component="h1"
+                variant="h4" // 'h4'로 유지
+                className="brand-title"
+                sx={{
+                  mb: 3,
+                  mt: -3,
+                  textAlign: 'left',
+                  color: '#B3D9E2',
+                  fontSize: '2rem', // 원하는 크기로 조정
+                  flexGrow: 1, // 버튼과 글자 사이의 간격을 유지
+                }}
+              >
+                HANDICINE
+              </Typography>
 
-            {/* Sign in 글자 */}
+              {/* 회원탈퇴 버튼 */}
+              <Button
+                variant="outlined"
+                onClick={handleDeleteAccount}
+                sx={{ ml: 2 }} // 왼쪽 여백 추가
+              >
+                회원탈퇴
+              </Button>
+            </div>
+
+            {/* 정보 수정 글자 */}
             <Typography
               component="h1"
               variant="h5"
               sx={{ marginBottom: 3, textAlign: 'left' }}
             >
-              Sign up
+              회원 정보 수정
             </Typography>
 
             {/* ID 레이블 */}
@@ -99,9 +117,10 @@ export default function SignUp() {
               sx={{ alignSelf: 'flex-start', mb: 1 }}
             >
               ID
-              <FormControlLabel style={{marginLeft:"170px"}}control={<Checkbox defaultChecked />} label="일반인" value="normal" />
-              <FormControlLabel control={<Checkbox />} label="전문가" value="expert"/>        
+              <FormControlLabel style={{ marginLeft: "170px" }} control={<Checkbox defaultChecked />} label="일반인" value="normal" />
+              <FormControlLabel control={<Checkbox />} label="전문가" value="expert" />
             </Typography>
+
             {/* ID 입력 필드 */}
             <TextField
               margin="normal"
@@ -124,6 +143,7 @@ export default function SignUp() {
             >
               Password
             </Typography>
+
             {/* Password 입력 필드 */}
             <TextField
               margin="normal"
@@ -137,13 +157,15 @@ export default function SignUp() {
                 disableUnderline: true,
               }}
             />
+
             <Typography
               variant="body1"
               sx={{ alignSelf: 'flex-start', mb: 1 }}
             >
               E-mail
             </Typography>
-            {/* Password 입력 필드 */}
+
+            {/* E-mail 입력 필드 */}
             <TextField
               margin="normal"
               required
@@ -156,36 +178,16 @@ export default function SignUp() {
                 disableUnderline: true,
               }}
             />
-            
-            {/* 회원가입 버튼 */}
+
+            {/* 수정하기 버튼 */}
             <Button
               type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
-              className="login-button"
+              className="update-button"
             >
-              Sign up
-            </Button>
-
-            {/* Google 회원가입 버튼 */}
-            <Button
-              fullWidth
-              variant="outlined"
-              startIcon={<GoogleIcon/>}
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Sign up with Google
-            </Button>
-
-            {/* Facebook 회원가입 버튼 */}
-            <Button
-              fullWidth
-              variant="outlined"
-              startIcon={<FacebookIcon />}
-              sx={{ mt: 1, mb: 2 }}
-            >
-              Sign up with Facebook
+              회원 정보 수정
             </Button>
           </Box>
         </Container>

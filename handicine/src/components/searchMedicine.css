@@ -1,0 +1,79 @@
+.search-medicine-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+  color: white;
+  background-color: #B3D9E2;
+  font-family: 'Roboto', sans-serif;
+  min-height: 100vh;
+}
+
+.search-bar-container {
+  position: absolute;
+  top: 100px;
+  right: 10px;
+  width: auto;
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px;
+}
+
+.card-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-top: 200px;
+  width: 100%;
+  max-width: 1200px;
+  margin-left: 60px;
+}
+
+.card-col {
+  margin-bottom: 20px;
+}
+
+.card {
+  height: 100%;
+  border: 1px solid #ddd;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+  background-color: white;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card-img {
+  height: 250px;
+  object-fit: cover;
+}
+
+.card-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.modal-body {
+  display: flex;
+  flex-direction: row;
+}
+
+.list-group-item {
+  cursor: pointer;
+}
+
+.list-group-item:hover {
+  background-color: #f8f9fa;
+}
+
+.medicine-text {
+  font-size: 1.2rem; /* 글씨 크기 */
+  color: #333; /* 글씨 색상 */
+  line-height: 1.6; /* 줄 간격 */
+  font-weight: 400; /* 글씨 두께 */
+  text-shadow: none;
+}

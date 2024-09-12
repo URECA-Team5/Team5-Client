@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './QnAPage.css';
 import { Link, useNavigate } from 'react-router-dom'; // useNavigate로 페이지 이동 추가
-import { FormControl, InputGroup, Button, Pagination, Table } from 'react-bootstrap';
+import { FormControl, InputGroup, Button, Pagination, Table, Container, Row, Col, Form } from 'react-bootstrap';
 import { FaSearch } from 'react-icons/fa'; // 돋보기 아이콘
 
 const QnAPage = () => {
@@ -52,11 +52,10 @@ const QnAPage = () => {
 
   return (
     <div className="qna-page">
-      <h1 className='page-title'>전문가 Q&A 게시판</h1>
+      <h1 className='page-title' style={{color:"black"}}>전문가 Q&A 게시판</h1>
       <div className="search-bar">
         <InputGroup className="custom-search">
           <FormControl
-            placeholder="검색어를 입력해주세요"
             aria-label="Search"
             onChange={(e) => setSearchText(e.target.value)}
           />
@@ -66,7 +65,7 @@ const QnAPage = () => {
         </InputGroup>
       </div>
 
-      <div className="container-box">
+      <div className="container-box" style={{width:'90%', margin:'0 auto'}}>
         <Table striped bordered hover responsive className="qna-table">
           <thead>
             <tr>
@@ -79,7 +78,7 @@ const QnAPage = () => {
             {currentQuestions.map(question => (
               <tr key={question.id}>
                 <td>
-                  <Link to={`/board/${question.id}`}>
+                  <Link to={`/qna/${question.id}`}>
                     {question.title}
                   </Link>
                 </td>

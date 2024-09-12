@@ -1,46 +1,83 @@
-import React, { useState, useEffect } from 'react';
-import './QnAPage.css';
-import { Link } from 'react-router-dom';
-import { Dropdown, DropdownButton, FormControl, InputGroup } from 'react-bootstrap';
-import { FaSearch } from 'react-icons/fa'; // 돋보기 아이콘
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Button, Form } from 'react-bootstrap';
+import './Detail.css';
 
-const BoardDetail = () => {
- 
+const QnADetail = () => {
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+  const [comments, setComments] = useState([]); // 댓글 상태 추가
+  const [newComment, setNewComment] = useState(""); // 새로운 댓글 입력 상태
+  const navigate = useNavigate();
 
-  const [searchOption, setSearchOption] = useState("제목만");
-  const [searchText, setSearchText] = useState("");
-
-  const handleSearchOptionSelect = (option) => {
-    setSearchOption(option);
+  const handleTitleChange = (e) => {
+    setTitle(e.target.value);
   };
 
-  const handleSearch = () => {
-    console.log(`검색 옵션: ${searchOption}, 검색어: ${searchText}`);
-    // 검색 기능을 추가할 때 사용할 검색 로직
+  const handleContentChange = (e) => {
+    setContent(e.target.value);              
   };
 
-  useEffect(() => {
-    // 백엔드 API에서 데이터를 가져오는 로직을 추가할 수 있습니다.
-  }, []);
+  const handleBackToList = () => {
+    navigate('/qna');
+  };
+
+  const handleUpdateClick = () => {
+    navigate('/board/update');
+  };
+
+  const handleAddComment = () => {
+    if (newComment.trim() !== "") { // 댓글이 빈칸이 아닐 때만 추가
+      setComments([...comments, newComment]); // 새로운 댓글을 기존 배열에 추가
+      setNewComment(""); // 입력 필드를 비우기
+    }
+  };
+
+  const handleCommentChange = (e) => {
+    setNewComment(e.target.value); // 새로운 댓글 입력 상태 업데이트
+  };
 
   return (
     <div className="qna-page">
-      <h1>전문가 Q&A 게시판</h1>
+      <h1 className='page-title'>제목</h1>
+      <div className="container-box">
+        <h4>내용</h4>
+      </div>
+      <h2 style={{marginRight:"720px", marginTop:"25px"}}>댓글</h2>
 
-      <div className="search-bar">
-        <InputGroup className="custom-search">
-          <FormControl
-            placeholder="검색어를 입력해주세요"
-            aria-label="Search"
-            onChange={(e) => setSearchText(e.target.value)}
-          />
-          <InputGroup.Text className="search-icon" onClick={handleSearch}>
-            <FaSearch style={{ color: 'green' }} />
-          </InputGroup.Text>
-        </InputGroup>
+      {/* 댓글 입력 필드 */}
+      <Form.Control
+      className='commentfield'
+        as="textarea"
+        rows={3}
+        placeholder="댓글을 입력하세요"
+        value={newComment}
+        onChange={handleCommentChange}
+        style={{ marginTop: "20px" }}
+      />
+      
+      {/* 기존 댓글을 렌더링 */}
+      {comments.map((comment, index) => (
+        <div key={index} className='container-box' style={{marginTop:"30px"}}>
+          {comment}
+        </div>
+      ))}
+
+      
+
+      <div className="write-button-container" style={{ marginTop: "20px" }}>
+        <Button variant="secondary" onClick={handleUpdateClick} style={{marginRight: "10px"}}>
+          수정하기
+        </Button>
+        <Button variant="secondary" onClick={handleBackToList} style={{marginRight: "10px"}}>
+          목록보기
+        </Button>
+        <Button variant="success" onClick={handleAddComment}> {/* 댓글 등록 버튼 */}
+          댓글등록
+        </Button>
       </div>
     </div>
   );
 };
 
-export default BoardDetail;
+export default QnADetail;

@@ -18,7 +18,7 @@
 .custom-brand {
   font-weight: bold;
   font-size: 3rem;
-  color: white !important;
+  color: black;
   padding-left: 50px;
 }
 
@@ -30,7 +30,7 @@
 }
 
 .menu .nav-link {
-  color: white !important;
+  color: black;
   font-weight: bold;
   font-size: 1.5rem;
   margin-top: 5px;
@@ -39,7 +39,7 @@
 }
 
 .menu .nav-link:hover {
-  color: #ccc !important;
+  color: blue;
 }
 
 .auth-container {
