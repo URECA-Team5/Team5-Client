@@ -1,18 +1,18 @@
 .search-bar {
     display: flex;
     align-items: center;
-    width: 50%;
+    width: 20%;
     background-color: white;
     border: 2px solid green;
-    border-radius: 30px;
-    padding: 10px;
+    border-radius: 0px;
+    padding: -30px;
 }
 
 .search-input {
     flex: 1;
     border: none;
     outline: none;
-    font-size: 2rem;
+    font-size: 1.5rem;
     padding-left: 15px;
     border-radius: 30px;
 }

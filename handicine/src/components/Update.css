@@ -1,0 +1,23 @@
+.container-box {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 60%;
+  max-width: 800px; /* 박스의 최대 너비를 설정 */
+}
+
+.page-title {
+  font-size: 2rem;
+  /* font-weight: bold; */
+  color: #007bff;
+  margin-bottom: 40px; /* 제목과 컨텐츠 사이의 간격 */
+  text-shadow: none;
+  margin-left: 550px;
+}
+
+.write-button-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}

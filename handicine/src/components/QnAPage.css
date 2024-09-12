@@ -2,31 +2,31 @@
     background-color: #B3D9E2;
     min-height: 100vh;
     display: flex;
-    flex-direction: column; /* 페이지 상단에 배치된 요소들을 수직으로 나열 */
-    justify-content: flex-start; /* 페이지 상단부터 배치 */
-    align-items: center; /* 모든 요소를 가로로 중앙 정렬 */
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; /* Center align items horizontally */
     padding: 20px;
-    padding-top: 250px; /* 내비바와의 간격 확보 */
 }
 
 .page-title {
     text-align: center;
+    justify-content: center;
     font-size: 3.5rem;
     font-weight: bold;
-    margin: 0 auto;
-    color: #007bff;
-    margin-bottom: 20px; /* 제목과 컨텐츠 사이의 간격 */
-    margin-top: -100px;
+    color: black;
+    margin-bottom: 20px; /* Title and content gap */
 }
+
 
 .container-box {
     background-color: #ffffff;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     padding: 15px;
-    width: 60%;
-    max-width: 1200px; /* 박스의 최대 너비를 설정 */
+    width: 80%; /* 수정: 너비를 더 넓게 설정 */
+    max-width: 1200px;
 }
+
 
 h1 {
     font-size: 1.2rem;
@@ -36,12 +36,14 @@ h1 {
 }
 
 .search-bar {
-    margin-top: 40px;
-    margin-bottom: 15px;
-    width: 25%;
-    border-radius: 0;     
-    margin-left: 580px;
-}
+    width: 15%; /* 너비 비율 조정 */
+    max-width: 600px; /* 최대 너비 설정 */
+    margin: 20px auto; /* 상하 여백 설정, 좌우 자동 정렬 */
+    padding: 1px; /* 내부 여백 설정 */
+    border-radius: 0;
+    margin-right : 545px;
+    margin-bottom: 5px;
+  }
 
 .custom-search {
     display: flex;
@@ -107,5 +109,10 @@ h1 {
     display: flex;
     justify-content: center;
     margin-top: 20px;
+  }
+
+  .qna-table a {
+    color:black;
+    text-decoration: none;
   }
   

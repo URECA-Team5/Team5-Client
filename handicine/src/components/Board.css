@@ -1,0 +1,121 @@
+.qna-page {
+  background-color: #B3D9E2;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column; /* 페이지 상단에 배치된 요소들을 수직으로 나열 */
+  justify-content: flex-start; /* 페이지 상단부터 배치 */
+  align-items: center; /* 모든 요소를 가로로 중앙 정렬 */
+  padding: 20px;
+  padding-top: 250px; /* 내비바와의 간격 확보 */
+  background-image: url('../images/d.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+.page-title {
+  text-align: center;
+  font-size: 3.5rem;
+  font-weight: bold;
+  margin: 0 auto;
+  color: #007bff;
+  margin-bottom: 20px; /* 제목과 컨텐츠 사이의 간격 */
+  margin-top: -100px;
+}
+
+.container-box {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  width: 60%;
+  max-width: 1200px; /* 박스의 최대 너비를 설정 */
+}
+
+h1 {
+  font-size: 1.2rem;
+  color: #007bff;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.search-bar {
+  width: 15%; /* 너비 비율 조정 */
+  max-width: 600px; /* 최대 너비 설정 */
+  margin: 20px auto; /* 상하 여백 설정, 좌우 자동 정렬 */
+  padding: 1px; /* 내부 여백 설정 */
+  border-radius: 0;
+  margin-right : 545px;
+  margin-bottom: 5px;
+}
+
+
+.custom-search {
+  display: flex;
+  border: none;
+  overflow: hidden;
+}
+
+.search-icon {
+  cursor: pointer;
+  background-color: white;
+  border: none;
+  border-left: 2px solid green;
+  border-radius: 0 30px 30px 0;
+  font-size: 1.3rem;
+  padding: 8px 10px;
+}
+
+.input-group .form-control {
+  border: none;
+  box-shadow: none;
+  font-size: 1.3rem;
+}
+
+.dropdown-toggle {
+  border: none;
+  box-shadow: none;
+  border-right: 2px solid green;
+  border-radius: 30px 0 0 30px;
+  font-size: 1.3rem;
+  padding: 8px 10px;
+}
+
+.qna-list {
+  margin-top: 15px;
+}
+
+.qna-item {
+  border: 1px solid #ddd;
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  background-color: #ffffff;
+}
+
+.qna-item h2 {
+  margin: 0;
+  font-size: 1.4rem;
+  color: #007bff;
+}
+
+.qna-item p {
+  margin: 5px 0;
+  color: #555;
+}
+
+.write-button-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.board-table a {
+  color : black;
+  text-decoration: none;
+}
