@@ -1,13 +1,13 @@
-.main-content{
+.main-content {
   padding: 20px;
-    padding-top: 140px;
-    width: 100%;
-    margin: 0 auto;
-    background-color: #B3D9E2;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  padding-top: 140px;
+  width: 100%;
+  margin: 0 auto;
+  background-color: #B3D9E2;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .login-container {
@@ -17,5 +17,7 @@
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-
-
+.brand-title {
+  color: #83C9E7;
+  text-shadow: none;
+}

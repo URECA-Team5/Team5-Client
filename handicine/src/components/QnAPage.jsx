@@ -52,16 +52,22 @@ const QnAPage = () => {
 
   return (
     <div className="qna-page">
+      <hr></hr>
       <h1 className='page-title' style={{color:"black"}}>전문가 Q&A 게시판</h1>
       <div className="search-bar">
         <InputGroup className="custom-search">
-          <FormControl
-            aria-label="Search"
-            onChange={(e) => setSearchText(e.target.value)}
-          />
-          <InputGroup.Text className="search-icon" onClick={handleSearch}>
-            <FaSearch style={{ color: 'green' }} />
-          </InputGroup.Text>
+        <FormControl
+          type="text" 
+          value={searchText}
+          onChange={(e) => setSearchText(e.target.value)}
+          onKeyPress={(e) => {
+            if (e.key === 'Enter') {
+              handleSearch(); // Enter 키를 누르면 검색 실행
+              e.preventDefault();
+            }
+          }}
+        />
+
         </InputGroup>
       </div>
 
@@ -78,7 +84,8 @@ const QnAPage = () => {
             {currentQuestions.map(question => (
               <tr key={question.id}>
                 <td>
-                  <Link to={`/qna/${question.id}`}>
+                  <Link 
+                  to={`/qna/${question.id}`}>
                     {question.title}
                   </Link>
                 </td>
@@ -112,7 +119,7 @@ const QnAPage = () => {
 
         {/* 글쓰기 버튼 */}
         <div className="write-button-container">
-          <Button variant="success" onClick={handleWriteClick}>
+          <Button variant="light" className='btn' onClick={handleWriteClick}>
             글쓰기
           </Button>
         </div>

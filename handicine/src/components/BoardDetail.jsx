@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button, Form } from 'react-bootstrap';
 import './Detail.css';
 
-const QnADetail = () => {
+const BoardDetail = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [comments, setComments] = useState([]); // 댓글 상태 추가
@@ -23,7 +23,7 @@ const QnADetail = () => {
   };
 
   const handleUpdateClick = () => {
-    navigate('/board/update');
+    navigate('/qna/update');
   };
 
   const handleAddComment = () => {
@@ -39,15 +39,20 @@ const QnADetail = () => {
 
   return (
     <div className="qna-page">
-      <h1 className='page-title'>제목</h1>
-      <div className="container-box">
-        <h4>내용</h4>
+      <div className="detail-container">
+        <div className="title-box">
+          <h1>{title}</h1>
+        </div>
+        <div className="content-box">
+          <h4>{content}</h4>
+        </div>
       </div>
-      <h2 style={{marginRight:"720px", marginTop:"25px"}}>댓글</h2>
+
+      <h2 className="comment-section-title">댓글</h2>
 
       {/* 댓글 입력 필드 */}
       <Form.Control
-      className='commentfield'
+        className='commentfield'
         as="textarea"
         rows={3}
         placeholder="댓글을 입력하세요"
@@ -55,21 +60,19 @@ const QnADetail = () => {
         onChange={handleCommentChange}
         style={{ marginTop: "20px" }}
       />
-      
+
       {/* 기존 댓글을 렌더링 */}
       {comments.map((comment, index) => (
-        <div key={index} className='container-box' style={{marginTop:"30px"}}>
+        <div key={index} className='container-box' style={{ marginTop: "30px" }}>
           {comment}
         </div>
       ))}
 
-      
-
       <div className="write-button-container" style={{ marginTop: "20px" }}>
-        <Button variant="secondary" onClick={handleUpdateClick} style={{marginRight: "10px"}}>
+        <Button variant="secondary" onClick={handleUpdateClick} style={{ marginRight: "10px" }}>
           수정하기
         </Button>
-        <Button variant="secondary" onClick={handleBackToList} style={{marginRight: "10px"}}>
+        <Button variant="secondary" onClick={handleBackToList} style={{ marginRight: "10px" }}>
           목록보기
         </Button>
         <Button variant="success" onClick={handleAddComment}> {/* 댓글 등록 버튼 */}
@@ -80,4 +83,4 @@ const QnADetail = () => {
   );
 };
 
-export default QnADetail;
+export default BoardDetail;

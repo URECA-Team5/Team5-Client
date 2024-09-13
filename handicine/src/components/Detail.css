@@ -1,34 +1,58 @@
-.container-box {
+.qna-page {
+  background-image: url('../images/d.jpg');
+  background-size: cover;
+  background-position: center;
+}
+
+.detail-container {
   background-color: #ffffff;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  padding: 20px;
   width: 60%;
-  max-width: 800px; /* 박스의 최대 너비를 설정 */
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  margin-top: 30px;
+}
+
+.title-box, .content-box {
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.title-box {
+  background-color: #f8f9fa;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.content-box {
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
 }
 
 .page-title {
   font-size: 2rem;
-  /* font-weight: bold; */
-  color: #007bff;
-  margin-bottom: 40px; /* 제목과 컨텐츠 사이의 간격 */
+  color: black;
+  margin-bottom: 40px;
   text-shadow: none;
   margin-left: 550px;
+}
+
+.comment-section-title {
+  margin-right: 720px;
+  margin-top: 25px;
+  font-size: 2rem;
 }
 
 .write-button-container {
   display: flex;
   justify-content: flex-end;
   margin-top: 20px;
-  margin-left: 500px;
+  margin-left: 450px;
 }
 
 .commentfield {
   width: 43%;
-}
-
-.qna-page{
-  background-image: url('../images/d.jpg');
-    background-size: cover;
-    background-position: center;
 }

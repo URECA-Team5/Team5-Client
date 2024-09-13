@@ -32,7 +32,7 @@ const QnAUpdate = () => {
 
   return (
     <div className="qna-page">
-      <h1 className='page-title'>게시물 수정</h1>
+      <h1 className='page-title' style={{color:"#333"}}>게시물 수정</h1>
       <div className="container-box">
         <Form onSubmit={handleSubmit}>
           <Form.Select>
@@ -40,8 +40,8 @@ const QnAUpdate = () => {
             <option value="board">자유 게시판</option>
           </Form.Select>
           <Form.Group controlId="formTitle">
-            <Form.Label style={{marginTop:"20px"}}>제목</Form.Label>
             <FormControl
+              className='box'
               type="text"
               placeholder="제목을 입력하세요"
               value={title}
@@ -50,8 +50,8 @@ const QnAUpdate = () => {
           </Form.Group>
 
           <Form.Group controlId="formContent">
-            <Form.Label style={{marginTop:"20px"}}>내용</Form.Label>
             <FormControl
+              className='box'
               as="textarea"
               rows={5}
               placeholder="내용을 입력하세요"

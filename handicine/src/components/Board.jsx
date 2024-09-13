@@ -52,16 +52,15 @@ const Board = () => {
 
   return (
     <div className="qna-page">
-      <h1 className='page-title'>자유 게시판</h1>
+      <hr></hr>
+      <h1 className='page-title' style={{color:"black"}}>자유 게시판</h1>
       <div className="search-bar">
         <InputGroup className="custom-search">
-          <FormControl
+          <FormControl style={{width:"50%", border: "1px solid black"}} 
             aria-label="Search"
             onChange={(e) => setSearchText(e.target.value)}
           />
-          <InputGroup.Text className="search-icon" onClick={handleSearch}>
-            <FaSearch style={{ color: 'green' }} />
-          </InputGroup.Text>
+          
         </InputGroup>
       </div>
 
@@ -112,7 +111,7 @@ const Board = () => {
 
         {/* 글쓰기 버튼 */}
         <div className="write-button-container">
-          <Button variant="success" onClick={handleWriteClick}>
+          <Button variant="light" className='btn' onClick={handleWriteClick}>
             글쓰기
           </Button>
         </div>

@@ -34,6 +34,7 @@ const theme = createTheme({
           borderColor: '#000', // outlined 버튼 테두리 색상을 검은색으로 설정
           '&:hover': {
             borderColor: '#333', // outlined 버튼 hover 시 테두리 색상 변경
+            backgroundColor: '#f5f5f5', // hover 시 배경색 변경
           },
         },
       },
@@ -42,17 +43,16 @@ const theme = createTheme({
 });
 
 export default function Login() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    const Id = data.get('Id')
-    const password = data.get('password')
     console.log({
       id: data.get('id'),
       password: data.get('password'),
     });
-    navigate('/')
+    navigate('/');
   };
 
   return (
@@ -65,7 +65,7 @@ export default function Login() {
               marginTop: 4,
               display: 'flex',
               flexDirection: 'column',
-              alignItems: 'flex-start', // 왼쪽 정렬
+              alignItems: 'center', // 가운데 정렬
             }}
           >
             {/* HANDICINE 글자 */}
@@ -75,20 +75,20 @@ export default function Login() {
               className="brand-title"
               sx={{
                 mb: 3,
-                mt: -3,
-                textAlign: 'left',
-                color: '#B3D9E2',
-                fontSize: '2rem', // 원하는 크기로 조정
+                textAlign: 'center', // 중앙 정렬
+                color: '#83C9E7',
+                fontSize: '2.5rem', // 더 큰 크기
+                fontWeight: 'bold', // 굵게
               }}
             >
               HANDICINE
             </Typography>
 
             {/* Sign in 글자 */}
-            <Typography
+            <Typography style={{textShadow:"none"}}
               component="h1"
               variant="h5"
-              sx={{ marginBottom: 3, textAlign: 'left' }}
+              sx={{ marginBottom: 3, textAlign: 'center' }}
             >
               Sign in
             </Typography>
@@ -96,7 +96,7 @@ export default function Login() {
             {/* ID 레이블 */}
             <Typography
               variant="body1"
-              sx={{ alignSelf: 'flex-start', mb: 1 }}
+              sx={{ alignSelf: 'flex-start', mb: 1, fontWeight: 'bold' }}
             >
               ID
             </Typography>
@@ -112,13 +112,23 @@ export default function Login() {
               InputProps={{
                 disableUnderline: true,
               }}
-              sx={{ mb: 2 }}
+              sx={{ 
+                mb: 2,
+                '& .MuiInputBase-root': { 
+                  border: '1px solid #ccc',
+                  borderRadius: '5px',
+                  padding: '10px',
+                  '&:focus': { 
+                    borderColor: '#83C9E7',
+                  },
+                },
+              }}
             />
 
             {/* Password 레이블 */}
             <Typography
               variant="body1"
-              sx={{ alignSelf: 'flex-start', mb: 1 }}
+              sx={{ alignSelf: 'flex-start', mb: 1, fontWeight: 'bold' }}
             >
               Password
             </Typography>
@@ -133,6 +143,17 @@ export default function Login() {
               autoComplete="current-password"
               InputProps={{
                 disableUnderline: true,
+              }}
+              sx={{ 
+                mb: 2,
+                '& .MuiInputBase-root': { 
+                  border: '1px solid #ccc',
+                  borderRadius: '5px',
+                  padding: '10px',
+                  '&:focus': { 
+                    borderColor: '#83C9E7',
+                  },
+                },
               }}
             />
             
@@ -153,7 +174,7 @@ export default function Login() {
               fullWidth
               variant="outlined"
               startIcon={<GoogleIcon />}
-              sx={{ mt: 3, mb: 2 }}
+              sx={{ mt: 2, mb: 2 }}
             >
               Sign in with Google
             </Button>
@@ -163,7 +184,7 @@ export default function Login() {
               fullWidth
               variant="outlined"
               startIcon={<FacebookIcon />}
-              sx={{ mt: 1, mb: 2 }}
+              sx={{ mt: 2, mb: 2 }}
             >
               Sign in with Facebook
             </Button>
