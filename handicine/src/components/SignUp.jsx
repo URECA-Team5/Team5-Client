@@ -10,8 +10,8 @@ import GoogleIcon from '@mui/icons-material/Google';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import './SignUp.css';  // 스타일을 위한 CSS 파일
 import Checkbox from '@mui/material/Checkbox';
-import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
+import { FormGroup } from 'react-bootstrap';
 
 // Material UI 테마
 const theme = createTheme({
@@ -36,6 +36,7 @@ const theme = createTheme({
           borderColor: '#000', // outlined 버튼 테두리 색상을 검은색으로 설정
           '&:hover': {
             borderColor: '#333', // outlined 버튼 hover 시 테두리 색상 변경
+            backgroundColor: '#f5f5f5', // hover 시 배경색 변경
           },
         },
       },
@@ -47,25 +48,24 @@ export default function SignUp() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    const Id = data.get('Id')
-    const password = data.get('password')
     console.log({
       id: data.get('id'),
       password: data.get('password'),
+      email: data.get('email'),
     });
   };
 
   return (
     <div className="main-content">
       <ThemeProvider theme={theme}>
-        <Container component="main" maxWidth="xs" className="login-container">
+        <Container component="main" maxWidth="xs" className="signup-container">
           <CssBaseline />
           <Box
             sx={{
               marginTop: 4,
               display: 'flex',
               flexDirection: 'column',
-              alignItems: 'flex-start', // 왼쪽 정렬
+              alignItems: 'center', // 중앙 정렬
             }}
           >
             {/* HANDICINE 글자 */}
@@ -75,20 +75,20 @@ export default function SignUp() {
               className="brand-title"
               sx={{
                 mb: 3,
-                mt: -3,
-                textAlign: 'left',
+                textAlign: 'center', // 중앙 정렬
                 color: '#B3D9E2',
-                fontSize: '2rem', // 원하는 크기로 조정
+                fontSize: '2.5rem', // 더 큰 크기
+                fontWeight: 'bold', // 굵게
               }}
             >
               HANDICINE
             </Typography>
 
-            {/* Sign in 글자 */}
-            <Typography
+            {/* Sign up 글자 */}
+            <Typography style={{textShadow:"none"}}
               component="h1"
               variant="h5"
-              sx={{ marginBottom: 3, textAlign: 'left' }}
+              sx={{ marginBottom: 3, textAlign: 'center' }}
             >
               Sign up
             </Typography>
@@ -96,11 +96,9 @@ export default function SignUp() {
             {/* ID 레이블 */}
             <Typography
               variant="body1"
-              sx={{ alignSelf: 'flex-start', mb: 1 }}
+              sx={{ alignSelf: 'flex-start', mb: 1, fontWeight: 'bold' }}
             >
               ID
-              <FormControlLabel style={{marginLeft:"170px"}}control={<Checkbox defaultChecked />} label="일반인" value="normal" />
-              <FormControlLabel control={<Checkbox />} label="전문가" value="expert"/>        
             </Typography>
             {/* ID 입력 필드 */}
             <TextField
@@ -114,13 +112,23 @@ export default function SignUp() {
               InputProps={{
                 disableUnderline: true,
               }}
-              sx={{ mb: 2 }}
+              sx={{ 
+                mb: 2,
+                '& .MuiInputBase-root': { 
+                  border: '1px solid #ccc',
+                  borderRadius: '5px',
+                  padding: '10px',
+                  '&:focus': { 
+                    borderColor: '#B3D9E2',
+                  },
+                },
+              }}
             />
 
             {/* Password 레이블 */}
             <Typography
               variant="body1"
-              sx={{ alignSelf: 'flex-start', mb: 1 }}
+              sx={{ alignSelf: 'flex-start', mb: 1, fontWeight: 'bold' }}
             >
               Password
             </Typography>
@@ -136,34 +144,73 @@ export default function SignUp() {
               InputProps={{
                 disableUnderline: true,
               }}
+              sx={{ 
+                mb: 2,
+                '& .MuiInputBase-root': { 
+                  border: '1px solid #ccc',
+                  borderRadius: '5px',
+                  padding: '10px',
+                  '&:focus': { 
+                    borderColor: '#B3D9E2',
+                  },
+                },
+              }}
             />
+
+            {/* E-mail 레이블 */}
             <Typography
               variant="body1"
-              sx={{ alignSelf: 'flex-start', mb: 1 }}
+              sx={{ alignSelf: 'flex-start', mb: 1, fontWeight: 'bold' }}
             >
               E-mail
             </Typography>
-            {/* Password 입력 필드 */}
+            {/* E-mail 입력 필드 */}
             <TextField
               margin="normal"
               required
               fullWidth
-              name="Email"
-              type="Email"
-              id="Email"
-              autoComplete="current-password"
+              name="email"
+              type="email"
+              id="email"
+              autoComplete="email"
               InputProps={{
                 disableUnderline: true,
               }}
+              sx={{ 
+                mb: 2,
+                '& .MuiInputBase-root': { 
+                  border: '1px solid #ccc',
+                  borderRadius: '5px',
+                  padding: '10px',
+                  '&:focus': { 
+                    borderColor: '#B3D9E2',
+                  },
+                },
+              }}
             />
-            
+
+            {/* 사용자 유형 체크박스 */}
+            <FormGroup sx={{ mb: 2 }}>
+              <FormControlLabel
+                control={<Checkbox defaultChecked />}
+                label="일반인"
+                value="normal"
+              />
+              <FormControlLabel
+                control={<Checkbox />}
+                label="전문가"
+                value="expert"
+              />
+            </FormGroup>
+
             {/* 회원가입 버튼 */}
             <Button
               type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
-              className="login-button"
+              className="signup-button"
+              onClick={handleSubmit}
             >
               Sign up
             </Button>
@@ -172,8 +219,8 @@ export default function SignUp() {
             <Button
               fullWidth
               variant="outlined"
-              startIcon={<GoogleIcon/>}
-              sx={{ mt: 3, mb: 2 }}
+              startIcon={<GoogleIcon />}
+              sx={{ mt: 2, mb: 2 }}
             >
               Sign up with Google
             </Button>
@@ -183,7 +230,7 @@ export default function SignUp() {
               fullWidth
               variant="outlined"
               startIcon={<FacebookIcon />}
-              sx={{ mt: 1, mb: 2 }}
+              sx={{ mt: 2, mb: 2 }}
             >
               Sign up with Facebook
             </Button>

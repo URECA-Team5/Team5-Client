@@ -37,6 +37,21 @@
     margin: 0 auto;
 }
 
+.form-container .form-control {
+    height: 60px; /* Adjust height as needed */
+    border-radius: 25px; /* Rounded corners */
+    padding: 0 20px; /* Adjust padding */
+    font-size: 2rem;
+    text-align: center; /* Center text horizontally */
+    box-sizing: border-box; /* Include padding in the height */
+  }
+
+  .form-container .form-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
 h1 {
     font-size: 3rem; /* 제목 크기 조정 */
     color: white;

@@ -62,6 +62,7 @@ const SearchMedicine = () => {
     }
   };
 
+  // 검색어에 따라 필터링된 약품 목록 생성
   const filteredMedicines = medicineData.filter(medicine =>
     medicine.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -99,22 +100,25 @@ const SearchMedicine = () => {
         </Form>
       </div>
       <Container>
-        <Row className="card-container">
-          {filteredMedicines.length > 0 ? (
-            filteredMedicines.map((medicine, index) => (
-              <Col md={4} key={index} className="card-col">
-                <Card className="card" onClick={() => handleCardClick(medicine)}>
-                  <Card.Img variant="top" src={medicine.image} className="card-img" alt={medicine.name} />
-                  <Card.Body>
-                    <Card.Title className="card-title">{medicine.name}</Card.Title>
-                  </Card.Body>
-                </Card>
-              </Col>
-            ))
-          ) : (
-            <p>해당 약품이 검색되지 않았습니다.</p>
-          )}
-        </Row>
+        {/* 검색어가 있을 때만 카드 표시 */}
+        {searchTerm.trim() && (
+          <Row className="card-container">
+            {filteredMedicines.length > 0 ? (
+              filteredMedicines.map((medicine, index) => (
+                <Col md={4} key={index} className="card-col">
+                  <Card className="card" onClick={() => handleCardClick(medicine)}>
+                    <Card.Img variant="top" src={medicine.image} className="card-img" alt={medicine.name} />
+                    <Card.Body>
+                      <Card.Title className="card-title">{medicine.name}</Card.Title>
+                    </Card.Body>
+                  </Card>
+                </Col>
+              ))
+            ) : (
+              <p style={{color:"#333"}}>해당 약품이 없습니다.</p>
+            )}
+          </Row>
+        )}
       </Container>
 
       {/* MedicineDetail 모달 */}

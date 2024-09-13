@@ -32,7 +32,7 @@ const Input = () => {
 
   return (
     <div className="qna-page">
-      <h1 className='page-title'>게시물 등록</h1>
+      <h1 className='page-title' style={{color:"#333"}}>게시물 등록</h1>
       <div className="container-box">
         <Form onSubmit={handleSubmit}>
           <Form.Select>

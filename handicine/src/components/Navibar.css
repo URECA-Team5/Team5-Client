@@ -18,7 +18,7 @@
 .custom-brand {
   font-weight: bold;
   font-size: 3rem;
-  color: black;
+  color: #83C9E7;
   padding-left: 50px;
 }
 
@@ -50,15 +50,24 @@
 
 .auth-container .btn {
   font-size: 1.1rem;
-  padding: 5px 10px;
+  padding: 10px 20px; /* 여백을 넓혀서 클릭하기 쉽게 */
   margin-left: 10px;
+  border-radius: 25px; /* 둥근 모서리 */
+  border: none; /* 기본 테두리 제거 */
+  font-weight: bold;
+  transition: all 0.3s ease; /* 애니메이션 추가 */
 }
 
 .auth-container .btn-light {
-  background-color: white;
-  color: black;
+  background: linear-gradient(90deg, #83C9E7, #00A3E0); /* 그라디언트 배경 */
+  color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 그림자 효과 */
 }
 
 .auth-container .btn-light:hover {
-  background-color: #e6e6e6;
+  background: linear-gradient(90deg, #00A3E0, #83C9E7); /* 호버 시 그라디언트 반전 */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* 호버 시 그림자 강조 */
+  transform: scale(1.05); /* 호버 시 약간 확대 효과 */
 }
+
+

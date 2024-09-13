@@ -9,15 +9,60 @@
 
 .page-title {
   font-size: 2rem;
-  /* font-weight: bold; */
-  color: #007bff;
-  margin-bottom: 40px; /* 제목과 컨텐츠 사이의 간격 */
-  text-shadow: none;
-  margin-left: 550px;
+  color: #333; /* 제목 색상 */
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.container-box {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 80%;
+  max-width: 600px; /* 최대 너비 */
 }
 
 .write-button-container {
   display: flex;
   justify-content: flex-end;
   margin-top: 20px;
+}
+
+.write-button-container .btn {
+  font-size: 1rem;
+  padding: 10px 20px;
+  margin-left: 10px;
+}
+
+.write-button-container .btn-secondary {
+  background-color: #f1f1f1; /* 목록보기 버튼 배경 색상 */
+  color: #333; /* 텍스트 색상 */
+  border: none;
+}
+
+.write-button-container .btn-secondary:hover {
+  background-color: #e0e0e0; /* 호버 시 배경 색상 */
+}
+
+.write-button-container .btn-success {
+  background-color: #4caf50; /* 등록 버튼 배경 색상 */
+  color: white; /* 텍스트 색상 */
+  border: none;
+}
+
+.write-button-container .btn-success:hover {
+  background-color: #45a049; /* 호버 시 배경 색상 */
+}
+
+input, textarea {
+  border-radius: 5px; /* 입력 필드 둥근 모서리 */
+}
+
+textarea {
+  resize: none; /* 텍스트 영역 크기 조절 비활성화 */
+}
+
+.form-control {
+  border: 1px solid #ccc; /* 입력 필드 테두리 색상 */
 }
