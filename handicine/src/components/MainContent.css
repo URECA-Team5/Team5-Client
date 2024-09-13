@@ -12,6 +12,7 @@
     color: white;
     font-family: 'Roboto', sans-serif;
     margin-top: 56px; /* 내비바 높이 */
+    overflow: hidden;
 }
 
 
@@ -89,3 +90,18 @@ p {
     background: rgba(0, 0, 0, 0.4); /* 배경에 어두운 오버레이 추가 */
     z-index: -1;
 }
+
+@keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  .content-container h1,
+  .content-container p {
+    animation: fadeIn 2s ease-in-out;
+  }
+  

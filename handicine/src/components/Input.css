@@ -1,3 +1,10 @@
+.qna-page{
+  background-image: url('../images/backgroundImg2.jpg'); /* 메인 페이지와 동일한 이미지 사용 */
+    background-size: cover; /* 이미지가 컨테이너를 완전히 덮도록 설정 */
+    background-position: center center; /* 이미지가 컨테이너의 중앙에 위치하도록 설정 */
+    background-attachment: fixed; /* 배경 이미지가 스크롤 시 고정되도록 설정 */margin: 0; /* 여백을 제거하여 일관된 배경을 유지 */
+    min-height: 100vh;
+}
 .container-box {
   background-color: #ffffff;
   border-radius: 8px;
@@ -14,14 +21,6 @@
   text-align: center;
 }
 
-.container-box {
-  background-color: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  width: 80%;
-  max-width: 600px; /* 최대 너비 */
-}
 
 .write-button-container {
   display: flex;

@@ -39,6 +39,7 @@ const QnADetail = () => {
 
   return (
     <div className="qna-page">
+      <h1 className='page-title' style={{color:"#333"}}>게시물 내용</h1>
       <div className="detail-container">
         <div className="title-box">
           <h1>{title}</h1>

@@ -1,8 +1,7 @@
 .custom-navbar {
-  position: absolute;
+  position: fixed;
   top: 0;
   width: 100%;
-  background-color: transparent;
   z-index: 10;
   display: flex;
   align-items: center;
@@ -20,6 +19,16 @@
   font-size: 3rem;
   color: #83C9E7;
   padding-left: 50px;
+  text-decoration: none; /* 링크의 기본 밑줄 제거 */
+}
+
+.custom-brand:hover {
+  color: #83C9E7;; /* Hover 시 색상 변경 */
+  text-decoration: none; /* Hover 시 밑줄 제거 */
+}
+
+.custom-brand:active {
+  color: #83C9E7; /* Click 시 색상 유지 */
 }
 
 .nav-container {
@@ -69,5 +78,3 @@
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* 호버 시 그림자 강조 */
   transform: scale(1.05); /* 호버 시 약간 확대 효과 */
 }
-
-

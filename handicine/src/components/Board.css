@@ -1,5 +1,4 @@
 .qna-page {
-  background-color: #B3D9E2;
   min-height: 100vh;
   display: flex;
   flex-direction: column; /* 페이지 상단에 배치된 요소들을 수직으로 나열 */
@@ -7,9 +6,7 @@
   align-items: center; /* 모든 요소를 가로로 중앙 정렬 */
   padding: 20px;
   padding-top: 250px; /* 내비바와의 간격 확보 */
-  background-image: url('../images/backgroundImg2.jpg');
-  background-size: cover;
-  background-position: center;
+
 }
 
 .page-title {
