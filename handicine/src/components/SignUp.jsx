@@ -194,7 +194,7 @@ export default function SignUp() {
               <FormControlLabel
                 control={<Checkbox defaultChecked />}
                 label="일반인"
-                value="normal"
+                value="member"
               />
               <FormControlLabel
                 control={<Checkbox />}

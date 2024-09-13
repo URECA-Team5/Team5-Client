@@ -3,17 +3,21 @@
   padding-top: 140px;
   width: 100%;
   margin: 0 auto;
-  background-image: url('../images/backgroundImg2.jpg');
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed; /* 배경 이미지 고정 */
-  height: 100vh; /* 정확히 화면 높이에 맞추기 */
+  min-height: 100vh; /* 정확히 화면 높이에 맞추기 */
   display: flex;
   flex-direction: column;
   align-items: center;
   box-sizing: border-box; /* 패딩을 포함하여 높이 계산 */
+  background-image: url('../images/backgroundImg2.jpg'); /* 이미지 경로에 맞게 수정 */
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed; /* 배경 이미지를 고정하여 스크롤에도 그대로 유지 */
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* 수평 스크롤 방지 */
+  overflow-y: auto; /* 컨텐츠가 넘칠 경우 스크롤 가능하게 설정 */
 }
-
 
 
 .signup-container {
@@ -23,7 +27,7 @@
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   width: 100%; /* 전체 너비 */
   max-width: 400px; /* 최대 너비 설정 */
-  margin-top: 20px;
+  margin-top: 90px;
 }
 
 .brand-title {

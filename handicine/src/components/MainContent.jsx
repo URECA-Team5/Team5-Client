@@ -42,14 +42,14 @@ const MainContent = () => {
                   onKeyDown={handleKeyDown}
                 />
               </Form.Group>
-              <Button style={{marginTop:"20px", width:"30%", backgroundColor:"#83C9E7"}}variant="info" type="submit">검색</Button>
+              <Button style={{ marginTop: "20px", width: "30%", backgroundColor: "#83C9E7" }} variant="info" type="submit">검색</Button>
             </Form>
           </Col>
         </Row>
       </Container>
       <div className="content-container">
-        <h1 style={{color:"#333", fontWeight:"bold", fontSize:"2rem"}}>내 손 안의 약사 서비스, HANDICINE</h1>
-        <p style={{color:"#333", fontWeight:"bold", fontSize:"2rem"}}>
+        <h1 style={{ color: "#333", fontWeight: "bold", fontSize: "2rem" }}>내 손 안의 약사 서비스, HANDICINE</h1>
+        <p style={{ color: "#333", fontWeight: "bold", fontSize: "2rem" }}>
           5000 종 이상의 의약품, <br />
           식품의약품안전처에서 제공한 정보로 안전하게!
         </p>

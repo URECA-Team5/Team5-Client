@@ -8,6 +8,7 @@
   background-image: url('../images/backgroundImg2.jpg');
     background-size: cover;
     background-position: center;
+    background-attachment: fixed;
   font-family: 'Roboto', sans-serif;
   min-height: 100vh;
 }
@@ -72,9 +73,17 @@
   width: 100%;
   max-width: 1200px;
   margin-left: 60px;
+  max-height: 600px; /* 카드 컨테이너의 최대 높이를 제한하여 스크롤 발생 */
+  gap: 20px;
+  padding-top: 40px;
+  overflow-y: auto; /* 스크롤이 발생하도록 설정 */
+  background-color: #f0f0f0; /* Light background color */
+  border-radius: 12px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .card-col {
+  flex: 0 0 30%; /* 카드가 한 줄에 3개 나오도록 설정 */
   margin-bottom: 20px;
 }
 
@@ -84,6 +93,8 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease;
   background-color: white;
+  display: flex;
+  flex-direction: column;
 }
 
 .card:hover {
@@ -99,11 +110,15 @@
   font-size: 1.2rem;
   font-weight: bold;
   color: #333;
+  word-wrap: break-word; /* 긴 단어가 있을 경우 줄바꿈 허용 */
+  white-space: normal; /* 텍스트가 잘리지 않고 줄바꿈 되도록 */
 }
 
 .modal-body {
   display: flex;
   flex-direction: row;
+  overflow-y: auto;
+  max-height: 60vh;
 }
 
 .list-group-item {
@@ -120,4 +135,111 @@
   line-height: 1.6; /* 줄 간격 */
   font-weight: 400; /* 글씨 두께 */
   text-shadow: none;
+}
+
+.modal-content {
+  border-radius: 12px; /* 둥근 모서리 */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* 그림자 */
+  border: none; /* 테두리 제거 */
+  overflow: hidden; /* 내부 내용이 모달 경계를 넘지 않도록 */
+}
+
+.modal-header {
+  background-color: #83C9E7; /* 헤더 배경 색상 */
+  color: white; /* 헤더 텍스트 색상 */
+  border-bottom: 1px solid #ddd; /* 하단 테두리 */
+  padding: 20px;
+}
+
+.modal-title {
+  font-size: 1.5rem; /* 제목 크기 */
+  font-weight: bold; /* 제목 두께 */
+}
+
+.modal-body {
+  padding: 20px;
+  background-color: #f9f9f9; /* 본문 배경 색상 */
+  max-height: 60vh; /* 최대 높이 */
+  overflow-y: auto; /* 스크롤 가능 */
+}
+
+.modal-footer {
+  border-top: 1px solid #ddd; /* 상단 테두리 */
+  padding: 10px 20px;
+  background-color: #f9f9f9; /* 푸터 배경 색상 */
+  display: flex;
+  justify-content: flex-end; /* 버튼을 오른쪽에 정렬 */
+}
+
+.modal-footer button {
+  border-radius: 8px; /* 버튼 모서리 둥글게 */
+  padding: 10px 20px;
+  font-size: 1rem; /* 버튼 텍스트 크기 */
+  margin-left: 10px;
+  background-color: #83C9E7; /* 버튼 배경 색상 */
+  color: white; /* 버튼 텍스트 색상 */
+  border: none;
+  transition: background-color 0.3s ease;
+}
+
+.modal-footer button:hover {
+  background-color: #83C9E7; /* 버튼 호버 시 배경 색상 */
+}
+
+.modal-body .list-group-item {
+  border-radius: 8px; /* 항목 모서리 둥글게 */
+  margin-bottom: 5px; /* 항목 간 간격 */
+  background-color: #ffffff; /* 항목 배경 색상 */
+  transition: background-color 0.3s ease;
+}
+
+.modal-body .list-group-item:hover {
+  background-color: #e8f5e9; /* 호버 시 배경 색상 */
+}
+
+.modal-body .list-group {
+  border-radius: 12px; /* 메뉴바 모서리 둥글게 */
+  background-color: #ffffff; /* 배경 색상 */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* 그림자 */
+  border: 1px solid #ddd; /* 테두리 색상 */
+  overflow: hidden; /* 내부 내용이 경계를 넘지 않도록 */
+}
+
+/* 메뉴 항목 스타일 */
+.modal-body .list-group-item {
+  border-radius: 8px; /* 항목 모서리 둥글게 */
+  margin-bottom: 5px; /* 항목 간 간격 */
+  padding: 10px 15px; /* 패딩 */
+  font-size: 1rem; /* 폰트 크기 */
+  color: #333; /* 텍스트 색상 */
+  background-color: #ffffff; /* 항목 배경 색상 */
+  transition: background-color 0.3s ease, color 0.3s ease; /* 배경 색상과 텍스트 색상 전환 */
+}
+
+/* 메뉴 항목 호버 스타일 */
+.modal-body .list-group-item:hover {
+  background-color: #83C9E7; /* 호버 시 배경 색상 */
+  color: black; /* 호버 시 텍스트 색상 */
+}
+
+/* 선택된 메뉴 항목 스타일 */
+.modal-body .list-group-item.active {
+  background-color: #83C9E7; /* 선택된 항목 배경 색상 */
+  color: black; /* 선택된 항목 텍스트 색상 */
+  font-weight: bold; /* 선택된 항목 텍스트 두께 */
+}
+/* 내용 스타일 */
+.modal-body p {
+  font-size: 1.1rem; /* 기본 폰트 크기 */
+  color: #333; /* 글자 색상 */
+  line-height: 1.8; /* 줄 간격 */
+  margin: 0 0 15px 0; /* 상단 여백 제거, 하단 여백 추가 */
+  padding: 0; /* 패딩 제거 */
+  text-align: left; /* 텍스트 정렬 왼쪽 */
+  font-family: 'Roboto', sans-serif; /* 폰트 패밀리 설정 */
+  text-shadow: none; /* 글자 그림자 제거 */
+  background-color: #f9f9f9; /* 배경 색상 추가 */
+  border-radius: 4px; /* 모서리 둥글게 */
+  padding: 15px; /* 내용 내 여백 */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 가벼운 그림자 추가 */
 }
