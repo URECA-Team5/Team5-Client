@@ -5,7 +5,7 @@ import './searchMedicine.css';
 import TylenolImage from '../images/Tylenol.jpg';
 import TylenolImage2 from '../images/Tylenol2.jpg';
 import TylenolImage3 from '../images/Tylenol3.jpg';
-
+import axios from 'axios'; // axios 추가
 const medicineData = [
   { 
     name: '타이레놀', 
@@ -98,14 +98,49 @@ const SearchMedicine = () => {
   useEffect(() => {
     // Update the search term and filteredMedicines when medicineName URL param changes
     if (medicineName) {
-      setSearchTerm(medicineName);
-      const results = medicineData.filter(medicine =>
-        medicine.name.toLowerCase().includes(medicineName.toLowerCase())
-      );
-      setFilteredMedicines(results);
+      fetchMedicines(medicineName);
+      // 기존 코드
+
+      // setSearchTerm(medicineName);
+      // const results = medicineData.filter(medicine =>
+      //   medicine.name.toLowerCase().includes(medicineName.toLowerCase())
+      // );
+      // setFilteredMedicines(results);
     }
   }, [medicineName]);
+  const fetchMedicines = async (itemName) => {
+    const url = "http://localhost:8080/api/medicines/search";
+    try {
+      const response = await axios.get(url, {
+        params: { itemName }
+      });
 
+      console.log(response.data); // 전체 응답 데이터 출력
+      if (response.data && response.data.length > 0) {
+        // API 응답 데이터로 filteredMedicines 설정
+        const medicines = response.data.map(item => ({
+          name: item.itemName,
+          image: item.image || TylenolImage, // 기본 이미지를 설정하거나 API 응답에서 이미지 필드를 가져옵니다.
+          description: item.efcyQesitm || '설명 없음',
+          manufacturer: item.entpName || '제조사 정보 없음',
+          usage: item.useMethodQesitm || '사용법 정보 없음',
+          warning: item.atpnQesitm || '주의사항 정보 없음',
+          interaction: item.intrcQesitm || '상호작용 정보 없음',
+          sideEffects: item.sideEffects || '부작용 정보 없음',
+          storage: item.depositMethodQesitm || '보관법 정보 없음'
+        }));
+        
+        setFilteredMedicines(medicines); // API로부터 받은 데이터를 설정
+        navigate(`/searchMedicine/${itemName}`, { state: { medicines } });
+      } else {
+        console.log("약품이 없습니다.");
+        setFilteredMedicines([]); // 빈 배열로 설정
+      }
+    } catch (error) {
+      
+      console.error('불러오기 실패:', error);
+    }
+  };
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
   };
@@ -113,11 +148,13 @@ const SearchMedicine = () => {
   const handleSearchSubmit = (e) => {
     e.preventDefault();
     if (searchTerm.trim() !== "") {
-      const results = medicineData.filter(medicine =>
-        medicine.name.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-      setFilteredMedicines(results);
-      navigate(`/searchMedicine/${searchTerm}`);
+      fetchMedicines(searchTerm); // 검색어로 API 호출
+      // 기존 코드
+      // const results = medicineData.filter(medicine =>
+      //   medicine.name.toLowerCase().includes(searchTerm.toLowerCase())
+      // );
+      // setFilteredMedicines(results);
+      // navigate(`/searchMedicine/${searchTerm}`);
     }
   };
 
