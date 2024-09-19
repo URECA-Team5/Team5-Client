@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // useNavigate로 페이지 이동 추가
+import { useNavigate, useLocation } from 'react-router-dom'; // useNavigate로 페이지 이동 추가
 import { FormControl, InputGroup, Button, Form } from 'react-bootstrap'; // FormControl, InputGroup, Button, Form 추가
 import './Input.css';
 
@@ -7,6 +7,7 @@ const Input = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const navigate = useNavigate(); // 페이지 이동을 위한 hook
+  const location = useLocation();
 
   const handleTitleChange = (e) => {
     setTitle(e.target.value);
@@ -17,7 +18,8 @@ const Input = () => {
   };
 
   const handleBackToList = () => {
-    navigate('/qna'); // 'qna' 페이지로 이동
+    const from = location.state?.from || 'qna'; // Default to 'qna' if no state is passed
+    navigate(`/${from}`); // Navigate back to the appropriate page
   };
 
   const handleSubmit = (e) => {
@@ -27,7 +29,8 @@ const Input = () => {
     const formData = new FormData(e.target)
     const data = Object.fromEntries(formData.entries())
     console.log(data)
-    navigate('/qna'); // 'qna' 페이지로 이동
+    const from = location.state?.from || 'qna';
+    navigate(`/${from}`); // 'qna' 페이지로 이동
   };
 
   return (
