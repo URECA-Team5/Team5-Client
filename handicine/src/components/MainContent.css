@@ -1,8 +1,8 @@
 .main-content {
     display: flex;
     flex-direction: column;
-    align-items: center; /* 가로 중앙 정렬 */
-    justify-content: center; /* 세로 중앙 정렬 */
+    align-items: center;
+    justify-content: center;
     text-align: center;
     height: calc(100vh - 56px); /* 내비바 높이 제외 */
     background-image: url('../images/backgroundImg2.jpg');
@@ -15,15 +15,16 @@
     overflow: hidden;
 }
 
-
 .content-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  text-align: center;
+  width: 90%; /* 너비 조정 */
 }
+
 
 .search-container {
     display: flex;
@@ -39,31 +40,36 @@
 }
 
 .form-container .form-control {
-    height: 60px; /* Adjust height as needed */
-    border-radius: 25px; /* Rounded corners */
-    padding: 0 20px; /* Adjust padding */
+    height: 60px; /* 조정 필요 */
+    border-radius: 30px; /* 둥근 모서리 */
+    padding: 0 20px; /* 여백 조정 */
     font-size: 2rem;
-    text-align: center; /* Center text horizontally */
-    box-sizing: border-box; /* Include padding in the height */
-  }
+    text-align: center;
+    box-sizing: border-box;
+    border: 2px solid #00A3E0;
+}
 
-  .form-container .form-group {
+.form-container .form-control:focus {
+    border-color: #83C9E7;
+    box-shadow: 0px 0px 10px rgba(0, 163, 224, 0.5);
+}
+
+.form-container .form-group {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100%;
-  }
-h1 {
-    font-size: 3rem; /* 제목 크기 조정 */
-    color: white;
-    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.7);
+}
+
+.content-container h1 {
+    font-size: 2.5rem; /* 제목 크기 조정 */
+    color: #000000;
     margin-bottom: 20px;
 }
 
 p {
-    font-size: 1.25rem; /* 설명 텍스트 크기 조정 */
-    color: white;
-    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.7);
+    font-size: 2rem; /* 설명 텍스트 크기 조정 */
+    color: #000000;
     margin-top: 10px;
 }
 
@@ -81,27 +87,35 @@ p {
     border-color: #007bff; /* 파란색 테두리 */
 }
 
-.background-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.4); /* 배경에 어두운 오버레이 추가 */
-    z-index: -1;
+button[type="submit"] {
+    background: linear-gradient(135deg, #83C9E7, #00A3E0);
+    color: white;
+    font-size: 1.5rem;
+    border: none;
+    border-radius: 30px;
+    padding: 10px 30px;
+    transition: all 0.3s ease;
+    box-shadow: 0px 4px 10px rgba(0, 163, 224, 0.4);
+}
+
+button[type="submit"]:hover {
+    background: linear-gradient(135deg, #00A3E0, #83C9E7);
+    box-shadow: 0px 6px 15px rgba(0, 163, 224, 0.6);
+    transform: translateY(-3px);
 }
 
 @keyframes fadeIn {
     from {
-      opacity: 0;
+        opacity: 0;
     }
     to {
-      opacity: 1;
+        opacity: 1;
     }
-  }
-  
-  .content-container h1,
-  .content-container p {
+}
+
+.content-container h1,
+.content-container p {
     animation: fadeIn 2s ease-in-out;
-  }
-  
+    color: #003366;
+}
+

@@ -1,3 +1,9 @@
+body {
+  font-family: 'Noto Sans', sans-serif; /* 선택한 폰트로 설정 */
+  font-size: 16px; /* 기본 글자 크기 */
+  color: #333; /* 기본 글자 색상 */
+}
+
 .detail-container {
   background-color: #ffffff;
   border-radius: 8px;
@@ -38,6 +44,8 @@
   margin-right: 720px;
   margin-top: 25px;
   font-size: 2rem;
+  color : black;
+  font-weight: bold;
 }
 
 .write-button-container {

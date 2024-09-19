@@ -76,7 +76,7 @@ export default function Login() {
               sx={{
                 mb: 3,
                 textAlign: 'center', // 중앙 정렬
-                color: '#83C9E7',
+                color: '#00A3E0',
                 fontSize: '2.5rem', // 더 큰 크기
                 fontWeight: 'bold', // 굵게
               }}
@@ -96,7 +96,7 @@ export default function Login() {
             {/* ID 레이블 */}
             <Typography
               variant="body1"
-              sx={{ alignSelf: 'flex-start', mb: 1, fontWeight: 'bold' }}
+              sx={{ alignSelf: 'flex-start', mb: 1, fontWeight: 'bold', textShadow: 'none' }}
             >
               ID
             </Typography>
@@ -128,7 +128,7 @@ export default function Login() {
             {/* Password 레이블 */}
             <Typography
               variant="body1"
-              sx={{ alignSelf: 'flex-start', mb: 1, fontWeight: 'bold' }}
+              sx={{ alignSelf: 'flex-start', mb: 1, fontWeight: 'bold', textShadow: 'none' }}
             >
               Password
             </Typography>
@@ -173,7 +173,11 @@ export default function Login() {
             <Button
               fullWidth
               variant="outlined"
-              startIcon={<GoogleIcon />}
+              startIcon={<img 
+                src={require('../images/Google.jpg')}  // 이미지 파일 경로
+                alt="Google" 
+                style={{ width: '24px', height: '24px', borderRadius: '50%' }}  // 이미지 크기 및 스타일
+              />}
               sx={{ mt: 2, mb: 2 }}
             >
               Sign in with Google
@@ -183,7 +187,11 @@ export default function Login() {
             <Button
               fullWidth
               variant="outlined"
-              startIcon={<FacebookIcon />}
+              startIcon={<img 
+                src={require('../images/facebook.jpg')}  // 이미지 파일 경로
+                alt="facebook" 
+                style={{ width: '24px', height: '24px', borderRadius: '50%' }}  // 이미지 크기 및 스타일
+              />}
               sx={{ mt: 2, mb: 2 }}
             >
               Sign in with Facebook

@@ -1,3 +1,9 @@
+body {
+  font-family: 'Noto Sans', sans-serif; /* 선택한 폰트로 설정 */
+  font-size: 16px; /* 기본 글자 크기 */
+  color: #333; /* 기본 글자 색상 */
+}
+
 .main-content {
   padding: 20px;
   padding-top: 140px;
@@ -17,6 +23,7 @@
   padding: 0;
   overflow-x: hidden; /* 수평 스크롤 방지 */
   overflow-y: auto; /* 컨텐츠가 넘칠 경우 스크롤 가능하게 설정 */
+  margin-top: 40px;
 }
 
 
@@ -31,5 +38,6 @@
 }
 
 .brand-title {
-  color: #B3D9E2;
+  color: #1E90FF;
+  text-shadow: none;
 }
