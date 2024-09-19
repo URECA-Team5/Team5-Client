@@ -11,6 +11,8 @@ import FacebookIcon from '@mui/icons-material/Facebook';
 import './SignUp.css';  // 스타일을 위한 CSS 파일
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
+import { useState } from 'react';
+import { Radio } from '@mui/material';
 
 // Material UI 테마
 const theme = createTheme({
@@ -43,6 +45,7 @@ const theme = createTheme({
 });
 
 export default function Mypage() {
+  const [selectedRole, setSelectedRole] = useState('normal');
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -60,7 +63,9 @@ export default function Mypage() {
     // 예를 들어, API 호출을 통해 사용자의 정보를 삭제하는 로직을 추가할 수 있습니다.
     alert('회원탈퇴 기능이 호출되었습니다. 실제로는 서버와 통신하여 사용자를 삭제해야 합니다.');
   };
-
+  const handleRoleChange = (event) => {
+    setSelectedRole(event.target.value);
+  };
   return (
     <div className="main-content">
       <ThemeProvider theme={theme}>
@@ -104,6 +109,7 @@ export default function Mypage() {
 
             {/* 정보 수정 글자 */}
             <Typography
+              style={{textShadow:"none"}}
               component="h1"
               variant="h5"
               sx={{ marginBottom: 3, textAlign: 'left' }}
@@ -113,12 +119,21 @@ export default function Mypage() {
 
             {/* ID 레이블 */}
             <Typography
+              style={{textShadow:"none"}}
               variant="body1"
               sx={{ alignSelf: 'flex-start', mb: 1 }}
             >
               ID
-              <FormControlLabel style={{ marginLeft: "170px" }} control={<Checkbox defaultChecked />} label="일반인" value="normal" />
-              <FormControlLabel control={<Checkbox />} label="전문가" value="expert" />
+              <FormControlLabel
+                style={{ marginLeft: "170px", textShadow:"none" }}
+                control={<Radio checked={selectedRole === 'normal'} onChange={handleRoleChange} value="normal" />}
+                label="일반인"
+              />
+              <FormControlLabel
+              style={{textShadow:"none" }}
+                control={<Radio checked={selectedRole === 'expert'} onChange={handleRoleChange} value="expert" />}
+                label="전문가"
+              />
             </Typography>
 
             {/* ID 입력 필드 */}
@@ -138,6 +153,7 @@ export default function Mypage() {
 
             {/* Password 레이블 */}
             <Typography
+              style={{textShadow:"none"}}
               variant="body1"
               sx={{ alignSelf: 'flex-start', mb: 1 }}
             >
@@ -159,6 +175,7 @@ export default function Mypage() {
             />
 
             <Typography
+              style={{textShadow:"none"}}
               variant="body1"
               sx={{ alignSelf: 'flex-start', mb: 1 }}
             >

@@ -76,7 +76,7 @@ export default function SignUp() {
               sx={{
                 mb: 3,
                 textAlign: 'center', // 중앙 정렬
-                color: '#B3D9E2',
+                color: '#00A3E0',
                 fontSize: '2.5rem', // 더 큰 크기
                 fontWeight: 'bold', // 굵게
               }}
@@ -95,6 +95,7 @@ export default function SignUp() {
 
             {/* ID 레이블 */}
             <Typography
+              style={{textShadow:"none"}}
               variant="body1"
               sx={{ alignSelf: 'flex-start', mb: 1, fontWeight: 'bold' }}
             >
@@ -127,6 +128,7 @@ export default function SignUp() {
 
             {/* Password 레이블 */}
             <Typography
+              style={{textShadow:"none"}}
               variant="body1"
               sx={{ alignSelf: 'flex-start', mb: 1, fontWeight: 'bold' }}
             >
@@ -159,6 +161,7 @@ export default function SignUp() {
 
             {/* E-mail 레이블 */}
             <Typography
+              style={{textShadow:"none"}}
               variant="body1"
               sx={{ alignSelf: 'flex-start', mb: 1, fontWeight: 'bold' }}
             >
@@ -219,7 +222,11 @@ export default function SignUp() {
             <Button
               fullWidth
               variant="outlined"
-              startIcon={<GoogleIcon />}
+              startIcon={<img 
+                src={require('../images/Google.jpg')}  // 이미지 파일 경로
+                alt="Google" 
+                style={{ width: '24px', height: '24px', borderRadius: '50%' }}  // 이미지 크기 및 스타일
+              />}
               sx={{ mt: 2, mb: 2 }}
             >
               Sign up with Google
@@ -229,7 +236,11 @@ export default function SignUp() {
             <Button
               fullWidth
               variant="outlined"
-              startIcon={<FacebookIcon />}
+              startIcon={<img 
+                src={require('../images/facebook.jpg')}  // 이미지 파일 경로
+                alt="facebook" 
+                style={{ width: '24px', height: '24px', borderRadius: '50%' }}  // 이미지 크기 및 스타일
+              />}
               sx={{ mt: 2, mb: 2 }}
             >
               Sign up with Facebook

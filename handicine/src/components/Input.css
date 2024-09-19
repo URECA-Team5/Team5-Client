@@ -1,3 +1,9 @@
+body {
+  font-family: 'Noto Sans', sans-serif; /* 선택한 폰트로 설정 */
+  font-size: 16px; /* 기본 글자 크기 */
+  color: #333; /* 기본 글자 색상 */
+}
+
 .qna-page{
   background-image: url('../images/backgroundImg2.jpg'); /* 메인 페이지와 동일한 이미지 사용 */
     background-size: cover; /* 이미지가 컨테이너를 완전히 덮도록 설정 */

@@ -54,22 +54,28 @@ const QnAPage = () => {
     <div className="qna-page">
       <hr></hr>
       <h1 className='page-title' style={{color:"black"}}>전문가 Q&A 게시판</h1>
-      <div className="search-bar">
-        <InputGroup className="custom-search">
-        <FormControl
-          type="text" 
-          value={searchText}
-          onChange={(e) => setSearchText(e.target.value)}
-          onKeyPress={(e) => {
-            if (e.key === 'Enter') {
-              handleSearch(); // Enter 키를 누르면 검색 실행
-              e.preventDefault();
-            }
-          }}
-        />
-
-        </InputGroup>
+      <div className="search-bar-container">
+        <Form onSubmit={handleSearch}>
+          <Form.Group className="d-flex">
+            <Form.Control
+              type="text"
+              value={searchText}
+              onChange={(e) => setSearchText(e.target.value)}
+              onKeyPress={(e) => {
+                if (e.key === 'Enter') {
+                  handleSearch();
+                  e.preventDefault(); 
+                }
+              }}
+              placeholder="검색어를 입력하세요"
+            />
+            <Button variant="outline-secondary" onClick={handleSearch} style={{ backgroundColor:'#00A3E0'}}>
+              <i className="fas fa-search"></i>
+            </Button>
+          </Form.Group>
+        </Form>
       </div>
+
 
       <div className="container-box" style={{width:'90%', margin:'0 auto'}}>
         <Table striped bordered hover responsive className="qna-table">

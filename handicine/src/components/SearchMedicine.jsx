@@ -6,6 +6,7 @@ import TylenolImage from '../images/Tylenol.jpg';
 import TylenolImage2 from '../images/Tylenol2.jpg';
 import TylenolImage3 from '../images/Tylenol3.jpg';
 
+
 const medicineData = [
   { 
     name: '타이레놀', 
@@ -143,14 +144,17 @@ const SearchMedicine = () => {
     <div className="search-medicine-page">
       <div className="search-bar-container">
         <Form onSubmit={handleSearchSubmit}>
-          <Form.Group>
+          <Form.Group className="d-flex">
             <Form.Control
               type="text"
-              placeholder="약품 이름을 입력하세요"
               value={searchTerm}
               onChange={handleSearchChange}
               onKeyDown={handleKeyDown}
+              placeholder="Search here..."
             />
+            <Button variant="outline-secondary" onClick={handleSearchSubmit} style={{ backgroundColor:'#00A3E0'}}>
+              <i className="fas fa-search"></i>
+            </Button>
           </Form.Group>
         </Form>
       </div>
@@ -170,7 +174,7 @@ const SearchMedicine = () => {
           </Row>
         )}
         {filteredMedicines.length === 0 && searchTerm.trim() !== '' && (
-          <p style={{ color: "#333", marginTop:"500px", fontSize:"2rem" }}>해당 약품은 존재하지 않습니다.</p>
+          <p style={{ color: "black", marginTop:"500px", fontSize:"2rem" }}>해당 약품은 존재하지 않습니다.</p>
         )}
       </Container>
 
@@ -184,27 +188,56 @@ const SearchMedicine = () => {
               <Row>
                 <Col md={3}>
                   <ListGroup>
-                    <ListGroup.Item action onClick={() => setActiveSection('description')}>
-                      제품 설명
-                    </ListGroup.Item>
-                    <ListGroup.Item action onClick={() => setActiveSection('manufacturer')}>
-                      제조사
-                    </ListGroup.Item>
-                    <ListGroup.Item action onClick={() => setActiveSection('usage')}>
-                      사용법
-                    </ListGroup.Item>
-                    <ListGroup.Item action onClick={() => setActiveSection('warning')}>
-                      주의사항
-                    </ListGroup.Item>
-                    <ListGroup.Item action onClick={() => setActiveSection('interaction')}>
-                      상호작용
-                    </ListGroup.Item>
-                    <ListGroup.Item action onClick={() => setActiveSection('sideEffects')}>
-                      부작용
-                    </ListGroup.Item>
-                    <ListGroup.Item action onClick={() => setActiveSection('storage')}>
-                      보관법
-                    </ListGroup.Item>
+                  <ListGroup.Item
+                        action
+                        onClick={() => setActiveSection('description')}
+                        className={activeSection === 'description' ? 'active' : ''}
+                      >
+                        제품 설명
+                      </ListGroup.Item>
+                      <ListGroup.Item
+                        action
+                        onClick={() => setActiveSection('manufacturer')}
+                        className={activeSection === 'manufacturer' ? 'active' : ''}
+                      >
+                        제조사
+                      </ListGroup.Item>
+                      <ListGroup.Item
+                        action
+                        onClick={() => setActiveSection('usage')}
+                        className={activeSection === 'usage' ? 'active' : ''}
+                      >
+                        사용법
+                      </ListGroup.Item>
+                      <ListGroup.Item
+                        action
+                        onClick={() => setActiveSection('warning')}
+                        className={activeSection === 'warning' ? 'active' : ''}
+                      >
+                        주의사항
+                      </ListGroup.Item>
+                      <ListGroup.Item
+                        action
+                        onClick={() => setActiveSection('interaction')}
+                        className={activeSection === 'interaction' ? 'active' : ''}
+                      >
+                        상호작용
+                      </ListGroup.Item>
+                      <ListGroup.Item
+                        action
+                        onClick={() => setActiveSection('sideEffects')}
+                        className={activeSection === 'sideEffects' ? 'active' : ''}
+                      >
+                        부작용
+                      </ListGroup.Item>
+                      <ListGroup.Item
+                        action
+                        onClick={() => setActiveSection('storage')}
+                        className={activeSection === 'storage' ? 'active' : ''}
+                      >
+                        보관법
+                      </ListGroup.Item>
+
                   </ListGroup>
                 </Col>
                 <Col md={9}>

@@ -19,11 +19,11 @@ const BoardDetail = () => {
   };
 
   const handleBackToList = () => {
-    navigate('/qna');
+    navigate('/board');
   };
 
   const handleUpdateClick = () => {
-    navigate('/qna/update');
+    navigate('/board/update');
   };
 
   const handleAddComment = () => {
@@ -39,6 +39,7 @@ const BoardDetail = () => {
 
   return (
     <div className="qna-page">
+      <h1 className='page-title' style={{color:"black"}}>게시물 내용</h1>
       <div className="detail-container">
         <div className="title-box">
           <h1>{title}</h1>

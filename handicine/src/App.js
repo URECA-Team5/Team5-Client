@@ -28,7 +28,7 @@ function App() {
           <Route path="/input" element={<Input />} />
           <Route path="/SignUp" element={<SignUp />} />
           <Route path="/mypage" element={<Mypage/>} />
-          <Route path="/qna/update/" element={<QnAUpdate/>} />
+          <Route path="/qna/update" element={<QnAUpdate/>} />
           <Route path="/searchMedicine/:medicineName" element={<SearchMedicine />} />
         </Routes>
       </div>
