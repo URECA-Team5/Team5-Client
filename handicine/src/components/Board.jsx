@@ -37,7 +37,7 @@ const Board = () => {
   };
 
   const handleWriteClick = () => {
-    navigate('/input'); // 'input.jsx'로 이동
+    navigate('/Input', { state: { from: 'board' } }); // 'input.jsx'로 이동
   };
 
   const indexOfLastQuestion = currentPage * questionsPerPage;

@@ -25,7 +25,7 @@ function App() {
           <Route path="/board/:id" element={<BoardDetail />} />
           <Route path="/board" element={<Board />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/input" element={<Input />} />
+          <Route path="/Input" element={<Input />} />
           <Route path="/SignUp" element={<SignUp />} />
           <Route path="/mypage" element={<Mypage/>} />
           <Route path="/qna/update" element={<QnAUpdate/>} />

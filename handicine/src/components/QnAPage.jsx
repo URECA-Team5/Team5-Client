@@ -37,7 +37,7 @@ const QnAPage = () => {
   };
 
   const handleWriteClick = () => {
-    navigate('/input'); // 'input.jsx'로 이동
+    navigate('/Input', { state: { from: 'qna' } }); // 'input.jsx'로 이동
   };
 
   const indexOfLastQuestion = currentPage * questionsPerPage;
