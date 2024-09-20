@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -6,12 +6,9 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import GoogleIcon from '@mui/icons-material/Google';
-import FacebookIcon from '@mui/icons-material/Facebook';
-import './SignUp.css';  // 스타일을 위한 CSS 파일
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import { FormGroup } from 'react-bootstrap';
+import { FormGroup } from '@mui/material';
 
 // Material UI 테마
 const theme = createTheme({
@@ -45,14 +42,41 @@ const theme = createTheme({
 });
 
 export default function SignUp() {
-  const handleSubmit = (event) => {
+  const [id, setId] = useState("");
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [role, setRole] = useState("member");
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      id: data.get('id'),
-      password: data.get('password'),
-      email: data.get('email'),
-    });
+
+    const userData = {
+      username: id,
+      password: password,
+      email: email,
+      roleName: role
+    };
+
+    try {
+      const response = await fetch("http://localhost:8080/api/users/signup", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userData),
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        console.log('User created:', result);
+        alert("회원가입이 완료됐습니다!")
+        window.location.href = "/login";
+      } else {
+        console.error('Error creating user');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
 
   return (
@@ -68,7 +92,6 @@ export default function SignUp() {
               alignItems: 'center', // 중앙 정렬
             }}
           >
-            {/* HANDICINE 글자 */}
             <Typography
               component="h1"
               variant="h4" // 'h4'로 유지
@@ -84,8 +107,7 @@ export default function SignUp() {
               HANDICINE
             </Typography>
 
-            {/* Sign up 글자 */}
-            <Typography style={{textShadow:"none"}}
+            <Typography
               component="h1"
               variant="h5"
               sx={{ marginBottom: 3, textAlign: 'center' }}
@@ -93,15 +115,12 @@ export default function SignUp() {
               Sign up
             </Typography>
 
-            {/* ID 레이블 */}
             <Typography
-              style={{textShadow:"none"}}
               variant="body1"
               sx={{ alignSelf: 'flex-start', mb: 1, fontWeight: 'bold' }}
             >
               ID
             </Typography>
-            {/* ID 입력 필드 */}
             <TextField
               margin="normal"
               required
@@ -110,7 +129,9 @@ export default function SignUp() {
               name="id"
               autoComplete="id"
               autoFocus
-              InputProps={{
+              value={id}
+              onChange={(e) => setId(e.target.value)}
+              InputProps={{ // InputProps를 사용하여 disableUnderline 적용
                 disableUnderline: true,
               }}
               sx={{ 
@@ -126,15 +147,12 @@ export default function SignUp() {
               }}
             />
 
-            {/* Password 레이블 */}
             <Typography
-              style={{textShadow:"none"}}
               variant="body1"
               sx={{ alignSelf: 'flex-start', mb: 1, fontWeight: 'bold' }}
             >
               Password
             </Typography>
-            {/* Password 입력 필드 */}
             <TextField
               margin="normal"
               required
@@ -143,9 +161,8 @@ export default function SignUp() {
               type="password"
               id="password"
               autoComplete="current-password"
-              InputProps={{
-                disableUnderline: true,
-              }}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               sx={{ 
                 mb: 2,
                 '& .MuiInputBase-root': { 
@@ -159,15 +176,12 @@ export default function SignUp() {
               }}
             />
 
-            {/* E-mail 레이블 */}
             <Typography
-              style={{textShadow:"none"}}
               variant="body1"
               sx={{ alignSelf: 'flex-start', mb: 1, fontWeight: 'bold' }}
             >
               E-mail
             </Typography>
-            {/* E-mail 입력 필드 */}
             <TextField
               margin="normal"
               required
@@ -176,9 +190,8 @@ export default function SignUp() {
               type="email"
               id="email"
               autoComplete="email"
-              InputProps={{
-                disableUnderline: true,
-              }}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               sx={{ 
                 mb: 2,
                 '& .MuiInputBase-root': { 
@@ -192,21 +205,19 @@ export default function SignUp() {
               }}
             />
 
-            {/* 사용자 유형 체크박스 */}
             <FormGroup sx={{ mb: 2 }}>
               <FormControlLabel
-                control={<Checkbox defaultChecked />}
+                control={<Checkbox checked={role === 'member'} onChange={() => setRole('member')} />}
                 label="일반인"
                 value="member"
               />
               <FormControlLabel
-                control={<Checkbox />}
+                control={<Checkbox checked={role === 'expert'} onChange={() => setRole('expert')} />}
                 label="전문가"
                 value="expert"
               />
             </FormGroup>
 
-            {/* 회원가입 버튼 */}
             <Button
               type="submit"
               fullWidth
@@ -218,7 +229,6 @@ export default function SignUp() {
               Sign up
             </Button>
 
-            {/* Google 회원가입 버튼 */}
             <Button
               fullWidth
               variant="outlined"
@@ -232,7 +242,6 @@ export default function SignUp() {
               Sign up with Google
             </Button>
 
-            {/* Facebook 회원가입 버튼 */}
             <Button
               fullWidth
               variant="outlined"

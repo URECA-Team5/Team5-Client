@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -7,8 +7,6 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import GoogleIcon from '@mui/icons-material/Google';
-import FacebookIcon from '@mui/icons-material/Facebook';
 import './Login.css';  // 스타일을 위한 CSS 파일
 
 // Material UI 테마
@@ -44,15 +42,39 @@ const theme = createTheme({
 
 export default function Login() {
   const navigate = useNavigate();
+  const [id, setId] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      id: data.get('id'),
-      password: data.get('password'),
-    });
-    navigate('/');
+    
+    const userData = {
+      username: id,
+      password: password,
+    };
+
+    try {
+      const response = await fetch("http://localhost:8080/api/users/login", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userData),
+      });
+
+      if (response.ok) {
+        const result = await response.text();
+        console.log('Login successful:', result);
+        localStorage.setItem('token', result)
+        navigate('/');
+      } else {
+        console.error('Login failed');
+        // 실패 시 사용자에게 알림 추가 가능
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
 
   return (
@@ -85,7 +107,7 @@ export default function Login() {
             </Typography>
 
             {/* Sign in 글자 */}
-            <Typography style={{textShadow:"none"}}
+            <Typography style={{ textShadow: "none" }}
               component="h1"
               variant="h5"
               sx={{ marginBottom: 3, textAlign: 'center' }}
@@ -105,20 +127,22 @@ export default function Login() {
               margin="normal"
               required
               fullWidth
-              id="id"
-              name="id"
-              autoComplete="id"
+              id="username"
+              name="username"
+              autoComplete="username"
               autoFocus
+              value={id}
+              onChange={(e) => setId(e.target.value)} // 상태 업데이트
               InputProps={{
                 disableUnderline: true,
               }}
-              sx={{ 
+              sx={{
                 mb: 2,
-                '& .MuiInputBase-root': { 
+                '& .MuiInputBase-root': {
                   border: '1px solid #ccc',
                   borderRadius: '5px',
                   padding: '10px',
-                  '&:focus': { 
+                  '&:focus': {
                     borderColor: '#83C9E7',
                   },
                 },
@@ -141,16 +165,18 @@ export default function Login() {
               type="password"
               id="password"
               autoComplete="current-password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)} // 상태 업데이트
               InputProps={{
                 disableUnderline: true,
               }}
-              sx={{ 
+              sx={{
                 mb: 2,
-                '& .MuiInputBase-root': { 
+                '& .MuiInputBase-root': {
                   border: '1px solid #ccc',
                   borderRadius: '5px',
                   padding: '10px',
-                  '&:focus': { 
+                  '&:focus': {
                     borderColor: '#83C9E7',
                   },
                 },
@@ -173,9 +199,9 @@ export default function Login() {
             <Button
               fullWidth
               variant="outlined"
-              startIcon={<img 
+              startIcon={<img
                 src={require('../images/Google.jpg')}  // 이미지 파일 경로
-                alt="Google" 
+                alt="Google"
                 style={{ width: '24px', height: '24px', borderRadius: '50%' }}  // 이미지 크기 및 스타일
               />}
               sx={{ mt: 2, mb: 2 }}
@@ -187,9 +213,9 @@ export default function Login() {
             <Button
               fullWidth
               variant="outlined"
-              startIcon={<img 
+              startIcon={<img
                 src={require('../images/facebook.jpg')}  // 이미지 파일 경로
-                alt="facebook" 
+                alt="facebook"
                 style={{ width: '24px', height: '24px', borderRadius: '50%' }}  // 이미지 크기 및 스타일
               />}
               sx={{ mt: 2, mb: 2 }}
