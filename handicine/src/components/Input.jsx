@@ -1,36 +1,69 @@
 import React, { useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom'; // useNavigate로 페이지 이동 추가
-import { FormControl, InputGroup, Button, Form } from 'react-bootstrap'; // FormControl, InputGroup, Button, Form 추가
+import { useNavigate, useLocation } from 'react-router-dom';
+import { FormControl, Button, Form } from 'react-bootstrap';
 import './Input.css';
 
 const Input = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const navigate = useNavigate(); // 페이지 이동을 위한 hook
+  const [boardType, setBoardType] = useState("qna"); // 기본 값: QnA 게시판
+  const navigate = useNavigate();
   const location = useLocation();
 
+  // 제목 입력 핸들러
   const handleTitleChange = (e) => {
     setTitle(e.target.value);
   };
 
+  // 내용 입력 핸들러
   const handleContentChange = (e) => {
-    setContent(e.target.value);              
+    setContent(e.target.value);
   };
 
-  const handleBackToList = () => {
-    const from = location.state?.from || 'qna'; // Default to 'qna' if no state is passed
-    navigate(`/${from}`); // Navigate back to the appropriate page
+  // 게시판 선택 핸들러
+  const handleBoardTypeChange = (e) => {
+    setBoardType(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  // 폼 제출 핸들러
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // 여기서 폼 데이터를 서버에 제출하는 로직을 추가할 수 있습니다.
-    let ff = e.target
-    const formData = new FormData(e.target)
-    const data = Object.fromEntries(formData.entries())
-    console.log(data)
+    
+    const postData = {
+      title: title,
+      content: content,
+      authorUsername: "사용자", // 임시 사용자 이름
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
+
+    // 선택한 게시판에 따른 API 엔드포인트 설정
+    const apiEndpoint = boardType === "qna" ? "/api/qna" : "/api/board";
+
+    try {
+      const response = await fetch(apiEndpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(postData),
+      });
+
+      if (response.ok) {
+        const from = location.state?.from || boardType;
+        navigate(`/${from}`); // 게시글 작성 후 해당 게시판으로 이동
+      } else {
+        console.error("Error creating post");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  // 목록보기 버튼 핸들러
+  const handleBackToList = () => {
     const from = location.state?.from || 'qna';
-    navigate(`/${from}`); // 'qna' 페이지로 이동
+    navigate(`/${from}`);
   };
 
   return (
@@ -38,7 +71,7 @@ const Input = () => {
       <h1 className='page-title' style={{color:"#333"}}>게시물 등록</h1>
       <div className="container-box">
         <Form onSubmit={handleSubmit}>
-          <Form.Select>
+          <Form.Select value={boardType} onChange={handleBoardTypeChange}>
             <option value="qna">QnA 게시판</option>
             <option value="board">자유 게시판</option>
           </Form.Select>
@@ -60,7 +93,6 @@ const Input = () => {
               onChange={handleContentChange}
             />
           </Form.Group>
-          
 
           <div className="write-button-container">
             <Button variant="secondary" onClick={handleBackToList} style={{marginRight: "10px"}}>

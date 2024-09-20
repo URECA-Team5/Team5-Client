@@ -39,15 +39,11 @@ body {
   left: 50%;
   width: 120%;
   height: 120%;
-  background: radial-gradient(circle, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0) 100%);
   border-radius: 50%;
   transform: translate(-50%, -50%);
   z-index: -1;
 }
 
-.custom-brand:hover::before {
-  background: radial-gradient(circle, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0) 100%);
-}
 
 .nav-container {
   flex: 3;
