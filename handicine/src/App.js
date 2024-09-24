@@ -12,7 +12,7 @@ import Input from './components/Input';
 import SearchMedicine from './components/SearchMedicine';
 import QnAUpdate from './components/QnAUpdate';
 import Mypage from './components/Mypage';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import BoardUpdate from './components/BoardUpdate';
 
 function App() {
@@ -24,7 +24,7 @@ function App() {
     const loggedInStatus = localStorage.getItem('isLoggedIn') === 'true';
     setIsLoggedIn(loggedInStatus);
   }, []);
-  
+
   return (
     <Router>
       <div className="App">
