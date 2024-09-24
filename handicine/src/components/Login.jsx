@@ -66,12 +66,12 @@ export default function Login() {
       if (response.ok) {
         const result = await response.text();
         console.log('Login successful:', result);
-        localStorage.setItem('token', result); // Save token to localStorage
-        localStorage.setItem('isLoggedIn', true); // Save login state to localStorage
+        localStorage.setItem('token', result);  // 로그인 토큰 저장
+        localStorage.setItem('isLoggedIn', true);  // 로그인 상태 저장
+        setIsLoggedIn(true);  // 상태 업데이트
         navigate('/');
       } else {
         console.error('Login failed');
-        // Handle login failure
       }
       
     } catch (error) {
