@@ -246,13 +246,13 @@ export default function SignUp() {
               fullWidth
               variant="outlined"
               startIcon={<img 
-                src={require('../images/facebook.jpg')}  // 이미지 파일 경로
-                alt="facebook" 
+                src={require('../images/kakao.jpg')}  // 이미지 파일 경로
+                alt="kakao" 
                 style={{ width: '24px', height: '24px', borderRadius: '50%' }}  // 이미지 크기 및 스타일
               />}
               sx={{ mt: 2, mb: 2 }}
             >
-              Sign up with Facebook
+              Sign up with KakaoTalk
             </Button>
           </Box>
         </Container>

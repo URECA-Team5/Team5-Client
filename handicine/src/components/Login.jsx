@@ -66,12 +66,14 @@ export default function Login() {
       if (response.ok) {
         const result = await response.text();
         console.log('Login successful:', result);
-        localStorage.setItem('token', result)
+        localStorage.setItem('token', result); // Save token to localStorage
+        localStorage.setItem('isLoggedIn', true); // Save login state to localStorage
         navigate('/');
       } else {
         console.error('Login failed');
-        // 실패 시 사용자에게 알림 추가 가능
+        // Handle login failure
       }
+      
     } catch (error) {
       console.error('Error:', error);
     }
@@ -214,13 +216,13 @@ export default function Login() {
               fullWidth
               variant="outlined"
               startIcon={<img
-                src={require('../images/facebook.jpg')}  // 이미지 파일 경로
-                alt="facebook"
+                src={require('../images/kakao.jpg')}  // 이미지 파일 경로
+                alt="kakao"
                 style={{ width: '24px', height: '24px', borderRadius: '50%' }}  // 이미지 크기 및 스타일
               />}
               sx={{ mt: 2, mb: 2 }}
             >
-              Sign in with Facebook
+              Sign in with KakaoTalk
             </Button>
           </Box>
         </Container>

@@ -12,23 +12,29 @@ import Input from './components/Input';
 import SearchMedicine from './components/SearchMedicine';
 import QnAUpdate from './components/QnAUpdate';
 import Mypage from './components/Mypage';
+import { useState } from 'react';
+import BoardUpdate from './components/BoardUpdate';
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userId, setUserId] = useState(null);
+  
   return (
     <Router>
       <div className="App">
-        <Navibar />
+        <Navibar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} userId={userId} />
         <Routes>
           <Route path="/" element={<MainContent />} />
           <Route path="/qna" element={<QnAPage />} /> {/* QnA 페이지 라우트 추가 */}
-          <Route path="/qna/:id" element={<QnADetail />} />
-          <Route path="/board/:id" element={<BoardDetail />} />
+          <Route path="/qna/:qnaid" element={<QnADetail />} />
+          <Route path="/board/:postid" element={<BoardDetail />} />
           <Route path="/board" element={<Board />} />
-          <Route path="/login" element={<Login />} />
+          <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} setUserId={setUserId}/>} />
           <Route path="/Input" element={<Input />} />
           <Route path="/SignUp" element={<SignUp />} />
-          <Route path="/mypage" element={<Mypage/>} />
-          <Route path="/qna/update" element={<QnAUpdate/>} />
+          <Route path="/mypage/:id" element={<Mypage userId={userId}/>} />
+          <Route path="/qna/update/" element={<QnAUpdate/>} />
+          <Route path="/board/update/" element={<BoardUpdate/>} />
           <Route path="/searchMedicine/:medicineName" element={<SearchMedicine />} />
         </Routes>
       </div>

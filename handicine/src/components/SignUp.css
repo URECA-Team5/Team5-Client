@@ -23,7 +23,7 @@ body {
   padding: 0;
   overflow-x: hidden; /* 수평 스크롤 방지 */
   overflow-y: auto; /* 컨텐츠가 넘칠 경우 스크롤 가능하게 설정 */
-  margin-top: 40px;
+  margin-top: 90px;
 }
 
 

@@ -1,16 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Navbar, Nav, Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './Navibar.css';
 
 const Navibar = () => {
-  // 로그인 상태를 관리할 상태 변수
+  const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  // 로그아웃 처리 함수
+  useEffect(() => {
+    // Check localStorage to see if the user is logged in
+    const loggedInStatus = localStorage.getItem('isLoggedIn');
+    setIsLoggedIn(loggedInStatus === 'true');
+  }, []);
+
+  // Logout function
   const handleLogout = () => {
+    localStorage.removeItem('token'); // Remove token from localStorage
+    localStorage.setItem('isLoggedIn', false); // Update login status in localStorage
     setIsLoggedIn(false);
-    // 추가적인 로그아웃 처리 로직 (예: 세션 삭제)
+    navigate('/'); // Redirect to homepage after logout
   };
 
   return (
