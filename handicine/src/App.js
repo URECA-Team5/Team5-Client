@@ -18,6 +18,12 @@ import BoardUpdate from './components/BoardUpdate';
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userId, setUserId] = useState(null);
+
+  useEffect(() => {
+    // 로그인 상태를 localStorage에서 확인하여 초기화
+    const loggedInStatus = localStorage.getItem('isLoggedIn') === 'true';
+    setIsLoggedIn(loggedInStatus);
+  }, []);
   
   return (
     <Router>
