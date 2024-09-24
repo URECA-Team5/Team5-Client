@@ -40,7 +40,7 @@ const theme = createTheme({
   },
 });
 
-export default function Login() {
+export default function Login({setIsLoggedIn, setUserId}) {
   const navigate = useNavigate();
   const [id, setId] = useState("");
   const [username, setUsername] = useState("");
