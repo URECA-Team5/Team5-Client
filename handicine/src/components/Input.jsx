@@ -16,7 +16,10 @@ const Input = () => {
       alert("로그인 후 이용가능합니다.");
       navigate('/login'); // 로그인 페이지로 리다이렉트
     }
-  }, [navigate]);
+   // location.state로부터 'from' 값을 확인하고 게시판 타입을 설정
+   const from = location.state?.from || 'qna'; 
+   setBoardType(from === 'board' ? 'board' : 'qna'); // 'board'일 경우 자유 게시판으로 설정
+ }, [navigate, location.state]);
   // 제목 입력 핸들러
   const handleTitleChange = (e) => {
     setTitle(e.target.value);
@@ -67,7 +70,7 @@ const Input = () => {
   };
   return (
     <div className="qna-page">
-      <h1 className='page-title' style={{color:"#333"}}>게시물 등록</h1>
+      <h1 className='page-title' style={{color:"#333", marginLeft:"450px"}}>게시물 등록</h1>
       <div className="container-box">
         <Form onSubmit={handleSubmit}>
           <Form.Select value={boardType} onChange={handleBoardTypeChange}>
