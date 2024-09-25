@@ -33,7 +33,7 @@ function App() {
           <Route path="/" element={<MainContent />} />
           <Route path="/qna" element={<QnAPage />} /> {/* QnA 페이지 라우트 추가 */}
           <Route path="/qna/:qnaid" element={<QnADetail />} />
-          <Route path="/board/:postid" element={<BoardDetail />} />
+          <Route path="/board/:postId" element={<BoardDetail />} />
           <Route path="/board" element={<Board />} />
           <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} setUserId={setUserId}/>} />
           <Route path="/Input" element={<Input />} />

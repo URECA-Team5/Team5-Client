@@ -68,6 +68,7 @@ export default function Login({setIsLoggedIn, setUserId}) {
         console.log('Login successful:', result);
         localStorage.setItem('token', result);  // 로그인 토큰 저장
         localStorage.setItem('isLoggedIn', true);  // 로그인 상태 저장
+        localStorage.setItem('userId', id);
         setIsLoggedIn(true);  // 상태 업데이트
         navigate('/');
       } else {
