@@ -49,7 +49,7 @@ const QnADetail = () => {
         </div>
       </div>
 
-      <h2 className="comment-section-title">댓글</h2>
+      <h2 className="comment-section-title" style={{color:"black", marginRight:"1000px"}}>댓글</h2>
 
       {/* 댓글 입력 필드 */}
       <Form.Control
@@ -64,7 +64,7 @@ const QnADetail = () => {
 
       {/* 기존 댓글을 렌더링 */}
       {comments.map((comment, index) => (
-        <div key={index} className='container-box' style={{ marginTop: "30px", maxWidth:"1100px" }}>
+        <div key={index} className='container-box' style={{ marginTop: "30px", maxWidth:"1000px" }}>
           {comment}
         </div>
       ))}

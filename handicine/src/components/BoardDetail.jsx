@@ -87,7 +87,7 @@ const BoardDetail = () => {
           <h4>{post.content}</h4>
         </div>
       </div>
-      <h2 className="comment-section-title" style={{ color: "black", marginRight:"1000px"}}>댓글</h2>
+      <h2 className="comment-section-title" style={{color:"black", marginRight:"1000px"}}>댓글</h2>
       <Form.Control
         className='commentfield'
         as="textarea"
@@ -95,10 +95,10 @@ const BoardDetail = () => {
         placeholder="댓글을 입력하세요"
         value={newComment}
         onChange={handleCommentChange}
-        style={{ marginTop: "20px" }}
+        style={{ marginTop: "20px", width:"993px" }}
       />
       {comments.map((comment) => (
-        <div key={comment.id} className='container-box' style={{ marginTop: "30px", maxWidth:"1100px" }}>
+        <div key={comment.id} className='container-box' style={{ marginTop: "30px", maxWidth:"1000px" }}>
           <strong>{comment.authorUsername
           }</strong>: {comment.content} {/* Display author and content */}
         </div>
