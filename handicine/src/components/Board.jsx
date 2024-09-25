@@ -13,7 +13,7 @@ const Board = () => {
   useEffect(() => {
     const fetchQuestions = async () => {
       try {
-        const response = await fetch('/api/board');
+        const response = await fetch('http://localhost:8080/api/board');
         const data = await response.json();
         setQuestions(data);
       } catch (error) {

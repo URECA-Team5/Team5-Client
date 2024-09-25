@@ -13,7 +13,7 @@ const BoardDetail = () => {
   useEffect(() => {
     const fetchPostDetails = async () => {
       try {
-        const response = await fetch(`/api/board/${postId}`);
+        const response = await fetch(`http://localhost:8080/api/board/${postId}`);
         if (!response.ok) {
           throw new Error('Failed to fetch post');
         }
@@ -26,7 +26,7 @@ const BoardDetail = () => {
     };
     const fetchComments = async () => {
       try {
-        const response = await fetch(`/api/board/${postId}/comments`, {
+        const response = await fetch(`http://localhost:8080/api/board/${postId}/comments`, {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('token')}` // Include token if required
           }
