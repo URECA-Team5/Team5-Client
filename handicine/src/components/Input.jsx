@@ -1,45 +1,47 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { FormControl, Button, Form } from 'react-bootstrap';
 import './Input.css';
-
 const Input = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [boardType, setBoardType] = useState("qna"); // 기본 값: QnA 게시판
   const navigate = useNavigate();
   const location = useLocation();
-
+  const userId = localStorage.getItem('userId');
+  useEffect(() => {
+    const userToken = localStorage.getItem('token');
+    console.log(userId);
+    if (!userToken) {
+      alert("로그인 후 이용가능합니다.");
+      navigate('/login'); // 로그인 페이지로 리다이렉트
+    }
+  }, [navigate]);
   // 제목 입력 핸들러
   const handleTitleChange = (e) => {
     setTitle(e.target.value);
   };
-
   // 내용 입력 핸들러
   const handleContentChange = (e) => {
     setContent(e.target.value);
   };
-
   // 게시판 선택 핸들러
   const handleBoardTypeChange = (e) => {
     setBoardType(e.target.value);
   };
-
   // 폼 제출 핸들러
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
     const postData = {
       title: title,
       content: content,
-      authorUsername: "사용자", // 임시 사용자 이름
+      authorUsername: userId, // 임시 사용자 이름
       createdAt: new Date(),
       updatedAt: new Date(),
     };
-
     // 선택한 게시판에 따른 API 엔드포인트 설정
-    const apiEndpoint = boardType === "qna" ? "/api/qna" : "/api/board";
-
+    const apiEndpoint = boardType === "qna" ? "http://localhost:8080/api/qna" : "http://localhost:8080/api/board";
+    console.log(apiEndpoint);
     try {
       const response = await fetch(apiEndpoint, {
         method: 'POST',
@@ -48,7 +50,6 @@ const Input = () => {
         },
         body: JSON.stringify(postData),
       });
-
       if (response.ok) {
         const from = location.state?.from || boardType;
         navigate(`/${from}`); // 게시글 작성 후 해당 게시판으로 이동
@@ -59,13 +60,11 @@ const Input = () => {
       console.error("Error:", error);
     }
   };
-
   // 목록보기 버튼 핸들러
   const handleBackToList = () => {
     const from = location.state?.from || 'qna';
     navigate(`/${from}`);
   };
-
   return (
     <div className="qna-page">
       <h1 className='page-title' style={{color:"#333"}}>게시물 등록</h1>
@@ -93,7 +92,6 @@ const Input = () => {
               onChange={handleContentChange}
             />
           </Form.Group>
-
           <div className="write-button-container">
             <Button variant="secondary" onClick={handleBackToList} style={{marginRight: "10px"}}>
               목록보기
@@ -107,5 +105,4 @@ const Input = () => {
     </div>
   );
 };
-
 export default Input;

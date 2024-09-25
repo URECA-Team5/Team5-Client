@@ -39,7 +39,7 @@ const QnADetail = () => {
 
   return (
     <div className="qna-page">
-      <h1 className='page-title' style={{color:"black"}}>게시물 내용</h1>
+      <h1 className='page-title' style={{ color: "black", marginLeft:"300px" }}>게시물 내용</h1>
       <div className="detail-container">
         <div className="title-box">
           <h1>{title}</h1>
@@ -64,7 +64,7 @@ const QnADetail = () => {
 
       {/* 기존 댓글을 렌더링 */}
       {comments.map((comment, index) => (
-        <div key={index} className='container-box' style={{ marginTop: "30px" }}>
+        <div key={index} className='container-box' style={{ marginTop: "30px", maxWidth:"1100px" }}>
           {comment}
         </div>
       ))}
