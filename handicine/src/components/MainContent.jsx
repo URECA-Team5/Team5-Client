@@ -1,31 +1,36 @@
 import React, { useState } from 'react';
 import { Container, Form, Row, Col, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import './MainContent.css';
-
 const MainContent = () => {
   const [medicineName, setMedicineName] = useState("");
   const navigate = useNavigate();
-
   const handleSearchChange = (e) => {
     setMedicineName(e.target.value);
   };
-
-  const handleSearchSubmit = (e) => {
+  const handleSearchSubmit = async (e) => {
     e.preventDefault();
-    console.log(`Navigating to: /searchMedicine/${medicineName}`);
-    if (medicineName.trim() !== "") {
+    let url = "http://localhost:8080/api/medicines/search"
+    try {
+      const response = await axios.get(url, {
+        params: { itemName: medicineName }
+      });
+      console.log(response);
+      console.log(response.data);
+      navigate(`/searchMedicine/${medicineName}`, { state: { medicines: response.data } });
+    } catch (error) {
+      // alert(error.response.data);
+      console.error('불러오기 실패:', error);
       navigate(`/searchMedicine/${medicineName}`);
     }
   };
-
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
       e.preventDefault();
       handleSearchSubmit(e);
     }
   };
-
   return (
     <div className="main-content">
       <div className="background-overlay" />
@@ -57,5 +62,4 @@ const MainContent = () => {
     </div>
   );
 };
-
 export default MainContent;

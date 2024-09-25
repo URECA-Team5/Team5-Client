@@ -5,13 +5,12 @@ import './searchMedicine.css';
 import TylenolImage from '../images/Tylenol.jpg';
 import TylenolImage2 from '../images/Tylenol2.jpg';
 import TylenolImage3 from '../images/Tylenol3.jpg';
-
-
+import axios from 'axios'; // axios 추가
 const medicineData = [
-  { 
-    name: '타이레놀', 
-    image: TylenolImage, 
-    description: '통증 완화 및 해열에 사용되는 약품.', 
+  {
+    name: '타이레놀',
+    image: TylenolImage,
+    description: '통증 완화 및 해열에 사용되는 약품.',
     manufacturer: '제조사 A',
     usage: '사용법 설명',
     warning: '주의사항 설명',
@@ -19,9 +18,9 @@ const medicineData = [
     sideEffects: '부작용 설명',
     storage: '보관법 설명'
   },
-  { 
-    name: '타이레놀2', 
-    image: TylenolImage2, 
+  {
+    name: '타이레놀2',
+    image: TylenolImage2,
     description: '염증 완화 및 통증 완화에 사용되는 약품.',
     manufacturer: '제조사 B',
     usage: '사용법 설명2',
@@ -30,9 +29,9 @@ const medicineData = [
     sideEffects: '부작용 설명2',
     storage: '보관법 설명2'
   },
-  { 
-    name: '타이레놀3', 
-    image: TylenolImage3, 
+  {
+    name: '타이레놀3',
+    image: TylenolImage3,
     description: '알러지 증상 완화에 사용되는 약품.',
     manufacturer: '제조사 C',
     usage: '사용법 설명3',
@@ -41,9 +40,9 @@ const medicineData = [
     sideEffects: '부작용 설명3',
     storage: '보관법 설명3'
   },
-  { 
-    name: '타이레놀4', 
-    image: TylenolImage, 
+  {
+    name: '타이레놀4',
+    image: TylenolImage,
     description: '기타 설명.',
     manufacturer: '제조사 D',
     usage: '사용법 설명4',
@@ -52,9 +51,9 @@ const medicineData = [
     sideEffects: '부작용 설명4',
     storage: '보관법 설명4'
   },
-  { 
-    name: '타이레놀5', 
-    image: TylenolImage3, 
+  {
+    name: '타이레놀5',
+    image: TylenolImage3,
     description: '알러지 증상 완화에 사용되는 약품.',
     manufacturer: '제조사 C',
     usage: '사용법 설명3',
@@ -63,9 +62,9 @@ const medicineData = [
     sideEffects: '부작용 설명3',
     storage: '보관법 설명3'
   },
-  { 
-    name: '타이레놀6', 
-    image: TylenolImage3, 
+  {
+    name: '타이레놀6',
+    image: TylenolImage3,
     description: '알러지 증상 완화에 사용되는 약품.',
     manufacturer: '제조사 C',
     usage: '사용법 설명3',
@@ -74,9 +73,9 @@ const medicineData = [
     sideEffects: '부작용 설명3',
     storage: '보관법 설명3'
   },
-  { 
-    name: '타이레놀7', 
-    image: TylenolImage3, 
+  {
+    name: '타이레놀7',
+    image: TylenolImage3,
     description: '알러지 증상 완화에 사용되는 약품.',
     manufacturer: '제조사 C',
     usage: '사용법 설명3',
@@ -86,7 +85,6 @@ const medicineData = [
     storage: '보관법 설명3'
   }
 ];
-
 const SearchMedicine = () => {
   const { medicineName } = useParams();
   const [searchTerm, setSearchTerm] = useState(medicineName || '');
@@ -95,66 +93,90 @@ const SearchMedicine = () => {
   const [showModal, setShowModal] = useState(false);
   const [activeSection, setActiveSection] = useState('description');
   const navigate = useNavigate();
-
   useEffect(() => {
     // Update the search term and filteredMedicines when medicineName URL param changes
     if (medicineName) {
-      setSearchTerm(medicineName);
-      const results = medicineData.filter(medicine =>
-        medicine.name.toLowerCase().includes(medicineName.toLowerCase())
-      );
-      setFilteredMedicines(results);
+      fetchMedicines(medicineName);
+      // 기존 코드
+      // setSearchTerm(medicineName);
+      // const results = medicineData.filter(medicine =>
+      //   medicine.name.toLowerCase().includes(medicineName.toLowerCase())
+      // );
+      // setFilteredMedicines(results);
     }
   }, [medicineName]);
-
+  const fetchMedicines = async (itemName) => {
+    const url = "http://localhost:8080/api/medicines/search";
+    try {
+      const response = await axios.get(url, {
+        params: { itemName }
+      });
+      console.log(response.data); // 전체 응답 데이터 출력
+      if (response.data && response.data.length > 0) {
+        // API 응답 데이터로 filteredMedicines 설정
+        const medicines = response.data.map(item => ({
+          name: item.itemName,
+          image: item.itemImage || TylenolImage, // 기본 이미지를 설정하거나 API 응답에서 이미지 필드를 가져옵니다.
+          description: item.efcyQesitm || '설명 없음',
+          manufacturer: item.entpName || '제조사 정보 없음',
+          usage: item.useMethodQesitm || '사용법 정보 없음',
+          warning: item.atpnQesitm || '주의사항 정보 없음',
+          interaction: item.intrcQesitm || '상호작용 정보 없음',
+          sideEffects: item.sideEffects || '부작용 정보 없음',
+          storage: item.depositMethodQesitm || '보관법 정보 없음'
+        }));
+        setFilteredMedicines(medicines); // API로부터 받은 데이터를 설정
+        navigate(`/searchMedicine/${itemName}`, { state: { medicines } });
+      } else {
+        console.log("약품이 없습니다.");
+        setFilteredMedicines([]); // 빈 배열로 설정
+      }
+    } catch (error) {
+      console.error('불러오기 실패:', error);
+    }
+  };
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
   };
-
   const handleSearchSubmit = (e) => {
     e.preventDefault();
     if (searchTerm.trim() !== "") {
-      const results = medicineData.filter(medicine =>
-        medicine.name.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-      setFilteredMedicines(results);
-      navigate(`/searchMedicine/${searchTerm}`);
+      fetchMedicines(searchTerm); // 검색어로 API 호출
+      // 기존 코드
+      // const results = medicineData.filter(medicine =>
+      //   medicine.name.toLowerCase().includes(searchTerm.toLowerCase())
+      // );
+      // setFilteredMedicines(results);
+      // navigate(`/searchMedicine/${searchTerm}`);
     }
   };
-
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
       e.preventDefault();
       handleSearchSubmit(e);
     }
   };
-
   const handleCardClick = (medicine) => {
     setSelectedMedicine(medicine);
     setShowModal(true);
     setActiveSection('description');
   };
-
   const handleCloseModal = () => {
     setShowModal(false);
     setSelectedMedicine(null);
   };
-
   return (
     <div className="search-medicine-page">
       <div className="search-bar-container">
         <Form onSubmit={handleSearchSubmit}>
-          <Form.Group className="d-flex">
+          <Form.Group>
             <Form.Control
               type="text"
+              placeholder="약품 이름을 입력하세요"
               value={searchTerm}
               onChange={handleSearchChange}
               onKeyDown={handleKeyDown}
-              placeholder="Search here..."
             />
-            <Button variant="outline-secondary" onClick={handleSearchSubmit} style={{ backgroundColor:'#00A3E0'}}>
-              <i className="fas fa-search"></i>
-            </Button>
           </Form.Group>
         </Form>
       </div>
@@ -174,10 +196,9 @@ const SearchMedicine = () => {
           </Row>
         )}
         {filteredMedicines.length === 0 && searchTerm.trim() !== '' && (
-          <p style={{ color: "black", marginTop:"500px", fontSize:"2rem" }}>해당 약품은 존재하지 않습니다.</p>
+          <p style={{ color: "#333", marginTop:"500px", fontSize:"2rem" }}>해당 약품은 존재하지 않습니다.</p>
         )}
       </Container>
-
       {selectedMedicine && (
         <Modal show={showModal} onHide={handleCloseModal} size="lg">
           <Modal.Header closeButton>
@@ -188,56 +209,27 @@ const SearchMedicine = () => {
               <Row>
                 <Col md={3}>
                   <ListGroup>
-                  <ListGroup.Item
-                        action
-                        onClick={() => setActiveSection('description')}
-                        className={activeSection === 'description' ? 'active' : ''}
-                      >
-                        제품 설명
-                      </ListGroup.Item>
-                      <ListGroup.Item
-                        action
-                        onClick={() => setActiveSection('manufacturer')}
-                        className={activeSection === 'manufacturer' ? 'active' : ''}
-                      >
-                        제조사
-                      </ListGroup.Item>
-                      <ListGroup.Item
-                        action
-                        onClick={() => setActiveSection('usage')}
-                        className={activeSection === 'usage' ? 'active' : ''}
-                      >
-                        사용법
-                      </ListGroup.Item>
-                      <ListGroup.Item
-                        action
-                        onClick={() => setActiveSection('warning')}
-                        className={activeSection === 'warning' ? 'active' : ''}
-                      >
-                        주의사항
-                      </ListGroup.Item>
-                      <ListGroup.Item
-                        action
-                        onClick={() => setActiveSection('interaction')}
-                        className={activeSection === 'interaction' ? 'active' : ''}
-                      >
-                        상호작용
-                      </ListGroup.Item>
-                      <ListGroup.Item
-                        action
-                        onClick={() => setActiveSection('sideEffects')}
-                        className={activeSection === 'sideEffects' ? 'active' : ''}
-                      >
-                        부작용
-                      </ListGroup.Item>
-                      <ListGroup.Item
-                        action
-                        onClick={() => setActiveSection('storage')}
-                        className={activeSection === 'storage' ? 'active' : ''}
-                      >
-                        보관법
-                      </ListGroup.Item>
-
+                    <ListGroup.Item action onClick={() => setActiveSection('description')}>
+                      제품 설명
+                    </ListGroup.Item>
+                    <ListGroup.Item action onClick={() => setActiveSection('manufacturer')}>
+                      제조사
+                    </ListGroup.Item>
+                    <ListGroup.Item action onClick={() => setActiveSection('usage')}>
+                      사용법
+                    </ListGroup.Item>
+                    <ListGroup.Item action onClick={() => setActiveSection('warning')}>
+                      주의사항
+                    </ListGroup.Item>
+                    <ListGroup.Item action onClick={() => setActiveSection('interaction')}>
+                      상호작용
+                    </ListGroup.Item>
+                    <ListGroup.Item action onClick={() => setActiveSection('sideEffects')}>
+                      부작용
+                    </ListGroup.Item>
+                    <ListGroup.Item action onClick={() => setActiveSection('storage')}>
+                      보관법
+                    </ListGroup.Item>
                   </ListGroup>
                 </Col>
                 <Col md={9}>
@@ -262,5 +254,4 @@ const SearchMedicine = () => {
     </div>
   );
 };
-
 export default SearchMedicine;

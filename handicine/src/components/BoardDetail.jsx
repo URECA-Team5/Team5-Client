@@ -56,7 +56,7 @@ const BoardDetail = () => {
     };
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.post(`http://localhost:3000/api/board/${postId}/comments`, commentData, {
+      const response = await axios.post(`http://localhost:8080/api/board/${postId}/comments`, commentData, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
