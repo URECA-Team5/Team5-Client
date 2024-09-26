@@ -68,51 +68,60 @@
 
 .card-container {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   flex-wrap: wrap;
   margin-top: 200px;
   width: 100%;
   max-width: 1200px;
   margin-left: 60px;
-  max-height: 600px; /* 카드 컨테이너의 최대 높이를 제한하여 스크롤 발생 */
+  max-height: 600px; 
   gap: 20px;
   padding-top: 40px;
-  overflow-y: auto; /* 스크롤이 발생하도록 설정 */
-  background-color: #f0f0f0; /* Light background color */
-  border-radius: 12px; /* Rounded corners */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow-y: auto; 
+  background: linear-gradient(135deg, #e0f7fa 0%, #ffffff 100%); /* 예쁜 그라데이션 배경 */
+  border-radius: 16px; /* Smoother rounded corners */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15); /* Stronger shadow */
 }
 
+
 .card-col {
-  flex: 0 0 30%; /* 카드가 한 줄에 3개 나오도록 설정 */
+  flex: 0 0 30%;
   margin-bottom: 20px;
+  margin-left: 20px;
 }
 
 .card {
   height: 100%;
   border: 1px solid #ddd;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   background-color: white;
   display: flex;
   flex-direction: column;
 }
 
 .card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-10px); /* Higher hover translation */
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2); /* Larger shadow on hover */
+  border: 2px solid #1e90ff; /* Slight blue border on hover */
 }
 
 .card-img {
   height: 250px;
   object-fit: cover;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px; /* Rounds the top edges */
 }
 
 .card-title {
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   font-weight: bold;
-  color: #333;
-  word-wrap: break-word; /* 긴 단어가 있을 경우 줄바꿈 허용 */
-  white-space: normal; /* 텍스트가 잘리지 않고 줄바꿈 되도록 */
+  color: #2c3e50; /* Darker and more elegant */
+  padding: 0.5rem 0; /* Adds space between the title and content */
+  text-align: center;
+  word-wrap: break-word;
+  white-space: normal;
 }
 
 .modal-body {
