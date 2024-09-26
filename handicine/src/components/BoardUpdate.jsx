@@ -1,12 +1,28 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // useNavigate로 페이지 이동 추가
-import { FormControl, InputGroup, Button, Form } from 'react-bootstrap'; // FormControl, InputGroup, Button, Form 추가
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom'; 
+import { FormControl, InputGroup, Button, Form } from 'react-bootstrap'; 
+import axios from 'axios'; 
 import './Update.css';
 
 const BoardUpdate = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const navigate = useNavigate(); // 페이지 이동을 위한 hook
+  const navigate = useNavigate(); 
+  const { postId } = useParams(); 
+
+  useEffect(() => {
+    const fetchPost = async () => {
+      try {
+        const response = await axios.get(`http://localhost:8080/api/board/${postId}`);
+        const post = response.data;
+        setTitle(post.title);
+        setContent(post.content);
+      } catch (error) {
+        console.error("Error fetching post data:", error);
+      }
+    };
+    fetchPost();
+  }, [postId]);
 
   const handleTitleChange = (e) => {
     setTitle(e.target.value);
@@ -20,25 +36,38 @@ const BoardUpdate = () => {
     navigate('/board'); 
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // 여기서 폼 데이터를 서버에 제출하는 로직을 추가할 수 있습니다.
-    let ff = e.target
-    const formData = new FormData(e.target)
-    const data = Object.fromEntries(formData.entries())
-    console.log(data)
-    navigate('/board'); // 'qna' 페이지로 이동
+    try {
+      await axios.patch(`http://localhost:8080/api/board/${postId}`, { title, content });
+      navigate('/board'); 
+    } catch (error) {
+      console.error("Error updating post:", error);
+    }
   };
+
+  const handleDelete = async () => {
+    if (window.confirm("정말로 이 게시글을 삭제하시겠습니까?")) {
+      try {
+        const token = localStorage.getItem('token'); // 로컬 스토리지에서 토큰 가져오기
+        await axios.delete(`http://localhost:8080/api/board/${postId}`, {
+          headers: {
+            Authorization: `Bearer ${token}` // 토큰을 헤더에 추가
+          }
+        });
+        navigate('/board'); // 삭제 후 게시글 목록으로 이동
+      } catch (error) {
+        console.error("Error deleting post:", error);
+      }
+    }
+  };
+  
 
   return (
     <div className="qna-page">
       <h1 className='page-title' style={{color:"#333"}}>게시물 수정</h1>
       <div className="container-box">
         <Form onSubmit={handleSubmit}>
-          <Form.Select>
-            <option value="qna">QnA 게시판</option>
-            <option value="board">자유 게시판</option>
-          </Form.Select>
           <Form.Group controlId="formTitle">
             <FormControl
               className='box'
@@ -60,13 +89,15 @@ const BoardUpdate = () => {
             />
           </Form.Group>
           
-
           <div className="write-button-container">
             <Button variant="secondary" onClick={handleBackToList} style={{marginRight: "10px"}}>
               목록보기
             </Button>
-            <Button variant="success" type="submit">
-              수정
+            <Button variant="success" type="submit" style={{marginRight: "10px"}}>
+              수정하기
+            </Button>
+            <Button variant="danger" onClick={handleDelete}>
+              삭제하기
             </Button>
           </div>
         </Form>

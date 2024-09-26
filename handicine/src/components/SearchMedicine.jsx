@@ -6,6 +6,8 @@ import TylenolImage from '../images/Tylenol.jpg';
 import TylenolImage2 from '../images/Tylenol2.jpg';
 import TylenolImage3 from '../images/Tylenol3.jpg';
 import axios from 'axios'; // axios 추가
+import { FaPills } from 'react-icons/fa';
+
 const medicineData = [
   {
     name: '타이레놀',
@@ -186,7 +188,18 @@ const SearchMedicine = () => {
             {filteredMedicines.map((medicine, index) => (
               <Col md={4} key={index} className="card-col">
                 <Card className="card" onClick={() => handleCardClick(medicine)}>
-                  <Card.Img variant="top" src={medicine.image} className="card-img" alt={medicine.name} />
+                {medicine.image !== "없음" ? (
+                    <Card.Img 
+                      variant="top" 
+                      src={medicine.image} // 이미지가 있으면 보여줌
+                      className="card-img" 
+                      alt={medicine.name} 
+                    />
+                  ) : (
+                    <div style={{ height: '200px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                      <FaPills size={100} style={{ color: 'gray' }} />
+                    </div>
+                  )}
                   <Card.Body>
                     <Card.Title className="card-title">{medicine.name}</Card.Title>
                   </Card.Body>

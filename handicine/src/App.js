@@ -39,8 +39,8 @@ function App() {
           <Route path="/Input" element={<Input />} />
           <Route path="/SignUp" element={<SignUp />} />
           <Route path="/mypage" element={<Mypage/>} />
-          <Route path="/qna/update/" element={<QnAUpdate/>} />
-          <Route path="/board/update/" element={<BoardUpdate/>} />
+          <Route path="/qna/update/:qnaId" element={<QnAUpdate/>} />
+          <Route path="/board/update/:postId" element={<BoardUpdate/>} />
           <Route path="/searchMedicine/:medicineName" element={<SearchMedicine />} />
         </Routes>
       </div>
