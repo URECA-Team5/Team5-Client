@@ -217,9 +217,6 @@ export default function Mypage() {
               name="username"
               autoComplete="username"
               autoFocus
-              InputProps={{
-                disableUnderline: true
-              }}
               value={username}  // 서버에서 받아온 username
               onChange={(e) => setUsername(e.target.value)}  // 사용자 입력 변경 처리
               sx={{ mb: 2 }}
@@ -237,9 +234,6 @@ export default function Mypage() {
               type="password"
               id="password"
               autoComplete="current-password"
-              InputProps={{
-                disableUnderline: true,
-              }}
             />
 
             <Typography variant="body1" sx={{ alignSelf: 'flex-start', mb: 1 }}>
@@ -254,9 +248,6 @@ export default function Mypage() {
               type="Email"
               id="Email"
               autoComplete="current-email"
-              InputProps={{
-                disableUnderline: true,
-              }}
               value={email}  // 서버에서 받아온 이메일
               onChange={(e) => setEmail(e.target.value)}  // 사용자 입력 변경 처리
             />
