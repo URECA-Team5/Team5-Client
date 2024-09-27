@@ -123,9 +123,6 @@ export default function SignUp() {
               autoFocus
               value={id}
               onChange={(e) => setId(e.target.value)}
-              InputProps={{ // InputProps를 사용하여 disableUnderline 적용
-                disableUnderline: true,
-              }}
               sx={{
                 mb: 2,
                 '& .MuiInputBase-root': {

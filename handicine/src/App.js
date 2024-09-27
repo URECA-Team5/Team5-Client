@@ -38,7 +38,7 @@ function App() {
           <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} setUserId={setUserId}/>} />
           <Route path="/Input" element={<Input />} />
           <Route path="/SignUp" element={<SignUp />} />
-          <Route path="/mypage" element={<Mypage/>} />
+          <Route path="/mypage" element={<Mypage setIsLoggedIn={setIsLoggedIn}/>} />
           <Route path="/qna/update/:qnaId" element={<QnAUpdate/>} />
           <Route path="/board/update/:postId" element={<BoardUpdate/>} />
           <Route path="/searchMedicine/:medicineName" element={<SearchMedicine />} />

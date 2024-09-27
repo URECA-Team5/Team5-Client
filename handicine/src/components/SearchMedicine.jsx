@@ -167,6 +167,9 @@ const SearchMedicine = () => {
     setShowModal(false);
     setSelectedMedicine(null);
   };
+  const getItemStyle = (section) => {
+    return section === activeSection ? { backgroundColor: '#83C9E7', color: '#fff' } : {};
+  };
   return (
     <div className="search-medicine-page">
       <div className="search-bar-container">
@@ -222,25 +225,53 @@ const SearchMedicine = () => {
               <Row>
                 <Col md={3}>
                   <ListGroup>
-                    <ListGroup.Item action onClick={() => setActiveSection('description')}>
+                    <ListGroup.Item
+                      action
+                      style={getItemStyle('description')}
+                      onClick={() => setActiveSection('description')}
+                    >
                       제품 설명
                     </ListGroup.Item>
-                    <ListGroup.Item action onClick={() => setActiveSection('manufacturer')}>
+                    <ListGroup.Item
+                      action
+                      style={getItemStyle('manufacturer')}
+                      onClick={() => setActiveSection('manufacturer')}
+                    >
                       제조사
                     </ListGroup.Item>
-                    <ListGroup.Item action onClick={() => setActiveSection('usage')}>
+                    <ListGroup.Item
+                      action
+                      style={getItemStyle('usage')}
+                      onClick={() => setActiveSection('usage')}
+                    >
                       사용법
                     </ListGroup.Item>
-                    <ListGroup.Item action onClick={() => setActiveSection('warning')}>
+                    <ListGroup.Item
+                      action
+                      style={getItemStyle('warning')}
+                      onClick={() => setActiveSection('warning')}
+                    >
                       주의사항
                     </ListGroup.Item>
-                    <ListGroup.Item action onClick={() => setActiveSection('interaction')}>
+                    <ListGroup.Item
+                      action
+                      style={getItemStyle('interaction')}
+                      onClick={() => setActiveSection('interaction')}
+                    >
                       상호작용
                     </ListGroup.Item>
-                    <ListGroup.Item action onClick={() => setActiveSection('sideEffects')}>
+                    <ListGroup.Item
+                      action
+                      style={getItemStyle('sideEffects')}
+                      onClick={() => setActiveSection('sideEffects')}
+                    >
                       부작용
                     </ListGroup.Item>
-                    <ListGroup.Item action onClick={() => setActiveSection('storage')}>
+                    <ListGroup.Item
+                      action
+                      style={getItemStyle('storage')}
+                      onClick={() => setActiveSection('storage')}
+                    >
                       보관법
                     </ListGroup.Item>
                   </ListGroup>
@@ -267,4 +298,5 @@ const SearchMedicine = () => {
     </div>
   );
 };
+
 export default SearchMedicine;
