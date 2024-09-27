@@ -58,7 +58,7 @@ function parseJwt(token) {
   }
 }
 
-export default function Mypage() {
+export default function Mypage({setIsLoggedIn}) {
   const [selectedRole, setSelectedRole] = useState('MEMBER');
   const [username, setUsername] = useState('');  // ID가 아닌 username으로 변경
   const [email, setEmail] = useState('');
@@ -159,6 +159,7 @@ export default function Mypage() {
         if (response.ok) {
           alert('계정이 성공적으로 삭제되었습니다.');
           localStorage.removeItem('token');
+          setIsLoggedIn(false);
           navigate('/');
         } else {
           alert('계정 삭제에 실패했습니다.');
