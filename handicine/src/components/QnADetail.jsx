@@ -57,7 +57,7 @@ const QnADetail = () => {
     navigate('/qna');
   };
   const handleUpdateClick = () => {
-    navigate('/qna/update');
+    navigate(`/qna/update/${qnaId}`);
   };
   const handleAddComment = async () => {
     function parseJwt(token) {
@@ -114,9 +114,11 @@ const QnADetail = () => {
     <div className="qna-page">
       <h1 className='page-title' style={{ color: "black", marginLeft:"300px" }}>게시물 내용</h1>
       <div className="detail-container">
+      <h2>제목</h2>
         <div className="title-box">
-          <h1>{post.title}</h1>
+          <h1 style={{textAlign:"left"}}>{post.title}</h1>
         </div>
+        <h2>내용</h2>
         <div className="content-box">
           <h4>{post.content}</h4>
         </div>
