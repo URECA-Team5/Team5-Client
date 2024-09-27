@@ -138,8 +138,34 @@ export default function Mypage() {
   };
 
   const handleDeleteAccount = () => {
-    // 회원 탈퇴 버튼 클릭 시 동작하는 함수
-    alert('회원탈퇴 기능이 호출되었습니다. 실제로는 서버와 통신하여 사용자를 삭제해야 합니다.');
+    const token = localStorage.getItem('token');
+    const decodedToken = parseJwt(token);
+    const userId = decodedToken?.user_id;
+  
+    if (!userId) {
+      console.error('user_id를 찾을 수 없습니다.');
+      return;
+    }
+  
+    // Confirm with the user before proceeding with deletion
+    if (window.confirm('정말로 계정을 삭제하시겠습니까? 이 작업은 취소할 수 없습니다.')) {
+      fetch(`http://localhost:8080/api/users/${userId}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      })
+      .then(response => {
+        if (response.ok) {
+          alert('계정이 성공적으로 삭제되었습니다.');
+          localStorage.removeItem('token');
+          navigate('/');
+        } else {
+          alert('계정 삭제에 실패했습니다.');
+        }
+      })
+      .catch(error => console.error('계정 삭제 중 오류 발생:', error));
+    }
   };
 
   const handleRoleChange = (event) => {
