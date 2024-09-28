@@ -10,6 +10,7 @@ const BoardDetail = () => {
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
   const [editCommentId, setEditCommentId] = useState(null);
+  const [editedCommentContent, setEditedCommentContent] = useState(""); // 새로운 상태 추가
   const userId = localStorage.getItem('userId');
   const token = localStorage.getItem('token');
   const navigate = useNavigate();
@@ -76,10 +77,6 @@ const BoardDetail = () => {
     }
   };
 
-  const handleCommentChange = (e) => {
-    setNewComment(e.target.value);
-  };
-
   const handleUpdateComment = async (commentId, updatedContent) => {
     try {
       const response = await axios.patch(`http://localhost:8080/api/board/${postId}/comments/${commentId}`, {
@@ -92,8 +89,8 @@ const BoardDetail = () => {
       setComments(comments.map(comment =>
         comment.id === commentId ? response.data : comment
       ));
-      setEditCommentId(null);
-      setNewComment(""); // Clear newComment after editing
+      setEditCommentId(null); // 수정 모드 종료
+      setEditedCommentContent(""); // 수정 내용 초기화
     } catch (error) {
       console.error('Error updating comment:', error);
     }
@@ -114,7 +111,11 @@ const BoardDetail = () => {
 
   const handleEditClick = (comment) => {
     setEditCommentId(comment.id);
-    setNewComment(comment.content);
+    setEditedCommentContent(comment.content); // 수정할 댓글의 내용으로 상태 업데이트
+  };
+
+  const handleCommentChange = (e) => {
+    setNewComment(e.target.value);
   };
 
   if (!post) {
@@ -145,21 +146,26 @@ const BoardDetail = () => {
         style={{ marginTop: "20px", width: "993px" }}
       />
       {comments.map((comment) => (
-        <div key={comment.id} className='container-box' style={{ marginTop: "30px", maxWidth: "1000px" }}>
-          <strong>{comment.authorUsername}</strong>: {editCommentId === comment.id ? (
-            <Form.Control
-              type="text"
-              defaultValue={comment.content}
-              onBlur={(e) => handleUpdateComment(comment.id, e.target.value)}
-              onKeyPress={(e) => {
-                if (e.key === 'Enter') {
-                  handleUpdateComment(comment.id, e.target.value); // Handle Enter key
-                }
-              }}
-            />
-          ) : (
-            <span>{comment.content}</span>
-          )}
+        <div key={comment.id} className='container-box' style={{ marginTop: "30px", maxWidth: "1000px", display: "flex", justifyContent: "space-between" }}>
+          <div style={{display:"flex", alignItems:"center"}}>
+            <strong>{comment.authorUsername}</strong>
+            <span style={{ marginLeft: "5px", marginRight: "5px" }}>:</span>
+            {editCommentId === comment.id ? (
+              <Form.Control
+                type="text"
+                value={editedCommentContent}
+                onChange={(e) => setEditedCommentContent(e.target.value)} // 수정 중인 내용 업데이트
+                onBlur={() => handleUpdateComment(comment.id, editedCommentContent)} // 포커스가 해제되면 업데이트
+                onKeyPress={(e) => {
+                  if (e.key === 'Enter') {
+                    handleUpdateComment(comment.id, editedCommentContent); // 엔터키로 업데이트
+                  }
+                }}
+              />
+            ) : (
+              <span>{comment.content}</span>
+            )}
+          </div>
           <div>
             {comment.authorUsername === userId && (
               <>
