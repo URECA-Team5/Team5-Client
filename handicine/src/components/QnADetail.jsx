@@ -171,8 +171,11 @@ const QnADetail = () => {
         style={{ marginTop: "20px" }}
       />
       {comments.map((comment) => (
-        <div key={comment.id} className='container-box' style={{ marginTop: "30px", maxWidth: "1000px" }}>
-          <strong>{comment.authorUsername}</strong>: {editCommentId === comment.id ? (
+        <div key={comment.id} className='container-box' style={{ marginTop: "30px", maxWidth: "1000px",  display: "flex", justifyContent: "space-between" }}>
+          <div style={{display:"flex", alignItems:"center"}}>
+          <strong>{comment.authorUsername}</strong>
+          <span style={{ marginLeft: "5px", marginRight: "5px" }}>:</span>
+          {editCommentId === comment.id ? (
             <Form.Control
               type="text"
               value={editedCommentContent}
@@ -187,13 +190,14 @@ const QnADetail = () => {
           ) : (
             <span>{comment.content}</span>
           )}
+          </div>
           <div>
             {comment.authorUsername === userId && (
               <>
-                <Button style={{ marginTop: "10px", marginLeft: "10px", backgroundColor: "skyblue" }} onClick={() => handleEditClick(comment)}>
+                <Button style={{marginLeft: "10px", backgroundColor: "skyblue" }} onClick={() => handleEditClick(comment)}>
                   수정
                 </Button>
-                <Button style={{ marginTop: "10px" }} onClick={() => handleDeleteComment(comment.id)}>삭제</Button>
+                <Button onClick={() => handleDeleteComment(comment.id)}>삭제</Button>
               </>
             )}
           </div>
