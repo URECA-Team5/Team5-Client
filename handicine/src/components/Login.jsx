@@ -43,9 +43,9 @@ const theme = createTheme({
 export default function Login({setIsLoggedIn, setUserId}) {
   const navigate = useNavigate();
   const [id, setId] = useState("");
-  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  // 로컬 로그인 처리
   const handleSubmit = async (event) => {
     event.preventDefault();
     
@@ -71,6 +71,18 @@ export default function Login({setIsLoggedIn, setUserId}) {
         localStorage.setItem('userId', id);
         setIsLoggedIn(true);  // 상태 업데이트
         navigate('/');
+
+        // 예시로 로그인 후 다른 API 요청
+        const token = localStorage.getItem('token');
+        const apiResponse = await fetch('http://localhost:8080/api/users/profile', {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}`,  // Authorization 헤더에 토큰 추가
+            'Content-Type': 'application/json'
+          }
+        });
+        const data = await apiResponse.json();
+        console.log('Protected data:', data);
       } else {
         console.error('Login failed');
       }
@@ -78,6 +90,16 @@ export default function Login({setIsLoggedIn, setUserId}) {
     } catch (error) {
       console.error('Error:', error);
     }
+  };
+
+  // 구글 로그인 처리
+  const handleGoogleLogin = () => {
+    window.location.href = 'http://localhost:8080/oauth2/authorization/google';
+  };
+
+  // 카카오 로그인 처리
+  const handleKakaoLogin = () => {
+    window.location.href = 'http://localhost:8080/oauth2/authorization/kakao';
   };
 
   return (
@@ -93,23 +115,23 @@ export default function Login({setIsLoggedIn, setUserId}) {
               alignItems: 'center', // 가운데 정렬
             }}
           >
-            {/* HANDICINE 글자 */}
+            {/* HANDICINE 로고 */}
             <Typography
               component="h1"
-              variant="h4" // 'h4'로 유지
+              variant="h4"
               className="brand-title"
               sx={{
                 mb: 3,
-                textAlign: 'center', // 중앙 정렬
+                textAlign: 'center',
                 color: '#00A3E0',
-                fontSize: '2.5rem', // 더 큰 크기
-                fontWeight: 'bold', // 굵게
+                fontSize: '2.5rem',
+                fontWeight: 'bold',
               }}
             >
               HANDICINE
             </Typography>
 
-            {/* Sign in 글자 */}
+            {/* Sign in 제목 */}
             <Typography style={{ textShadow: "none" }}
               component="h1"
               variant="h5"
@@ -118,14 +140,13 @@ export default function Login({setIsLoggedIn, setUserId}) {
               Sign in
             </Typography>
 
-            {/* ID 레이블 */}
+            {/* ID 입력 필드 */}
             <Typography
               variant="body1"
               sx={{ alignSelf: 'flex-start', mb: 1, fontWeight: 'bold', textShadow: 'none' }}
             >
               ID
             </Typography>
-            {/* ID 입력 필드 */}
             <TextField
               margin="normal"
               required
@@ -135,7 +156,7 @@ export default function Login({setIsLoggedIn, setUserId}) {
               autoComplete="username"
               autoFocus
               value={id}
-              onChange={(e) => setId(e.target.value)} // 상태 업데이트
+              onChange={(e) => setId(e.target.value)}
               InputProps={{
                 disableUnderline: true,
               }}
@@ -152,14 +173,13 @@ export default function Login({setIsLoggedIn, setUserId}) {
               }}
             />
 
-            {/* Password 레이블 */}
+            {/* Password 입력 필드 */}
             <Typography
               variant="body1"
               sx={{ alignSelf: 'flex-start', mb: 1, fontWeight: 'bold', textShadow: 'none' }}
             >
               Password
             </Typography>
-            {/* Password 입력 필드 */}
             <TextField
               margin="normal"
               required
@@ -169,7 +189,7 @@ export default function Login({setIsLoggedIn, setUserId}) {
               id="password"
               autoComplete="current-password"
               value={password}
-              onChange={(e) => setPassword(e.target.value)} // 상태 업데이트
+              onChange={(e) => setPassword(e.target.value)}
               InputProps={{
                 disableUnderline: true,
               }}
@@ -186,7 +206,7 @@ export default function Login({setIsLoggedIn, setUserId}) {
               }}
             />
             
-            {/* 로그인 버튼 */}
+            {/* 로컬 로그인 버튼 */}
             <Button
               type="submit"
               fullWidth
@@ -203,25 +223,27 @@ export default function Login({setIsLoggedIn, setUserId}) {
               fullWidth
               variant="outlined"
               startIcon={<img
-                src={require('../images/Google.jpg')}  // 이미지 파일 경로
+                src={require('../images/Google.jpg')}
                 alt="Google"
-                style={{ width: '24px', height: '24px', borderRadius: '50%' }}  // 이미지 크기 및 스타일
+                style={{ width: '24px', height: '24px', borderRadius: '50%' }}
               />}
               sx={{ mt: 2, mb: 2 }}
+              onClick={handleGoogleLogin}
             >
               Sign in with Google
             </Button>
 
-            {/* Facebook 로그인 버튼 */}
+            {/* Kakao 로그인 버튼 */}
             <Button
               fullWidth
               variant="outlined"
               startIcon={<img
-                src={require('../images/kakao.jpg')}  // 이미지 파일 경로
+                src={require('../images/kakao.jpg')}
                 alt="kakao"
-                style={{ width: '24px', height: '24px', borderRadius: '50%' }}  // 이미지 크기 및 스타일
+                style={{ width: '24px', height: '24px', borderRadius: '50%' }}
               />}
               sx={{ mt: 2, mb: 2 }}
+              onClick={handleKakaoLogin}
             >
               Sign in with KakaoTalk
             </Button>
