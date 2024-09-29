@@ -77,7 +77,7 @@ const BoardUpdate = () => {
   
   return (
     <div className="qna-page">
-      <h1 className='page-title' style={{color:"#333"}}>게시물 수정</h1>
+      <h1 className='page-title' style={{color:"#333", marginLeft:"650px"}}>게시물 수정</h1>
       <div className="container-box">
         <Form onSubmit={handleSubmit}>
           <Form.Group controlId="formTitle">
