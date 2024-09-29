@@ -124,7 +124,7 @@ const BoardDetail = () => {
 
   return (
     <div className="qna-page">
-      <h1 className='page-title' style={{ color: "black", marginLeft: "300px" }}>게시물 내용</h1>
+      <h1 className='page-title' style={{ color: "black", marginLeft: "400px" }}>게시물 내용</h1>
       <div className="detail-container">
         <h2>제목</h2>
         <div className="title-box">
@@ -135,7 +135,7 @@ const BoardDetail = () => {
           <h4>{post.content}</h4>
         </div>
       </div>
-      <h2 className="comment-section-title" style={{ color: "black", marginRight: "1000px" }}>댓글</h2>
+      <h2 className="comment-section-title" style={{ color: "black", marginRight: "950px" }}>댓글</h2>
       <Form.Control
         className='commentfield'
         as="textarea"
@@ -155,10 +155,14 @@ const BoardDetail = () => {
                 type="text"
                 value={editedCommentContent}
                 onChange={(e) => setEditedCommentContent(e.target.value)} // 수정 중인 내용 업데이트
-                onBlur={() => handleUpdateComment(comment.id, editedCommentContent)} // 포커스가 해제되면 업데이트
+                onBlur={() => {
+                  handleUpdateComment(comment.id, editedCommentContent);
+                  setEditCommentId(null);  // 수정 모드 종료
+                }} // 포커스가 해제되면 업데이트
                 onKeyPress={(e) => {
                   if (e.key === 'Enter') {
                     handleUpdateComment(comment.id, editedCommentContent); // 엔터키로 업데이트
+                    setEditCommentId(null);
                   }
                 }}
               />
