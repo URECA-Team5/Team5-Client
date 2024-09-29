@@ -40,11 +40,11 @@ const theme = createTheme({
   },
 });
 
-export default function Login({setIsLoggedIn, setUserId}) {
+export default function Login({ setIsLoggedIn, setUserId }) {
   const navigate = useNavigate();
   const [id, setId] = useState("");
-  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState(""); // 에러 메시지 상태 추가
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -63,16 +63,18 @@ export default function Login({setIsLoggedIn, setUserId}) {
         body: JSON.stringify(userData),
       });
 
+      const textResponse = await response.text(); 
+
       if (response.ok) {
-        const result = await response.text();
-        console.log('Login successful:', result);
-        localStorage.setItem('token', result);  // 로그인 토큰 저장
+        const token = textResponse;  // JWT 토큰 문자열 처리
+        console.log('Login successful:', token);
+        localStorage.setItem('token', token);  // 로그인 토큰 저장
         localStorage.setItem('isLoggedIn', true);  // 로그인 상태 저장
         localStorage.setItem('userId', id);
         setIsLoggedIn(true);  // 상태 업데이트
-        navigate('/');
+        navigate('/'); // 홈으로 리다이렉트
       } else {
-        console.error('Login failed');
+        console.error('Login failed:', textResponse);
       }
       
     } catch (error) {
@@ -93,7 +95,6 @@ export default function Login({setIsLoggedIn, setUserId}) {
               alignItems: 'center', // 가운데 정렬
             }}
           >
-            {/* HANDICINE 글자 */}
             <Typography
               component="h1"
               variant="h4" // 'h4'로 유지
@@ -109,7 +110,6 @@ export default function Login({setIsLoggedIn, setUserId}) {
               HANDICINE
             </Typography>
 
-            {/* Sign in 글자 */}
             <Typography style={{ textShadow: "none" }}
               component="h1"
               variant="h5"
@@ -118,85 +118,70 @@ export default function Login({setIsLoggedIn, setUserId}) {
               Sign in
             </Typography>
 
-            {/* ID 레이블 */}
-            <Typography
-              variant="body1"
-              sx={{ alignSelf: 'flex-start', mb: 1, fontWeight: 'bold', textShadow: 'none' }}
-            >
-              ID
-            </Typography>
-            {/* ID 입력 필드 */}
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="username"
-              name="username"
-              autoComplete="username"
-              autoFocus
-              value={id}
-              onChange={(e) => setId(e.target.value)} // 상태 업데이트
-              InputProps={{
-                disableUnderline: true,
-              }}
-              sx={{
-                mb: 2,
-                '& .MuiInputBase-root': {
-                  border: '1px solid #ccc',
-                  borderRadius: '5px',
-                  padding: '10px',
-                  '&:focus': {
-                    borderColor: '#83C9E7',
-                  },
-                },
-              }}
-            />
+            {/* 에러 메시지 표시 */}
+            {errorMessage && (
+              <Typography variant="body2" color="error" sx={{ marginBottom: 2 }}>
+                {errorMessage}
+              </Typography>
+            )}
 
-            {/* Password 레이블 */}
-            <Typography
-              variant="body1"
-              sx={{ alignSelf: 'flex-start', mb: 1, fontWeight: 'bold', textShadow: 'none' }}
-            >
-              Password
-            </Typography>
-            {/* Password 입력 필드 */}
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)} // 상태 업데이트
-              InputProps={{
-                disableUnderline: true,
-              }}
-              sx={{
-                mb: 2,
-                '& .MuiInputBase-root': {
-                  border: '1px solid #ccc',
-                  borderRadius: '5px',
-                  padding: '10px',
-                  '&:focus': {
-                    borderColor: '#83C9E7',
+            <form onSubmit={handleSubmit}> {/* 폼 제출 이벤트 처리 */}
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="username"
+                name="username"
+                autoComplete="username"
+                autoFocus
+                value={id}
+                onChange={(e) => setId(e.target.value)} // 상태 업데이트
+                sx={{
+                  mb: 2,
+                  '& .MuiInputBase-root': {
+                    border: '1px solid #ccc',
+                    borderRadius: '5px',
+                    padding: '10px',
+                    '&:focus': {
+                      borderColor: '#83C9E7',
+                    },
                   },
-                },
-              }}
-            />
-            
-            {/* 로그인 버튼 */}
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-              className="login-button"
-              onClick={handleSubmit}
-            >
-              Sign in
-            </Button>
+                }}
+              />
+
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)} // 상태 업데이트
+                sx={{
+                  mb: 2,
+                  '& .MuiInputBase-root': {
+                    border: '1px solid #ccc',
+                    borderRadius: '5px',
+                    padding: '10px',
+                    '&:focus': {
+                      borderColor: '#83C9E7',
+                    },
+                  },
+                }}
+              />
+
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+                className="login-button"
+              >
+                Sign in
+              </Button>
+            </form>
 
             {/* Google 로그인 버튼 */}
             <Button

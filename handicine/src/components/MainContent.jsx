@@ -11,9 +11,9 @@ const MainContent = () => {
   };
   const handleSearchSubmit = async (e) => {
     e.preventDefault();
-    let url = "http://localhost:8080/api/medicines/search"
+    console.log("약품 이름:", medicineName); // 추가된 로그
     try {
-      const response = await axios.get(url, {
+      const response = await axios.get("http://localhost:8080/api/medicines/search", {
         params: { itemName: medicineName }
       });
       console.log(response);
@@ -23,12 +23,6 @@ const MainContent = () => {
       // alert(error.response.data);
       console.error('불러오기 실패:', error);
       navigate(`/searchMedicine/${medicineName}`);
-    }
-  };
-  const handleKeyDown = (e) => {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      handleSearchSubmit(e);
     }
   };
   return (
@@ -44,7 +38,6 @@ const MainContent = () => {
                   placeholder="약품이름을 입력하세요"
                   value={medicineName}
                   onChange={handleSearchChange}
-                  onKeyDown={handleKeyDown}
                 />
               </Form.Group>
               <Button style={{ marginTop: "20px", width: "30%", backgroundColor: "#83C9E7" }} variant="info" type="submit">검색</Button>
