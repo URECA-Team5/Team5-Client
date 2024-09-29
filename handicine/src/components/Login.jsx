@@ -46,6 +46,7 @@ export default function Login({ setIsLoggedIn, setUserId }) {
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState(""); // 에러 메시지 상태 추가
 
+  // 로컬 로그인 처리
   const handleSubmit = async (event) => {
     event.preventDefault();
     
@@ -72,7 +73,19 @@ export default function Login({ setIsLoggedIn, setUserId }) {
         localStorage.setItem('isLoggedIn', true);  // 로그인 상태 저장
         localStorage.setItem('userId', id);
         setIsLoggedIn(true);  // 상태 업데이트
-        navigate('/'); // 홈으로 리다이렉트
+        navigate('/');
+
+        // 예시로 로그인 후 다른 API 요청
+        const token = localStorage.getItem('token');
+        const apiResponse = await fetch('http://localhost:8080/api/users/profile', {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}`,  // Authorization 헤더에 토큰 추가
+            'Content-Type': 'application/json'
+          }
+        });
+        const data = await apiResponse.json();
+        console.log('Protected data:', data);
       } else {
         console.error('Login failed:', textResponse);
       }
@@ -80,6 +93,16 @@ export default function Login({ setIsLoggedIn, setUserId }) {
     } catch (error) {
       console.error('Error:', error);
     }
+  };
+
+  // 구글 로그인 처리
+  const handleGoogleLogin = () => {
+    window.location.href = 'http://localhost:8080/oauth2/authorization/google';
+  };
+
+  // 카카오 로그인 처리
+  const handleKakaoLogin = () => {
+    window.location.href = 'http://localhost:8080/oauth2/authorization/kakao';
   };
 
   return (
@@ -97,19 +120,18 @@ export default function Login({ setIsLoggedIn, setUserId }) {
           >
             <Typography
               component="h1"
-              variant="h4" // 'h4'로 유지
+              variant="h4"
               className="brand-title"
               sx={{
                 mb: 3,
-                textAlign: 'center', // 중앙 정렬
+                textAlign: 'center',
                 color: '#00A3E0',
-                fontSize: '2.5rem', // 더 큰 크기
-                fontWeight: 'bold', // 굵게
+                fontSize: '2.5rem',
+                fontWeight: 'bold',
               }}
             >
               HANDICINE
             </Typography>
-
             <Typography style={{ textShadow: "none" }}
               component="h1"
               variant="h5"
@@ -117,96 +139,107 @@ export default function Login({ setIsLoggedIn, setUserId }) {
             >
               Sign in
             </Typography>
-
-            {/* 에러 메시지 표시 */}
-            {errorMessage && (
-              <Typography variant="body2" color="error" sx={{ marginBottom: 2 }}>
-                {errorMessage}
-              </Typography>
-            )}
-
-            <form onSubmit={handleSubmit}> {/* 폼 제출 이벤트 처리 */}
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="username"
-                name="username"
-                autoComplete="username"
-                autoFocus
-                value={id}
-                onChange={(e) => setId(e.target.value)} // 상태 업데이트
-                sx={{
-                  mb: 2,
-                  '& .MuiInputBase-root': {
-                    border: '1px solid #ccc',
-                    borderRadius: '5px',
-                    padding: '10px',
-                    '&:focus': {
-                      borderColor: '#83C9E7',
-                    },
+            <Typography
+              variant="body1"
+              sx={{ alignSelf: 'flex-start', mb: 1, fontWeight: 'bold', textShadow: 'none' }}
+            >
+              ID
+            </Typography>
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="username"
+              name="username"
+              autoComplete="username"
+              autoFocus
+              value={id}
+              onChange={(e) => setId(e.target.value)}
+              InputProps={{
+                disableUnderline: true,
+              }}
+              sx={{
+                mb: 2,
+                '& .MuiInputBase-root': {
+                  border: '1px solid #ccc',
+                  borderRadius: '5px',
+                  padding: '10px',
+                  '&:focus': {
+                    borderColor: '#83C9E7',
                   },
                 }}
               />
 
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)} // 상태 업데이트
-                sx={{
-                  mb: 2,
-                  '& .MuiInputBase-root': {
-                    border: '1px solid #ccc',
-                    borderRadius: '5px',
-                    padding: '10px',
-                    '&:focus': {
-                      borderColor: '#83C9E7',
-                    },
+            <Typography
+              variant="body1"
+              sx={{ alignSelf: 'flex-start', mb: 1, fontWeight: 'bold', textShadow: 'none' }}
+            >
+              Password
+            </Typography>
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              InputProps={{
+                disableUnderline: true,
+              }}
+              sx={{
+                mb: 2,
+                '& .MuiInputBase-root': {
+                  border: '1px solid #ccc',
+                  borderRadius: '5px',
+                  padding: '10px',
+                  '&:focus': {
+                    borderColor: '#83C9E7',
                   },
-                }}
-              />
-
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-                className="login-button"
-              >
-                Sign in
-              </Button>
-            </form>
+                },
+              }}
+            />
+            
+            {/* 로컬 로그인 버튼 */}
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+              className="login-button"
+              onClick={handleSubmit}
+            >
+              Sign in
+            </Button>
 
             {/* Google 로그인 버튼 */}
             <Button
               fullWidth
               variant="outlined"
               startIcon={<img
-                src={require('../images/Google.jpg')}  // 이미지 파일 경로
+                src={require('../images/Google.jpg')}
                 alt="Google"
-                style={{ width: '24px', height: '24px', borderRadius: '50%' }}  // 이미지 크기 및 스타일
+                style={{ width: '24px', height: '24px', borderRadius: '50%' }}
               />}
               sx={{ mt: 2, mb: 2 }}
+              onClick={handleGoogleLogin}
             >
               Sign in with Google
             </Button>
 
-            {/* Facebook 로그인 버튼 */}
+            {/* Kakao 로그인 버튼 */}
             <Button
               fullWidth
               variant="outlined"
               startIcon={<img
-                src={require('../images/kakao.jpg')}  // 이미지 파일 경로
+                src={require('../images/kakao.jpg')}
                 alt="kakao"
-                style={{ width: '24px', height: '24px', borderRadius: '50%' }}  // 이미지 크기 및 스타일
+                style={{ width: '24px', height: '24px', borderRadius: '50%' }}
               />}
               sx={{ mt: 2, mb: 2 }}
+              onClick={handleKakaoLogin}
             >
               Sign in with KakaoTalk
             </Button>
