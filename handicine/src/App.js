@@ -15,17 +15,14 @@ import QnAUpdate from './components/QnAUpdate';
 import Mypage from './components/Mypage';
 import { useState, useEffect } from 'react';
 import BoardUpdate from './components/BoardUpdate';
-
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userId, setUserId] = useState(null);
-
   useEffect(() => {
     // 로그인 상태를 localStorage에서 확인하여 초기화
     const loggedInStatus = localStorage.getItem('isLoggedIn') === 'true';
     setIsLoggedIn(loggedInStatus);
   }, []);
-
   return (
     <Router>
       <div className="App">
@@ -33,14 +30,14 @@ function App() {
         <Routes>
           <Route path="/" element={<MainContent />} />
           <Route path="/qna" element={<QnAPage />} /> {/* QnA 페이지 라우트 추가 */}
-          <Route path="/qna/:qnaid" element={<QnADetail />} />
+          <Route path="/qna/:qnaId" element={<QnADetail />} />
           <Route path="/board/:postId" element={<BoardDetail />} />
           <Route path="/board" element={<Board />} />
           <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} setUserId={setUserId}/>} />
           <Route path="/oauth2/callback" element={<AuthCallback />} />
           <Route path="/Input" element={<Input />} />
           <Route path="/SignUp" element={<SignUp />} />
-          <Route path="/mypage" element={<Mypage/>} />
+          <Route path="/mypage" element={<Mypage setIsLoggedIn={setIsLoggedIn}/>} />
           <Route path="/qna/update/:qnaId" element={<QnAUpdate/>} />
           <Route path="/board/update/:postId" element={<BoardUpdate/>} />
           <Route path="/searchMedicine/:medicineName" element={<SearchMedicine />} />
@@ -49,5 +46,30 @@ function App() {
     </Router>
   );
 }
-
 export default App;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -3,18 +3,16 @@ import './QnAPage.css';
 import { Link, useNavigate } from 'react-router-dom'; // useNavigate로 페이지 이동 추가
 import { FormControl, InputGroup, Button, Pagination, Table, Container, Row, Col, Form } from 'react-bootstrap';
 import { FaSearch } from 'react-icons/fa'; // 돋보기 아이콘
-
 const QnAPage = () => {
   const [questions, setQuestions] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const questionsPerPage = 10; 
-  const navigate = useNavigate(); 
-
+  const questionsPerPage = 10;
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchQuestions = async () => {
       try {
-        const response = await fetch('/api/qna');
+        const response = await fetch('http://localhost:8080/api/qna');
         const data = await response.json();
         setQuestions(data);
       } catch (error) {
@@ -23,7 +21,6 @@ const QnAPage = () => {
     };
     fetchQuestions();
   }, []);
-
   const handleWriteClick = () => {
     const userToken = localStorage.getItem('token');
     if(userToken){
@@ -34,21 +31,17 @@ const QnAPage = () => {
       navigate('/Login');
     }
   };
-
   const indexOfLastQuestion = currentPage * questionsPerPage;
   const indexOfFirstQuestion = indexOfLastQuestion - questionsPerPage;
   const currentQuestions = questions.slice(indexOfFirstQuestion, indexOfLastQuestion);
   const totalPages = Math.ceil(questions.length / questionsPerPage);
-
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
-
   return (
     <div className="qna-page">
       <hr></hr>
-      <h1 className='page-title' style={{ color: "black", marginLeft:"450px"}}>전문가 Q&A 게시판</h1>
-      
+      <h1 className='page-title' style={{ color: "black", marginLeft:"650px"}}>전문가 Q&A 게시판</h1>
       <div className="container-box" style={{width:'90%', margin:'0 auto'}}>
         <Table striped bordered hover responsive className="qna-table">
           <thead>
@@ -62,7 +55,7 @@ const QnAPage = () => {
             {currentQuestions.map(question => (
               <tr key={question.id}>
                 <td>
-                  <Link 
+                  <Link
                   to={`/qna/${question.id}`}>
                     {question.title}
                   </Link>
@@ -73,7 +66,6 @@ const QnAPage = () => {
             ))}
           </tbody>
         </Table>
-
         {/* 페이지네이션 */}
         <Pagination className="pagination">
           <Pagination.First onClick={() => handlePageChange(1)} />
@@ -94,7 +86,6 @@ const QnAPage = () => {
           />
           <Pagination.Last onClick={() => handlePageChange(totalPages)} />
         </Pagination>
-
         {/* 글쓰기 버튼 */}
         <div className="write-button-container">
           <Button variant="light" className='btn' onClick={handleWriteClick}>
@@ -105,5 +96,4 @@ const QnAPage = () => {
     </div>
   );
 };
-
 export default QnAPage;

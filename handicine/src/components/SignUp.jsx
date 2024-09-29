@@ -9,7 +9,6 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import { FormGroup } from '@mui/material';
-
 // Material UI 테마
 const theme = createTheme({
   typography: {
@@ -33,31 +32,28 @@ const theme = createTheme({
           borderColor: '#000', // outlined 버튼 테두리 색상을 검은색으로 설정
           '&:hover': {
             borderColor: '#333', // outlined 버튼 hover 시 테두리 색상 변경
-            backgroundColor: '#f5f5f5', // hover 시 배경색 변경
+            backgroundColor: '#F5F5F5', // hover 시 배경색 변경
           },
         },
       },
     },
   },
 });
-
 export default function SignUp() {
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [role, setRole] = useState("member");
-
   const handleSubmit = async (event) => {
     event.preventDefault();
-
     const userData = {
       username: id,
       password: password,
       email: email,
-      roleName: role
+      role_name: role
     };
-
     try {
+      console.log(role);
       const response = await fetch("http://localhost:8080/api/users/signup", {
         method: 'POST',
         headers: {
@@ -65,7 +61,6 @@ export default function SignUp() {
         },
         body: JSON.stringify(userData),
       });
-
       if (response.ok) {
         const result = await response.json();
         console.log('User created:', result);
@@ -78,7 +73,6 @@ export default function SignUp() {
       console.error('Error:', error);
     }
   };
-
   return (
     <div className="main-content">
       <ThemeProvider theme={theme}>
@@ -106,7 +100,6 @@ export default function SignUp() {
             >
               HANDICINE
             </Typography>
-
             <Typography
               component="h1"
               variant="h5"
@@ -114,7 +107,6 @@ export default function SignUp() {
             >
               Sign up
             </Typography>
-
             <Typography
               variant="body1"
               sx={{ alignSelf: 'flex-start', mb: 1, fontWeight: 'bold' }}
@@ -131,22 +123,18 @@ export default function SignUp() {
               autoFocus
               value={id}
               onChange={(e) => setId(e.target.value)}
-              InputProps={{ // InputProps를 사용하여 disableUnderline 적용
-                disableUnderline: true,
-              }}
-              sx={{ 
+              sx={{
                 mb: 2,
-                '& .MuiInputBase-root': { 
+                '& .MuiInputBase-root': {
                   border: '1px solid #ccc',
                   borderRadius: '5px',
                   padding: '10px',
-                  '&:focus': { 
+                  '&:focus': {
                     borderColor: '#B3D9E2',
                   },
                 },
               }}
             />
-
             <Typography
               variant="body1"
               sx={{ alignSelf: 'flex-start', mb: 1, fontWeight: 'bold' }}
@@ -163,19 +151,18 @@ export default function SignUp() {
               autoComplete="current-password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              sx={{ 
+              sx={{
                 mb: 2,
-                '& .MuiInputBase-root': { 
+                '& .MuiInputBase-root': {
                   border: '1px solid #ccc',
                   borderRadius: '5px',
                   padding: '10px',
-                  '&:focus': { 
+                  '&:focus': {
                     borderColor: '#B3D9E2',
                   },
                 },
               }}
             />
-
             <Typography
               variant="body1"
               sx={{ alignSelf: 'flex-start', mb: 1, fontWeight: 'bold' }}
@@ -192,19 +179,18 @@ export default function SignUp() {
               autoComplete="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              sx={{ 
+              sx={{
                 mb: 2,
-                '& .MuiInputBase-root': { 
+                '& .MuiInputBase-root': {
                   border: '1px solid #ccc',
                   borderRadius: '5px',
                   padding: '10px',
-                  '&:focus': { 
+                  '&:focus': {
                     borderColor: '#B3D9E2',
                   },
                 },
               }}
             />
-
             <FormGroup sx={{ mb: 2 }}>
               <FormControlLabel
                 control={<Checkbox checked={role === 'member'} onChange={() => setRole('member')} />}
@@ -217,7 +203,6 @@ export default function SignUp() {
                 value="expert"
               />
             </FormGroup>
-
             <Button
               type="submit"
               fullWidth
@@ -228,26 +213,24 @@ export default function SignUp() {
             >
               Sign up
             </Button>
-
             <Button
               fullWidth
               variant="outlined"
-              startIcon={<img 
+              startIcon={<img
                 src={require('../images/Google.jpg')}  // 이미지 파일 경로
-                alt="Google" 
+                alt="Google"
                 style={{ width: '24px', height: '24px', borderRadius: '50%' }}  // 이미지 크기 및 스타일
               />}
               sx={{ mt: 2, mb: 2 }}
             >
               Sign up with Google
             </Button>
-
             <Button
               fullWidth
               variant="outlined"
-              startIcon={<img 
+              startIcon={<img
                 src={require('../images/kakao.jpg')}  // 이미지 파일 경로
-                alt="kakao" 
+                alt="kakao"
                 style={{ width: '24px', height: '24px', borderRadius: '50%' }}  // 이미지 크기 및 스타일
               />}
               sx={{ mt: 2, mb: 2 }}
