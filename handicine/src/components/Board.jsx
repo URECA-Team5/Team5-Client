@@ -42,7 +42,7 @@ const Board = () => {
   return (
     <div className="qna-page">
       <hr />
-      <h1 className='page-title' style={{ color: "black" ,marginLeft:"550px"}}>자유 게시판</h1>
+      <h1 className='page-title' style={{ color: "black" ,marginLeft:"650px"}}>자유 게시판</h1>
       <div className="container-box">
         <Table striped bordered hover responsive className="qna-table">
           <thead>

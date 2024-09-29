@@ -41,7 +41,7 @@ const QnAPage = () => {
   return (
     <div className="qna-page">
       <hr></hr>
-      <h1 className='page-title' style={{ color: "black", marginLeft:"550px"}}>전문가 Q&A 게시판</h1>
+      <h1 className='page-title' style={{ color: "black", marginLeft:"650px"}}>전문가 Q&A 게시판</h1>
       <div className="container-box" style={{width:'90%', margin:'0 auto'}}>
         <Table striped bordered hover responsive className="qna-table">
           <thead>
