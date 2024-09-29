@@ -5,6 +5,7 @@ import Navibar from './components/Navibar';
 import QnAPage from './components/QnAPage';
 import QnADetail from './components/QnADetail';
 import Login from './components/Login';
+import AuthCallback from './components/AuthCallback';
 import SignUp from './components/SignUp';
 import Board from './components/Board';
 import BoardDetail from './components/BoardDetail';
@@ -33,6 +34,7 @@ function App() {
           <Route path="/board/:postId" element={<BoardDetail />} />
           <Route path="/board" element={<Board />} />
           <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} setUserId={setUserId}/>} />
+          <Route path="/oauth2/callback" element={<AuthCallback />} />
           <Route path="/Input" element={<Input />} />
           <Route path="/SignUp" element={<SignUp />} />
           <Route path="/mypage" element={<Mypage setIsLoggedIn={setIsLoggedIn}/>} />
