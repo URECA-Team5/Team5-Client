@@ -40,10 +40,11 @@ const theme = createTheme({
   },
 });
 
-export default function Login({setIsLoggedIn, setUserId}) {
+export default function Login({ setIsLoggedIn, setUserId }) {
   const navigate = useNavigate();
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState(""); // 에러 메시지 상태 추가
 
   // 로컬 로그인 처리
   const handleSubmit = async (event) => {
@@ -63,10 +64,12 @@ export default function Login({setIsLoggedIn, setUserId}) {
         body: JSON.stringify(userData),
       });
 
+      const textResponse = await response.text(); 
+
       if (response.ok) {
-        const result = await response.text();
-        console.log('Login successful:', result);
-        localStorage.setItem('token', result);  // 로그인 토큰 저장
+        const token = textResponse;  // JWT 토큰 문자열 처리
+        console.log('Login successful:', token);
+        localStorage.setItem('token', token);  // 로그인 토큰 저장
         localStorage.setItem('isLoggedIn', true);  // 로그인 상태 저장
         localStorage.setItem('userId', id);
         setIsLoggedIn(true);  // 상태 업데이트
@@ -84,7 +87,7 @@ export default function Login({setIsLoggedIn, setUserId}) {
         const data = await apiResponse.json();
         console.log('Protected data:', data);
       } else {
-        console.error('Login failed');
+        console.error('Login failed:', textResponse);
       }
       
     } catch (error) {
@@ -115,7 +118,6 @@ export default function Login({setIsLoggedIn, setUserId}) {
               alignItems: 'center', // 가운데 정렬
             }}
           >
-            {/* HANDICINE 로고 */}
             <Typography
               component="h1"
               variant="h4"
@@ -130,8 +132,6 @@ export default function Login({setIsLoggedIn, setUserId}) {
             >
               HANDICINE
             </Typography>
-
-            {/* Sign in 제목 */}
             <Typography style={{ textShadow: "none" }}
               component="h1"
               variant="h5"
@@ -139,8 +139,6 @@ export default function Login({setIsLoggedIn, setUserId}) {
             >
               Sign in
             </Typography>
-
-            {/* ID 입력 필드 */}
             <Typography
               variant="body1"
               sx={{ alignSelf: 'flex-start', mb: 1, fontWeight: 'bold', textShadow: 'none' }}
@@ -169,11 +167,9 @@ export default function Login({setIsLoggedIn, setUserId}) {
                   '&:focus': {
                     borderColor: '#83C9E7',
                   },
-                },
-              }}
-            />
+                }}
+              />
 
-            {/* Password 입력 필드 */}
             <Typography
               variant="body1"
               sx={{ alignSelf: 'flex-start', mb: 1, fontWeight: 'bold', textShadow: 'none' }}

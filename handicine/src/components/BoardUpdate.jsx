@@ -49,26 +49,39 @@ const BoardUpdate = () => {
   const handleDelete = async () => {
     if (window.confirm("정말로 이 게시글을 삭제하시겠습니까?")) {
       try {
-        const token = localStorage.getItem('token'); // 로컬 스토리지에서 토큰 가져오기
-        await axios.delete(`http://localhost:8080/api/board/${postId}`, {
+        const token = localStorage.getItem('token');
+        if (!token) {
+          alert("로그인이 필요합니다.");
+          return;
+        }
+  
+        const response = await axios.delete(`http://localhost:8080/api/board/${postId}`, {
           headers: {
-            Authorization: `Bearer ${token}` // 토큰을 헤더에 추가
+            Authorization: `Bearer ${token}`
           }
         });
-        navigate('/board'); // 삭제 후 게시글 목록으로 이동
+        
+        console.log('Delete response:', response);
+        navigate('/board');
       } catch (error) {
-        console.error("Error deleting post:", error);
+        if (error.response) {
+          console.error("Error deleting post:", error.response.data);
+          alert(`Error: ${error.response.data.message || "게시물 삭제 실패"}`);
+        } else {
+          console.error("Error deleting post:", error.message);
+          alert("Network error: 요청을 처리할 수 없습니다.");
+        }
       }
     }
   };
   
-
   return (
     <div className="qna-page">
-      <h1 className='page-title' style={{color:"#333"}}>게시물 수정</h1>
+      <h1 className='page-title' style={{color:"#333", marginLeft:"650px"}}>게시물 수정</h1>
       <div className="container-box">
         <Form onSubmit={handleSubmit}>
           <Form.Group controlId="formTitle">
+            <h2>제목</h2>
             <FormControl
               className='box'
               type="text"
@@ -79,6 +92,7 @@ const BoardUpdate = () => {
           </Form.Group>
 
           <Form.Group controlId="formContent">
+          <h2 style={{marginTop:"20px"}}>내용</h2>
             <FormControl
               className='box'
               as="textarea"
