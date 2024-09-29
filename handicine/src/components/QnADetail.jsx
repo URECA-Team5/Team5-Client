@@ -116,6 +116,7 @@ const QnADetail = () => {
       console.error('Error updating comment:', error);
     }
   };
+  
 
   const handleDeleteComment = async (commentId) => {
     try {
@@ -149,7 +150,7 @@ const QnADetail = () => {
 
   return (
     <div className="qna-page">
-      <h1 className='page-title' style={{ color: "black", marginLeft: "300px" }}>게시물 내용</h1>
+      <h1 className='page-title' style={{ color: "black", marginLeft: "400px" }}>게시물 내용</h1>
       <div className="detail-container">
         <h2>제목</h2>
         <div className="title-box">
@@ -160,7 +161,7 @@ const QnADetail = () => {
           <h4>{post.content}</h4>
         </div>
       </div>
-      <h2 className="comment-section-title" style={{ color: "black", marginRight: "1000px" }}>댓글</h2>
+      <h2 className="comment-section-title" style={{ color: "black", marginRight: "950px" }}>댓글</h2>
       <Form.Control
         className='commentfield'
         as="textarea"
@@ -168,7 +169,7 @@ const QnADetail = () => {
         placeholder="댓글을 입력하세요"
         value={newComment}
         onChange={handleCommentChange}
-        style={{ marginTop: "20px" }}
+        style={{ marginTop: "20px", maxWidth:"1000px" }}
       />
       {comments.map((comment) => (
         <div key={comment.id} className='container-box' style={{ marginTop: "30px", maxWidth: "1000px",  display: "flex", justifyContent: "space-between" }}>
@@ -180,10 +181,14 @@ const QnADetail = () => {
               type="text"
               value={editedCommentContent}
               onChange={handleEditCommentChange}
-              onBlur={(e) => handleUpdateComment(comment.id, e.target.value)}
+              onBlur={async (e) => {
+                await handleUpdateComment(comment.id, e.target.value); // 업데이트가 완료된 후 상태 변경
+                setEditCommentId(null); // 업데이트 후 텍스트 박스 닫기
+              }}
               onKeyPress={(e) => {
                 if (e.key === 'Enter') {
                   handleUpdateComment(comment.id, e.target.value);
+                  setEditCommentId(null);
                 }
               }}
             />
