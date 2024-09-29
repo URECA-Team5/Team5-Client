@@ -75,17 +75,6 @@ export default function Login({ setIsLoggedIn, setUserId }) {
         setIsLoggedIn(true);  // 상태 업데이트
         navigate('/');
 
-        // 예시로 로그인 후 다른 API 요청
-        token = localStorage.getItem('token');
-        const apiResponse = await fetch('http://localhost:8080/api/users/profile', {
-          method: 'GET',
-          headers: {
-            'Authorization': `Bearer ${token}`,  // Authorization 헤더에 토큰 추가
-            'Content-Type': 'application/json'
-          }
-        });
-        const data = await apiResponse.json();
-        console.log('Protected data:', data);
       } else {
         console.error('Login failed:', textResponse);
       }
