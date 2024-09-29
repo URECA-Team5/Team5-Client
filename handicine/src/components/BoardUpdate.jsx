@@ -75,15 +75,13 @@ const BoardUpdate = () => {
     }
   };
   
-  
-  
-
   return (
     <div className="qna-page">
       <h1 className='page-title' style={{color:"#333"}}>게시물 수정</h1>
       <div className="container-box">
         <Form onSubmit={handleSubmit}>
           <Form.Group controlId="formTitle">
+            <h2>제목</h2>
             <FormControl
               className='box'
               type="text"
@@ -94,6 +92,7 @@ const BoardUpdate = () => {
           </Form.Group>
 
           <Form.Group controlId="formContent">
+          <h2 style={{marginTop:"20px"}}>내용</h2>
             <FormControl
               className='box'
               as="textarea"

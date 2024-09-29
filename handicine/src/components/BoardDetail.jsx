@@ -124,7 +124,7 @@ const BoardDetail = () => {
 
   return (
     <div className="qna-page">
-      <h1 className='page-title' style={{ color: "black", marginLeft: "400px" }}>게시물 내용</h1>
+      <h1 className='page-title' style={{ color: "black", marginLeft: "550px" }}>게시물 내용</h1>
       <div className="detail-container">
         <h2>제목</h2>
         <div className="title-box">

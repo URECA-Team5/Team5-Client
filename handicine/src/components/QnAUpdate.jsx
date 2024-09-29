@@ -79,6 +79,7 @@ const QnAUpdate = () => {
       <div className="container-box">
         <Form onSubmit={handleSubmit}>
           <Form.Group controlId="formTitle">
+            <h2>제목</h2>
             <FormControl
               className='box'
               type="text"
@@ -89,6 +90,7 @@ const QnAUpdate = () => {
           </Form.Group>
 
           <Form.Group controlId="formContent">
+            <h2 style={{marginTop:"20px"}}>내용</h2>
             <FormControl
               className='box'
               as="textarea"
