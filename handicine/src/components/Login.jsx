@@ -76,7 +76,7 @@ export default function Login({ setIsLoggedIn, setUserId }) {
         navigate('/');
 
         // 예시로 로그인 후 다른 API 요청
-        const token = localStorage.getItem('token');
+        token = localStorage.getItem('token');
         const apiResponse = await fetch('http://localhost:8080/api/users/profile', {
           method: 'GET',
           headers: {
@@ -167,7 +167,7 @@ export default function Login({ setIsLoggedIn, setUserId }) {
                   '&:focus': {
                     borderColor: '#83C9E7',
                   },
-                }}
+                }}}
               />
 
             <Typography
