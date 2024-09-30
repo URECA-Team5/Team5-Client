@@ -1,60 +1,118 @@
+/* Detail.css */
 body {
-  font-family: 'Noto Sans', sans-serif; /* 선택한 폰트로 설정 */
-  font-size: 16px; /* 기본 글자 크기 */
-  color: #333; /* 기본 글자 색상 */
+  font-family: 'Noto Sans', sans-serif;
+  font-size: 16px;
+  color: #333;
+  background-color: #f0f4f8; /* 부드러운 배경색 추가 */
 }
 
-.detail-container {
-  background-color: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  width: 60%;
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
-  margin-top: 30px;
-}
-
-.title-box, .content-box {
-  padding: 20px;
-  margin-bottom: 20px;
-}
-
-.title-box {
-  background-color: #f8f9fa;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-}
-
-.content-box {
-  background-color: #ffffff;
-  border: 1px solid #ddd;
-  border-radius: 8px;
+.qna-page {
+  padding: 40px 20px;
 }
 
 .page-title {
-  font-size: 2rem;
-  color: black;
-  margin-bottom: 40px;
-  text-shadow: none;
-  margin-left: 550px;
+  font-size: 2.5rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 30px;
+  color: #4a4a4a;
+}
+
+.detail-container {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: 150%;
+  max-width: 993px;
+  margin: 0 auto;
+  padding: 30px;
+  margin-top: 20px;
+}
+
+.title-box {
+  background-color: #e9ecef;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  padding: 20px;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+.content-box {
+  background-color: #fff;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+h2 {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 15px;
+  color: #333;
 }
 
 .comment-section-title {
-  margin-right: 720px;
-  margin-top: 25px;
+  margin-top: 30px;
   font-size: 2rem;
-  color : black;
+  color: #343a40;
   font-weight: bold;
+}
+
+.commentfield {
+  width: 60%;
+  max-width: 1100px;
+  height: 60px;
+  margin: 20px auto;
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid #dee2e6;
+  background-color: #f8f9fa;
+}
+
+.container-box {
+  background-color: #f1f3f5;
+  border-radius: 8px;
+  padding: 15px;
+  width: 100%; /* 컨테이너가 부모 요소의 전체 너비를 차지하도록 설정 */
+  max-width: 1100px; /* 최대 너비 설정 */
+  margin-top: 10px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .write-button-container {
   display: flex;
-  justify-content: flex-end;
-  margin-top: 20px;
-  margin-left: 450px;
+  justify-content: center;
+  margin-top: 30px;
 }
 
-.commentfield {
-  width: 43%;
+button {
+  margin: 0 10px;
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: none;
+  font-size: 1rem;
+  font-weight: bold;
+  color: white;
 }
+
+button:nth-child(1), button:nth-child(2) {
+  background-color: #6c757d;
+}
+
+button:nth-child(3) {
+  background-color: #28a745;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+
+/* Detail.css */
+.title-box h1 {
+  color: black; /* 제목 텍스트 색상을 검은색으로 변경 */
+  font-size: 1.5rem;
+}
+
+

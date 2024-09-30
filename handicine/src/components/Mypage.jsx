@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';  // 리다이렉트를 위해 사용
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -7,61 +8,150 @@ import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import './SignUp.css';  // 스타일을 위한 CSS 파일
-import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import { useState } from 'react';
 import { Radio } from '@mui/material';
-
 // Material UI 테마
 const theme = createTheme({
   typography: {
     allVariants: {
-      color: '#000', // 모든 텍스트 색상을 검은색으로 설정
-      fontWeight: 'normal', // 모든 텍스트 굵기 제거
+      color: '#000',
+      fontWeight: 'normal',
     },
   },
   components: {
     MuiButton: {
       styleOverrides: {
         contained: {
-          backgroundColor: '#000', // 버튼 배경색을 검은색으로 설정
-          color: '#fff', // 버튼 글씨 색상을 흰색으로 설정
+          backgroundColor: '#000',
+          color: '#fff',
           '&:hover': {
-            backgroundColor: '#333', // 버튼 hover 시 어두운 색상으로 변경
+            backgroundColor: '#333',
           },
         },
         outlined: {
-          color: '#000', // outlined 버튼 글씨 색상을 검은색으로 설정
-          borderColor: '#000', // outlined 버튼 테두리 색상을 검은색으로 설정
+          color: '#000',
+          borderColor: '#000',
           '&:hover': {
-            borderColor: '#333', // outlined 버튼 hover 시 테두리 색상 변경
+            borderColor: '#333',
           },
         },
       },
     },
   },
 });
-
-export default function Mypage() {
-  const [selectedRole, setSelectedRole] = useState('normal');
+// Base64 디코딩 함수
+function parseJwt(token) {
+  try {
+    const trimmedToken = token.trim();
+    const base64Url = token.split('.')[1]; // JWT의 payload 부분 추출
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+    return JSON.parse(jsonPayload); // payload JSON으로 반환
+  } catch (error) {
+    console.error("JWT 해석 중 오류 발생:", error);
+    return null;
+  }
+}
+export default function Mypage({setIsLoggedIn}) {
+  const [selectedRole, setSelectedRole] = useState('MEMBER');
+  const [username, setUsername] = useState('');  // ID가 아닌 username으로 변경
+  const [email, setEmail] = useState('');
+  const navigate = useNavigate();  // 리다이렉트를 위해 선언
+  // 사용자 정보를 가져오는 useEffect
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    console.log('토큰:', token);
+    if (!token) {
+      console.error('토큰이 없습니다. 로그인이 필요합니다.');
+      return;
+    }
+    const decodedToken = parseJwt(token); // 토큰에서 정보 추출
+    const username = decodedToken?.sub; // 토큰에서 username 추출
+    if (!username) {
+      console.error('username을 찾을 수 없습니다.');
+      return;
+    }
+    // 토큰을 사용해 사용자 프로필 정보 가져오기
+    fetch(`http://localhost:8080/api/users/profile`, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    })
+    .then(response => response.json())
+    .then(data => {
+      // 가져온 사용자 데이터를 폼 필드에 설정
+      setUsername(username);  // username 설정
+      setEmail(data.email);   // email 설정
+    })
+    .catch(error => console.error('사용자 데이터를 가져오는 중 오류 발생:', error));
+  }, []);  // []로 useEffect를 한 번만 실행
   const handleSubmit = (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    const Id = data.get('Id');
-    const password = data.get('password');
-    console.log({
-      id: data.get('id'),
-      password: data.get('password'),
-    });
+    const token = localStorage.getItem('token');
+    // 토큰에서 user_id 추출
+    const decodedToken = parseJwt(token);
+    const userId = decodedToken?.user_id;
+    if (!userId) {
+      console.error('user_id를 찾을 수 없습니다.');
+      return;
+    }
+    const data = {
+      username: username,  // 사용자가 변경한 username
+      email: email,        // 사용자가 변경한 email
+      password: event.target.password.value,  // 패스워드 값도 추가
+      role_name: selectedRole  // 선택된 역할 값 추가
+    };
+    console.log('보낼 데이터:', data);  // 전송할 데이터 확인
+    fetch(`http://localhost:8080/api/users/profile`, {  // user_id 경로 없이 토큰으로 처리
+      method: 'PATCH',  // PATCH 메서드 사용
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+    .then(response => {
+      if (response.ok) {
+        alert('사용자 정보가 성공적으로 업데이트되었습니다.');
+      } else {
+        alert('사용자 정보 업데이트에 실패했습니다.');
+      }
+    })
+    .catch(error => console.error('사용자 정보를 업데이트하는 중 오류 발생:', error));
   };
-
   const handleDeleteAccount = () => {
-    // 정보 삭제 기능 (실제 환경에서는 API 호출 필요)
-    console.log("회원탈퇴 버튼 클릭됨");
-    // 예를 들어, API 호출을 통해 사용자의 정보를 삭제하는 로직을 추가할 수 있습니다.
-    alert('회원탈퇴 기능이 호출되었습니다. 실제로는 서버와 통신하여 사용자를 삭제해야 합니다.');
+    const token = localStorage.getItem('token');
+    const decodedToken = parseJwt(token);
+    const userId = decodedToken?.user_id;
+    if (!userId) {
+      console.error('user_id를 찾을 수 없습니다.');
+      return;
+    }
+    // Confirm with the user before proceeding with deletion
+    if (window.confirm('정말로 계정을 삭제하시겠습니까? 이 작업은 취소할 수 없습니다.')) {
+      fetch(`http://localhost:8080/api/users/${userId}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      })
+      .then(response => {
+        if (response.ok) {
+          alert('계정이 성공적으로 삭제되었습니다.');
+          localStorage.removeItem('token');
+          setIsLoggedIn(false);
+          navigate('/');
+        } else {
+          alert('계정 삭제에 실패했습니다.');
+        }
+      })
+      .catch(error => console.error('계정 삭제 중 오류 발생:', error));
+    }
   };
   const handleRoleChange = (event) => {
+    // 역할 변경 시 호출되는 함수
     setSelectedRole(event.target.value);
   };
   return (
@@ -70,95 +160,73 @@ export default function Mypage() {
         <Container component="main" maxWidth="xs" className="login-container">
           <CssBaseline />
           <Box
+            component="form" onSubmit={handleSubmit}
             sx={{
               marginTop: 4,
               display: 'flex',
               flexDirection: 'column',
-              alignItems: 'flex-start', // 왼쪽 정렬
+              alignItems: 'flex-start',
             }}
           >
             <div style={{ display: 'flex', alignItems: 'center', width: '100%' }}>
-              {/* HANDICINE 글자 */}
               <Typography
                 component="h1"
-                variant="h4" // 'h4'로 유지
+                variant="h4"
                 className="brand-title"
                 sx={{
                   mb: 3,
                   mt: -3,
                   textAlign: 'left',
                   color: '#B3D9E2',
-                  fontSize: '2rem', // 원하는 크기로 조정
-                  flexGrow: 1, // 버튼과 글자 사이의 간격을 유지
+                  fontSize: '2rem',
+                  flexGrow: 1,
                 }}
               >
                 HANDICINE
               </Typography>
-
-              {/* 회원탈퇴 버튼 */}
               <Button
                 variant="outlined"
                 onClick={handleDeleteAccount}
-                sx={{ ml: 2 }} // 왼쪽 여백 추가
+                sx={{ ml: 2 }}
               >
                 회원탈퇴
               </Button>
             </div>
-
-            {/* 정보 수정 글자 */}
             <Typography
-              style={{textShadow:"none"}}
               component="h1"
               variant="h5"
               sx={{ marginBottom: 3, textAlign: 'left' }}
             >
               회원 정보 수정
             </Typography>
-
-            {/* ID 레이블 */}
-            <Typography
-              style={{textShadow:"none"}}
-              variant="body1"
-              sx={{ alignSelf: 'flex-start', mb: 1 }}
-            >
+            <Typography variant="body1" sx={{ alignSelf: 'flex-start', mb: 1 }}>
               ID
               <FormControlLabel
-                style={{ marginLeft: "170px", textShadow:"none" }}
-                control={<Radio checked={selectedRole === 'normal'} onChange={handleRoleChange} value="normal" />}
+                style={{ marginLeft: "170px" }}
+                control={<Radio checked={selectedRole === 'MEMBER'} onChange={handleRoleChange} value="MEMBER" />}
                 label="일반인"
               />
               <FormControlLabel
-              style={{textShadow:"none" }}
-                control={<Radio checked={selectedRole === 'expert'} onChange={handleRoleChange} value="expert" />}
+                control={<Radio checked={selectedRole === 'EXPERT'} onChange={handleRoleChange} value="EXPERT" />}
                 label="전문가"
               />
             </Typography>
-
             {/* ID 입력 필드 */}
             <TextField
               margin="normal"
               required
               fullWidth
-              id="id"
-              name="id"
-              autoComplete="id"
+              id="username"
+              name="username"
+              autoComplete="username"
               autoFocus
-              InputProps={{
-                disableUnderline: true,
-              }}
+              value={username}  // 서버에서 받아온 username
+              onChange={(e) => setUsername(e.target.value)}  // 사용자 입력 변경 처리
               sx={{ mb: 2 }}
             />
-
-            {/* Password 레이블 */}
-            <Typography
-              style={{textShadow:"none"}}
-              variant="body1"
-              sx={{ alignSelf: 'flex-start', mb: 1 }}
-            >
+            <Typography variant="body1" sx={{ alignSelf: 'flex-start', mb: 1 }}>
               Password
             </Typography>
-
-            {/* Password 입력 필드 */}
             <TextField
               margin="normal"
               required
@@ -167,20 +235,10 @@ export default function Mypage() {
               type="password"
               id="password"
               autoComplete="current-password"
-              InputProps={{
-                disableUnderline: true,
-              }}
             />
-
-            <Typography
-              style={{textShadow:"none"}}
-              variant="body1"
-              sx={{ alignSelf: 'flex-start', mb: 1 }}
-            >
+            <Typography variant="body1" sx={{ alignSelf: 'flex-start', mb: 1 }}>
               E-mail
             </Typography>
-
-            {/* E-mail 입력 필드 */}
             <TextField
               margin="normal"
               required
@@ -188,13 +246,10 @@ export default function Mypage() {
               name="Email"
               type="Email"
               id="Email"
-              autoComplete="current-password"
-              InputProps={{
-                disableUnderline: true,
-              }}
+              autoComplete="current-email"
+              value={email}  // 서버에서 받아온 이메일
+              onChange={(e) => setEmail(e.target.value)}  // 사용자 입력 변경 처리
             />
-
-            {/* 수정하기 버튼 */}
             <Button
               type="submit"
               fullWidth

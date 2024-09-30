@@ -4,25 +4,26 @@ import { FormControl, InputGroup, Button, Form } from 'react-bootstrap';
 import axios from 'axios'; 
 import './Update.css';
 
-const QnAUpdate = () => {
+const BoardUpdate = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const navigate = useNavigate(); // 페이지 이동을 위한 hook
-  const { qnaId } = useParams();
+  const navigate = useNavigate(); 
+  const { postId } = useParams(); 
 
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/api/qna/${qnaId}`);
-        const qna = response.data;
-        setTitle(qna.title);
-        setContent(qna.content);
+        const response = await axios.get(`http://localhost:8080/api/board/${postId}`);
+        const post = response.data;
+        setTitle(post.title);
+        setContent(post.content);
       } catch (error) {
         console.error("Error fetching post data:", error);
       }
     };
     fetchPost();
-  }, [qnaId]);
+  }, [postId]);
+
   const handleTitleChange = (e) => {
     setTitle(e.target.value);
   };
@@ -32,14 +33,14 @@ const QnAUpdate = () => {
   };
 
   const handleBackToList = () => {
-    navigate('/qna'); // 'qna' 페이지로 이동
+    navigate('/board'); 
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.patch(`http://localhost:8080/api/qna/${qnaId}`, { title, content });
-      navigate('/qna'); 
+      await axios.patch(`http://localhost:8080/api/board/${postId}`, { title, content });
+      navigate('/board'); 
     } catch (error) {
       console.error("Error updating post:", error);
     }
@@ -54,14 +55,14 @@ const QnAUpdate = () => {
           return;
         }
   
-        const response = await axios.delete(`http://localhost:8080/api/qna/${qnaId}`, {
+        const response = await axios.delete(`http://localhost:8080/api/board/${postId}`, {
           headers: {
             Authorization: `Bearer ${token}`
           }
         });
         
         console.log('Delete response:', response);
-        navigate('/qna');
+        navigate('/board');
       } catch (error) {
         if (error.response) {
           console.error("Error deleting post:", error.response.data);
@@ -73,6 +74,7 @@ const QnAUpdate = () => {
       }
     }
   };
+  
   return (
     <div className="qna-page">
       <h1 className='page-title' style={{color:"#333", marginLeft:"650px"}}>게시물 수정</h1>
@@ -90,7 +92,7 @@ const QnAUpdate = () => {
           </Form.Group>
 
           <Form.Group controlId="formContent">
-            <h2 style={{marginTop:"20px"}}>내용</h2>
+          <h2 style={{marginTop:"20px"}}>내용</h2>
             <FormControl
               className='box'
               as="textarea"
@@ -101,7 +103,6 @@ const QnAUpdate = () => {
             />
           </Form.Group>
           
-
           <div className="write-button-container">
             <Button variant="secondary" onClick={handleBackToList} style={{marginRight: "10px"}}>
               목록보기
@@ -119,4 +120,4 @@ const QnAUpdate = () => {
   );
 };
 
-export default QnAUpdate;
+export default BoardUpdate;

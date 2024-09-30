@@ -1,16 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Navbar, Nav, Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './Navibar.css';
 
-const Navibar = () => {
-  // 로그인 상태를 관리할 상태 변수
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+const Navibar = ({ isLoggedIn, setIsLoggedIn }) => {
+  const navigate = useNavigate();
 
-  // 로그아웃 처리 함수
+  // 로그아웃 함수
   const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.setItem('isLoggedIn', false);
     setIsLoggedIn(false);
-    // 추가적인 로그아웃 처리 로직 (예: 세션 삭제)
+    navigate('/');  // 로그아웃 후 메인 페이지로 이동
   };
 
   return (
@@ -35,7 +36,7 @@ const Navibar = () => {
           </>
         ) : (
           <>
-            <Button variant="light" className='btn' as={Link} to="/mypage">마이페이지</Button>
+            <Button variant="light" className='btn' as={Link} to={`/mypage`}>마이페이지</Button>
             <Button variant="light" className='btn' onClick={handleLogout}>로그아웃</Button>
           </>
         )}
@@ -43,5 +44,6 @@ const Navibar = () => {
     </Navbar>
   );
 };
+
 
 export default Navibar;
