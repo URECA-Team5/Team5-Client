@@ -1,31 +1,30 @@
 import React, { useState } from 'react';
 import { Container, Form, Row, Col, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import './MainContent.css';
-
 const MainContent = () => {
   const [medicineName, setMedicineName] = useState("");
   const navigate = useNavigate();
-
   const handleSearchChange = (e) => {
     setMedicineName(e.target.value);
   };
-
-  const handleSearchSubmit = (e) => {
+  const handleSearchSubmit = async (e) => {
     e.preventDefault();
-    console.log(`Navigating to: /searchMedicine/${medicineName}`);
-    if (medicineName.trim() !== "") {
+    console.log("약품 이름:", medicineName); // 추가된 로그
+    try {
+      const response = await axios.get("http://localhost:8080/api/medicines/search", {
+        params: { itemName: medicineName }
+      });
+      console.log(response);
+      console.log(response.data);
+      navigate(`/searchMedicine/${medicineName}`, { state: { medicines: response.data } });
+    } catch (error) {
+      // alert(error.response.data);
+      console.error('불러오기 실패:', error);
       navigate(`/searchMedicine/${medicineName}`);
     }
   };
-
-  const handleKeyDown = (e) => {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      handleSearchSubmit(e);
-    }
-  };
-
   return (
     <div className="main-content">
       <div className="background-overlay" />
@@ -39,7 +38,6 @@ const MainContent = () => {
                   placeholder="약품이름을 입력하세요"
                   value={medicineName}
                   onChange={handleSearchChange}
-                  onKeyDown={handleKeyDown}
                 />
               </Form.Group>
               <Button style={{ marginTop: "20px", width: "30%", backgroundColor: "#83C9E7" }} variant="info" type="submit">검색</Button>
@@ -57,5 +55,4 @@ const MainContent = () => {
     </div>
   );
 };
-
 export default MainContent;

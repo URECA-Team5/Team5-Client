@@ -3,80 +3,45 @@ import './QnAPage.css';
 import { Link, useNavigate } from 'react-router-dom'; // useNavigate로 페이지 이동 추가
 import { FormControl, InputGroup, Button, Pagination, Table, Container, Row, Col, Form } from 'react-bootstrap';
 import { FaSearch } from 'react-icons/fa'; // 돋보기 아이콘
-
 const QnAPage = () => {
-  const [questions, setQuestions] = useState([
-    { id: 1, title: "전문가에게 질문하고 싶어요", author: "사용자1", date: "2024-09-01" },
-    { id: 2, title: "약물 복용 관련 질문이 있습니다", author: "사용자2", date: "2024-09-02" },
-    { id: 3, title: "의학적인 질문을 하고 싶어요", author: "사용자3", date: "2024-09-03" },
-    { id: 4, title: "약물 복용 관련 질문이 있습니다", author: "사용자4", date: "2024-09-04" },
-    { id: 5, title: "전문가에게 질문하고 싶어요", author: "사용자5", date: "2024-09-05" },
-    { id: 6, title: "의학적인 질문을 하고 싶어요", author: "사용자6", date: "2024-09-06" },
-    { id: 7, title: "전문가에게 질문하고 싶어요", author: "사용자7", date: "2024-09-07" },
-    { id: 8, title: "약물 복용 관련 질문이 있습니다", author: "사용자8", date: "2024-09-08" },
-    { id: 9, title: "의학적인 질문을 하고 싶어요", author: "사용자9", date: "2024-09-09" },
-    { id: 10, title: "질문 예시", author: "사용자10", date: "2024-09-10" },
-    { id: 11, title: "질문 예시", author: "사용자11", date: "2024-09-11" },
-    { id: 12, title: "질문 예시", author: "사용자12", date: "2024-09-12" },
-    // 질문을 추가로 작성하거나 백엔드에서 받아올 수 있습니다.
-  ]);
-
-  const [searchOption, setSearchOption] = useState("제목만");
+  const [questions, setQuestions] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const questionsPerPage = 10; // 한 페이지당 질문 수
-  const navigate = useNavigate(); // 페이지 이동을 위한 hook
-
-  const handleSearchOptionSelect = (option) => {
-    setSearchOption(option);
-  };
-
-  const handleSearch = () => {
-    console.log(`검색 옵션: ${searchOption}, 검색어: ${searchText}`);
-    // 검색 기능을 추가할 때 사용할 검색 로직
-  };
-
+  const questionsPerPage = 10;
+  const navigate = useNavigate();
+  useEffect(() => {
+    const fetchQuestions = async () => {
+      try {
+        const response = await fetch('http://localhost:8080/api/qna');
+        const data = await response.json();
+        setQuestions(data);
+      } catch (error) {
+        console.error("Error fetching posts:", error);
+      }
+    };
+    fetchQuestions();
+  }, []);
   const handleWriteClick = () => {
-    navigate('/Input', { state: { from: 'qna' } }); // 'input.jsx'로 이동
+    const userToken = localStorage.getItem('token');
+    if(userToken){
+      navigate('/Input', { state: { from: 'qna' } });
+    }
+    else {
+      alert("로그인 후 이용가능합니다.");
+      navigate('/Login');
+    }
   };
-
   const indexOfLastQuestion = currentPage * questionsPerPage;
   const indexOfFirstQuestion = indexOfLastQuestion - questionsPerPage;
   const currentQuestions = questions.slice(indexOfFirstQuestion, indexOfLastQuestion);
-
   const totalPages = Math.ceil(questions.length / questionsPerPage);
-
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
-
   return (
     <div className="qna-page">
       <hr></hr>
-      <h1 className='page-title' style={{color:"black"}}>전문가 Q&A 게시판</h1>
-      <div className="search-bar-container">
-        <Form onSubmit={handleSearch}>
-          <Form.Group className="d-flex">
-            <Form.Control
-              type="text"
-              value={searchText}
-              onChange={(e) => setSearchText(e.target.value)}
-              onKeyPress={(e) => {
-                if (e.key === 'Enter') {
-                  handleSearch();
-                  e.preventDefault(); 
-                }
-              }}
-              placeholder="검색어를 입력하세요"
-            />
-            <Button variant="outline-secondary" onClick={handleSearch} style={{ backgroundColor:'#00A3E0'}}>
-              <i className="fas fa-search"></i>
-            </Button>
-          </Form.Group>
-        </Form>
-      </div>
-
-
+      <h1 className='page-title' style={{ color: "black", marginLeft:"650px"}}>전문가 Q&A 게시판</h1>
       <div className="container-box" style={{width:'90%', margin:'0 auto'}}>
         <Table striped bordered hover responsive className="qna-table">
           <thead>
@@ -90,18 +55,17 @@ const QnAPage = () => {
             {currentQuestions.map(question => (
               <tr key={question.id}>
                 <td>
-                  <Link 
+                  <Link
                   to={`/qna/${question.id}`}>
                     {question.title}
                   </Link>
                 </td>
-                <td>{question.author}</td>
-                <td>{question.date}</td>
+                <td>{question.authorUsername}</td>
+                <td>{new Date(question.createdAt).toLocaleDateString()}</td>
               </tr>
             ))}
           </tbody>
         </Table>
-
         {/* 페이지네이션 */}
         <Pagination className="pagination">
           <Pagination.First onClick={() => handlePageChange(1)} />
@@ -122,7 +86,6 @@ const QnAPage = () => {
           />
           <Pagination.Last onClick={() => handlePageChange(totalPages)} />
         </Pagination>
-
         {/* 글쓰기 버튼 */}
         <div className="write-button-container">
           <Button variant="light" className='btn' onClick={handleWriteClick}>
@@ -133,5 +96,4 @@ const QnAPage = () => {
     </div>
   );
 };
-
 export default QnAPage;
