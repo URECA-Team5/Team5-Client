@@ -213,30 +213,6 @@ export default function SignUp() {
             >
               Sign up
             </Button>
-            <Button
-              fullWidth
-              variant="outlined"
-              startIcon={<img
-                src={require('../images/Google.jpg')}  // 이미지 파일 경로
-                alt="Google"
-                style={{ width: '24px', height: '24px', borderRadius: '50%' }}  // 이미지 크기 및 스타일
-              />}
-              sx={{ mt: 2, mb: 2 }}
-            >
-              Sign up with Google
-            </Button>
-            <Button
-              fullWidth
-              variant="outlined"
-              startIcon={<img
-                src={require('../images/kakao.jpg')}  // 이미지 파일 경로
-                alt="kakao"
-                style={{ width: '24px', height: '24px', borderRadius: '50%' }}  // 이미지 크기 및 스타일
-              />}
-              sx={{ mt: 2, mb: 2 }}
-            >
-              Sign up with KakaoTalk
-            </Button>
           </Box>
         </Container>
       </ThemeProvider>
